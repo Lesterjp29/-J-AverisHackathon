@@ -1,0 +1,180 @@
+[
+ {
+  "email_id": "email_t04_bl_deleted",
+  "subject": "REQUEST BL DRAFT _ PO 26067_ COATED IVORY BOARD__138MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 1 attachment(s) found (SI)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_t04_bl_deleted_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_t06_blank_value",
+  "subject": "REQUEST BL DRAFT _ PO 26067_ COATED IVORY BOARD__138MT",
+  "reason": "missing_value",
+  "detail": "consignee: BL value is blank/placeholder ('')",
+  "fields_needing_attention": [
+   {
+    "field": "consignee",
+    "verdict": "missing",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "",
+    "reason": "BL value is blank/placeholder ('')",
+    "si_evidence": "Consignee (Non-Negotiable): EAST BRIGHT FZ-LLC",
+    "bl_evidence": "To the Order of:"
+   }
+  ],
+  "all_fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FAR EAST (M) SDN BHD",
+    "bl": "APRIL FAR EAST (M) SDN BHD",
+    "reason": "",
+    "si_evidence": "Shipper: APRIL FAR EAST (M) SDN BHD",
+    "bl_evidence": "SHIPPER: APRIL FAR EAST (M) SDN BHD"
+   },
+   {
+    "field": "consignee",
+    "verdict": "missing",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "",
+    "reason": "BL value is blank/placeholder ('')",
+    "si_evidence": "Consignee (Non-Negotiable): EAST BRIGHT FZ-LLC",
+    "bl_evidence": "To the Order of:"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
+    "reason": "",
+    "si_evidence": "Notify: EAST BRIGHT FZ-LLC",
+    "bl_evidence": "Notify Party: EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "NANTONG, CHINA (CNNTG)",
+    "bl": "NANTONG, CHINA (CNNTG)",
+    "reason": "",
+    "si_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)",
+    "bl_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "KARACHI, PAKISTAN (PKKHI)",
+    "bl": "KARACHI, PAKISTAN (PKKHI)",
+    "reason": "",
+    "si_evidence": "POD: KARACHI, PAKISTAN (PKKHI)",
+    "bl_evidence": "POD: KARACHI, PAKISTAN (PKKHI)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "6 x 40'HC",
+    "bl": "6 x 40'HC",
+    "reason": "",
+    "si_evidence": "Total Containers: 6 x 40'HC",
+    "bl_evidence": "Container Count: 6 x 40'HC"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "131,058 KG",
+    "bl": "131,058 KG",
+    "reason": "",
+    "si_evidence": "Gross Wt (kgs): 131,058 KG",
+    "bl_evidence": "Gross Weight (KG): 131,058 KG"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_t06_blank_value_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_t06_blank_value_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_t07_garbage_pdf",
+  "subject": "REQUEST BL DRAFT _ PO 26067_ COATED IVORY BOARD__138MT",
+  "reason": "unreadable",
+  "detail": "email_t07_garbage_pdf_BL.pdf: PDF could not be parsed (corrupt or truncated)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_t07_garbage_pdf_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_t07_garbage_pdf_BL.pdf",
+    "format": "pdf",
+    "kind": "UNREADABLE",
+    "ocr": false,
+    "error": "PDF could not be parsed (corrupt or truncated)"
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ }
+]

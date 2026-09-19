@@ -1,0 +1,5 @@
+{
+  "email_511": {"decision": "OK", "reviewer": "demo", "note": "opened original BL in Acrobat, all 7 fields match SI"},
+  "email_516": {"corrections": {"si": {"gross_weight_kg": "235,550 KG"}}, "reviewer": "demo", "note": "customer confirmed weight by phone"},
+  "email_517": {"corrections": {"si": {"port_of_loading": "SINGAPORE", "port_of_discharge": "CALLAO, PERU"}}, "reviewer": "demo"}
+}

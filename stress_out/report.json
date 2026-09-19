@@ -1,0 +1,742 @@
+[
+ {
+  "email_id": "email_t01_format_only",
+  "subject": "REQUEST BL DRAFT _ PO 26067_ COATED IVORY BOARD__138MT",
+  "processing": "done",
+  "error": null,
+  "category": "BL_COMPARISON",
+  "confidence": 0.95,
+  "reason": "attachments are shipping documents: ['SI', 'BL']",
+  "status": "OK",
+  "review_reason": null,
+  "review_detail": null,
+  "has_defect": false,
+  "defect_fields": [],
+  "fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FAR EAST (M) SDN BHD",
+    "bl": "APRIL FAR EAST (M) SDN BHD",
+    "reason": "",
+    "si_evidence": "Shipper: APRIL FAR EAST (M) SDN BHD",
+    "bl_evidence": "SHIPPER: APRIL FAR EAST (M) SDN BHD"
+   },
+   {
+    "field": "consignee",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "East Bright FZ LLC",
+    "reason": "",
+    "si_evidence": "Consignee (Non-Negotiable): EAST BRIGHT FZ-LLC",
+    "bl_evidence": "To the Order of: East Bright FZ LLC"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "East Bright FZ LLC",
+    "reason": "",
+    "si_evidence": "Notify: EAST BRIGHT FZ-LLC",
+    "bl_evidence": "Notify Party: East Bright FZ LLC"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "NANTONG, CHINA (CNNTG)",
+    "bl": "Nantong, China",
+    "reason": "",
+    "si_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)",
+    "bl_evidence": "Port of Loading (POL): Nantong, China"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "KARACHI, PAKISTAN (PKKHI)",
+    "bl": "KARACHI, PAKISTAN (PKKHI)",
+    "reason": "",
+    "si_evidence": "POD: KARACHI, PAKISTAN (PKKHI)",
+    "bl_evidence": "POD: KARACHI, PAKISTAN (PKKHI)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "6 x 40'HC",
+    "bl": "6 X 40'HC",
+    "reason": "",
+    "si_evidence": "Total Containers: 6 x 40'HC",
+    "bl_evidence": "Container Count: 6 X 40'HC"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "131,058 KG",
+    "bl": "131058.00 KGS",
+    "reason": "",
+    "si_evidence": "Gross Wt (kgs): 131,058 KG",
+    "bl_evidence": "Gross Weight (KG): 131058.00 KGS"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_t01_format_only_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_t01_format_only_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "swapped_attachment_order": false
+ },
+ {
+  "email_id": "email_t02_mt_units",
+  "subject": "REQUEST BL DRAFT _ PO 26067_ COATED IVORY BOARD__138MT",
+  "processing": "done",
+  "error": null,
+  "category": "BL_COMPARISON",
+  "confidence": 0.95,
+  "reason": "attachments are shipping documents: ['SI', 'BL']",
+  "status": "OK",
+  "review_reason": null,
+  "review_detail": null,
+  "has_defect": false,
+  "defect_fields": [],
+  "fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FAR EAST (M) SDN BHD",
+    "bl": "APRIL FAR EAST (M) SDN BHD",
+    "reason": "",
+    "si_evidence": "Shipper: APRIL FAR EAST (M) SDN BHD",
+    "bl_evidence": "SHIPPER: APRIL FAR EAST (M) SDN BHD"
+   },
+   {
+    "field": "consignee",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
+    "reason": "",
+    "si_evidence": "Consignee (Non-Negotiable): EAST BRIGHT FZ-LLC",
+    "bl_evidence": "To the Order of: EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
+    "reason": "",
+    "si_evidence": "Notify: EAST BRIGHT FZ-LLC",
+    "bl_evidence": "Notify Party: EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "NANTONG, CHINA (CNNTG)",
+    "bl": "NANTONG, CHINA (CNNTG)",
+    "reason": "",
+    "si_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)",
+    "bl_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "KARACHI, PAKISTAN (PKKHI)",
+    "bl": "KARACHI, PAKISTAN (PKKHI)",
+    "reason": "",
+    "si_evidence": "POD: KARACHI, PAKISTAN (PKKHI)",
+    "bl_evidence": "POD: KARACHI, PAKISTAN (PKKHI)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "6 x 40'HC",
+    "bl": "6 x 40'HC",
+    "reason": "",
+    "si_evidence": "Total Containers: 6 x 40'HC",
+    "bl_evidence": "Container Count: 6 x 40'HC"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "131,058 KG",
+    "bl": "131.058 MT",
+    "reason": "",
+    "si_evidence": "Gross Wt (kgs): 131,058 KG",
+    "bl_evidence": "Gross Weight (KG): 131.058 MT"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_t02_mt_units_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_t02_mt_units_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "swapped_attachment_order": false
+ },
+ {
+  "email_id": "email_t03_count_off_by_one",
+  "subject": "REQUEST BL DRAFT _ PO 26067_ COATED IVORY BOARD__138MT",
+  "processing": "done",
+  "error": null,
+  "category": "BL_COMPARISON",
+  "confidence": 0.95,
+  "reason": "attachments are shipping documents: ['SI', 'BL']",
+  "status": "MISMATCH",
+  "review_reason": null,
+  "review_detail": null,
+  "has_defect": true,
+  "defect_fields": [
+   "container_count"
+  ],
+  "fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FAR EAST (M) SDN BHD",
+    "bl": "APRIL FAR EAST (M) SDN BHD",
+    "reason": "",
+    "si_evidence": "Shipper: APRIL FAR EAST (M) SDN BHD",
+    "bl_evidence": "SHIPPER: APRIL FAR EAST (M) SDN BHD"
+   },
+   {
+    "field": "consignee",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
+    "reason": "",
+    "si_evidence": "Consignee (Non-Negotiable): EAST BRIGHT FZ-LLC",
+    "bl_evidence": "To the Order of: EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
+    "reason": "",
+    "si_evidence": "Notify: EAST BRIGHT FZ-LLC",
+    "bl_evidence": "Notify Party: EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "NANTONG, CHINA (CNNTG)",
+    "bl": "NANTONG, CHINA (CNNTG)",
+    "reason": "",
+    "si_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)",
+    "bl_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "KARACHI, PAKISTAN (PKKHI)",
+    "bl": "KARACHI, PAKISTAN (PKKHI)",
+    "reason": "",
+    "si_evidence": "POD: KARACHI, PAKISTAN (PKKHI)",
+    "bl_evidence": "POD: KARACHI, PAKISTAN (PKKHI)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "mismatch",
+    "si": "6 x 40'HC",
+    "bl": "7 x 40'HC",
+    "reason": "6 vs 7",
+    "si_evidence": "Total Containers: 6 x 40'HC",
+    "bl_evidence": "Container Count: 7 x 40'HC"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "131,058 KG",
+    "bl": "131,058 KG",
+    "reason": "",
+    "si_evidence": "Gross Wt (kgs): 131,058 KG",
+    "bl_evidence": "Gross Weight (KG): 131,058 KG"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_t03_count_off_by_one_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_t03_count_off_by_one_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "swapped_attachment_order": false
+ },
+ {
+  "email_id": "email_t04_bl_deleted",
+  "subject": "REQUEST BL DRAFT _ PO 26067_ COATED IVORY BOARD__138MT",
+  "processing": "done",
+  "error": null,
+  "category": "BL_COMPARISON",
+  "confidence": 0.95,
+  "reason": "attachments are shipping documents: ['SI']",
+  "status": "NEEDS_REVIEW",
+  "review_reason": "missing_attachment",
+  "review_detail": "comparison needs an SI and a draft BL; only 1 attachment(s) found (SI)",
+  "has_defect": false,
+  "defect_fields": [],
+  "fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_t04_bl_deleted_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   }
+  ]
+ },
+ {
+  "email_id": "email_t05_swapped_files",
+  "subject": "REQUEST BL DRAFT _ PO 26067_ COATED IVORY BOARD__138MT",
+  "processing": "done",
+  "error": null,
+  "category": "BL_COMPARISON",
+  "confidence": 0.95,
+  "reason": "attachments are shipping documents: ['BL', 'SI']",
+  "status": "OK",
+  "review_reason": null,
+  "review_detail": null,
+  "has_defect": false,
+  "defect_fields": [],
+  "fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FAR EAST (M) SDN BHD",
+    "bl": "APRIL FAR EAST (M) SDN BHD",
+    "reason": "",
+    "si_evidence": "Shipper: APRIL FAR EAST (M) SDN BHD",
+    "bl_evidence": "SHIPPER: APRIL FAR EAST (M) SDN BHD"
+   },
+   {
+    "field": "consignee",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
+    "reason": "",
+    "si_evidence": "Consignee (Non-Negotiable): EAST BRIGHT FZ-LLC",
+    "bl_evidence": "To the Order of: EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
+    "reason": "",
+    "si_evidence": "Notify: EAST BRIGHT FZ-LLC",
+    "bl_evidence": "Notify Party: EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "NANTONG, CHINA (CNNTG)",
+    "bl": "NANTONG, CHINA (CNNTG)",
+    "reason": "",
+    "si_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)",
+    "bl_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "KARACHI, PAKISTAN (PKKHI)",
+    "bl": "KARACHI, PAKISTAN (PKKHI)",
+    "reason": "",
+    "si_evidence": "POD: KARACHI, PAKISTAN (PKKHI)",
+    "bl_evidence": "POD: KARACHI, PAKISTAN (PKKHI)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "6 x 40'HC",
+    "bl": "6 x 40'HC",
+    "reason": "",
+    "si_evidence": "Total Containers: 6 x 40'HC",
+    "bl_evidence": "Container Count: 6 x 40'HC"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "131,058 KG",
+    "bl": "131,058 KG",
+    "reason": "",
+    "si_evidence": "Gross Wt (kgs): 131,058 KG",
+    "bl_evidence": "Gross Weight (KG): 131,058 KG"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_t05_swapped_files_SI.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_t05_swapped_files_BL.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "swapped_attachment_order": true
+ },
+ {
+  "email_id": "email_t06_blank_value",
+  "subject": "REQUEST BL DRAFT _ PO 26067_ COATED IVORY BOARD__138MT",
+  "processing": "done",
+  "error": null,
+  "category": "BL_COMPARISON",
+  "confidence": 0.95,
+  "reason": "attachments are shipping documents: ['SI', 'BL']",
+  "status": "NEEDS_REVIEW",
+  "review_reason": "missing_value",
+  "review_detail": "consignee: BL value is blank/placeholder ('')",
+  "has_defect": false,
+  "defect_fields": [],
+  "fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FAR EAST (M) SDN BHD",
+    "bl": "APRIL FAR EAST (M) SDN BHD",
+    "reason": "",
+    "si_evidence": "Shipper: APRIL FAR EAST (M) SDN BHD",
+    "bl_evidence": "SHIPPER: APRIL FAR EAST (M) SDN BHD"
+   },
+   {
+    "field": "consignee",
+    "verdict": "missing",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "",
+    "reason": "BL value is blank/placeholder ('')",
+    "si_evidence": "Consignee (Non-Negotiable): EAST BRIGHT FZ-LLC",
+    "bl_evidence": "To the Order of:"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
+    "reason": "",
+    "si_evidence": "Notify: EAST BRIGHT FZ-LLC",
+    "bl_evidence": "Notify Party: EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "NANTONG, CHINA (CNNTG)",
+    "bl": "NANTONG, CHINA (CNNTG)",
+    "reason": "",
+    "si_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)",
+    "bl_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "KARACHI, PAKISTAN (PKKHI)",
+    "bl": "KARACHI, PAKISTAN (PKKHI)",
+    "reason": "",
+    "si_evidence": "POD: KARACHI, PAKISTAN (PKKHI)",
+    "bl_evidence": "POD: KARACHI, PAKISTAN (PKKHI)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "6 x 40'HC",
+    "bl": "6 x 40'HC",
+    "reason": "",
+    "si_evidence": "Total Containers: 6 x 40'HC",
+    "bl_evidence": "Container Count: 6 x 40'HC"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "131,058 KG",
+    "bl": "131,058 KG",
+    "reason": "",
+    "si_evidence": "Gross Wt (kgs): 131,058 KG",
+    "bl_evidence": "Gross Weight (KG): 131,058 KG"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_t06_blank_value_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_t06_blank_value_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "swapped_attachment_order": false
+ },
+ {
+  "email_id": "email_t07_garbage_pdf",
+  "subject": "REQUEST BL DRAFT _ PO 26067_ COATED IVORY BOARD__138MT",
+  "processing": "done",
+  "error": null,
+  "category": "BL_COMPARISON",
+  "confidence": 0.95,
+  "reason": "attachments are shipping documents: ['SI', 'UNREADABLE']",
+  "status": "NEEDS_REVIEW",
+  "review_reason": "unreadable",
+  "review_detail": "email_t07_garbage_pdf_BL.pdf: PDF could not be parsed (corrupt or truncated)",
+  "has_defect": false,
+  "defect_fields": [],
+  "fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_t07_garbage_pdf_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_t07_garbage_pdf_BL.pdf",
+    "format": "pdf",
+    "kind": "UNREADABLE",
+    "ocr": false,
+    "error": "PDF could not be parsed (corrupt or truncated)"
+   }
+  ]
+ },
+ {
+  "email_id": "email_t08_misleading_subject",
+  "subject": "Invoice payment reminder - URGENT invoice 5250071111",
+  "processing": "done",
+  "error": null,
+  "category": "BL_COMPARISON",
+  "confidence": 0.95,
+  "reason": "attachments are shipping documents: ['SI', 'BL']",
+  "status": "OK",
+  "review_reason": null,
+  "review_detail": null,
+  "has_defect": false,
+  "defect_fields": [],
+  "fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FAR EAST (M) SDN BHD",
+    "bl": "APRIL FAR EAST (M) SDN BHD",
+    "reason": "",
+    "si_evidence": "Shipper: APRIL FAR EAST (M) SDN BHD",
+    "bl_evidence": "SHIPPER: APRIL FAR EAST (M) SDN BHD"
+   },
+   {
+    "field": "consignee",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
+    "reason": "",
+    "si_evidence": "Consignee (Non-Negotiable): EAST BRIGHT FZ-LLC",
+    "bl_evidence": "To the Order of: EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
+    "reason": "",
+    "si_evidence": "Notify: EAST BRIGHT FZ-LLC",
+    "bl_evidence": "Notify Party: EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "NANTONG, CHINA (CNNTG)",
+    "bl": "NANTONG, CHINA (CNNTG)",
+    "reason": "",
+    "si_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)",
+    "bl_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "KARACHI, PAKISTAN (PKKHI)",
+    "bl": "KARACHI, PAKISTAN (PKKHI)",
+    "reason": "",
+    "si_evidence": "POD: KARACHI, PAKISTAN (PKKHI)",
+    "bl_evidence": "POD: KARACHI, PAKISTAN (PKKHI)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "6 x 40'HC",
+    "bl": "6 x 40'HC",
+    "reason": "",
+    "si_evidence": "Total Containers: 6 x 40'HC",
+    "bl_evidence": "Container Count: 6 x 40'HC"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "131,058 KG",
+    "bl": "131,058 KG",
+    "reason": "",
+    "si_evidence": "Gross Wt (kgs): 131,058 KG",
+    "bl_evidence": "Gross Weight (KG): 131,058 KG"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_t08_misleading_subject_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_t08_misleading_subject_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "swapped_attachment_order": false
+ },
+ {
+  "email_id": "email_t09_subject_says_docs",
+  "subject": "TO CONFIRM DOCS _ 5RSG-51584 _ HOUSTON_US",
+  "processing": "done",
+  "error": null,
+  "category": "INVOICE_QUERY",
+  "confidence": 0.92,
+  "reason": "invoice / billing / charges wording"
+ },
+ {
+  "email_id": "email_t10_one_real_defect",
+  "subject": "REQUEST BL DRAFT _ PO 26067_ COATED IVORY BOARD__138MT",
+  "processing": "done",
+  "error": null,
+  "category": "BL_COMPARISON",
+  "confidence": 0.95,
+  "reason": "attachments are shipping documents: ['SI', 'BL']",
+  "status": "MISMATCH",
+  "review_reason": null,
+  "review_detail": null,
+  "has_defect": true,
+  "defect_fields": [
+   "consignee"
+  ],
+  "fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FAR EAST (M) SDN BHD",
+    "bl": "APRIL FAR EAST (M) SDN BHD",
+    "reason": "",
+    "si_evidence": "Shipper: APRIL FAR EAST (M) SDN BHD",
+    "bl_evidence": "SHIPPER: APRIL FAR EAST (M) SDN BHD"
+   },
+   {
+    "field": "consignee",
+    "verdict": "mismatch",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "UAB Novakopa",
+    "reason": "different party (similarity 15)",
+    "si_evidence": "Consignee (Non-Negotiable): EAST BRIGHT FZ-LLC",
+    "bl_evidence": "To the Order of: UAB Novakopa"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLC",
+    "bl": "East Bright FZ LLC",
+    "reason": "",
+    "si_evidence": "Notify: EAST BRIGHT FZ-LLC",
+    "bl_evidence": "Notify Party: East Bright FZ LLC"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "NANTONG, CHINA (CNNTG)",
+    "bl": "Nantong, China",
+    "reason": "",
+    "si_evidence": "Port of Loading (POL): NANTONG, CHINA (CNNTG)",
+    "bl_evidence": "Port of Loading (POL): Nantong, China"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "KARACHI, PAKISTAN (PKKHI)",
+    "bl": "KARACHI, PAKISTAN (PKKHI)",
+    "reason": "",
+    "si_evidence": "POD: KARACHI, PAKISTAN (PKKHI)",
+    "bl_evidence": "POD: KARACHI, PAKISTAN (PKKHI)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "6 x 40'HC",
+    "bl": "6 X 40'HC",
+    "reason": "",
+    "si_evidence": "Total Containers: 6 x 40'HC",
+    "bl_evidence": "Container Count: 6 X 40'HC"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "131,058 KG",
+    "bl": "131058.00 KGS",
+    "reason": "",
+    "si_evidence": "Gross Wt (kgs): 131,058 KG",
+    "bl_evidence": "Gross Weight (KG): 131058.00 KGS"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_t10_one_real_defect_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_t10_one_real_defect_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "swapped_attachment_order": false
+ }
+]

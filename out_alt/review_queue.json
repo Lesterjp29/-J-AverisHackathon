@@ -1,0 +1,3082 @@
+[
+ {
+  "email_id": "email_003",
+  "subject": "RE_ TO CONFIRM DOCS _ 5AAT-03056 _ AQABA_JORDAN _ ROXCEL TRADING GMBH _ SIN525534192",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_006",
+  "subject": "Draft BL MMSS 2507 V.257087E NHAVA SHEVA - amend BL 058",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_016",
+  "subject": "AFEMY - ASHDOD_ISRAEL - EVER(EGLV332003791769) - 5RAE-20163 - 5250072870 - TOAN LUC PAPER JOINT STOCK COMPANY - LC",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_018",
+  "subject": "RE_ AFPTME - SAVANNAH_US - MONTER(MCLSIN2316658) - 5RAE-69096 - 5250077054 - KPP-ANTALIS (SINGAPORE) PTE. LTD. - OA",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_036",
+  "subject": "Draft BL INDO SUKSES 65 V.51NW1 RUGAO/NANTONG/SHANGHAI - amend BL 041",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_038",
+  "subject": "TO CONFIRM DOCS _ 5SUS-42284 _ JEBEL ALI_UAE _ KTP CO., LTD _ MCLSIN9318393",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_047",
+  "subject": "RE_ AFRT - KOPER_SLOVENIA - PIL(SIN700541199) - 5RMY-59782 - 5250070715 - UAB NOVAKOPA - OA",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_049",
+  "subject": "Draft BL SOLID 16 V.044NW2 NHAVA SHEVA - amend BL 050",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_050",
+  "subject": "TO CONFIRM DOCS _ 5RVN-23924 _ HOCHIMINH CITY_VIETNAM _ BALL & DOGGETT AUSTRALIA PTY LTD _ SIN947383473",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_061",
+  "subject": "REQUEST BL DRAFT _ PO 26320_ PAPERONE DIGITAL COPIER PAPER__132MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_063",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RUS-16571 _ BRISBANE_AUSTRALIA _ CERIEX _ SIJ4842199",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_066",
+  "subject": "TO CONFIRM DOCS _ 5APH-32727 _ YANGON_MYANMAR _ EAST BRIGHT FZ-LLC _ MCLSIN1742684",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_077",
+  "subject": "RE_ AFPTME - YANGON_MYANMAR - MSC(MEDUUD392614) - 5AAT-85621 - 5250078501 - KPP-ANTALIS (SINGAPORE) PTE. LTD. - OA_CFR",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_080",
+  "subject": "RE_ TO CONFIRM DOCS _ 5APH-59657 _ APAPA_NIGERIA _ TOAN LUC PAPER JOINT STOCK COMPANY _ EGLV647154379937",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_081",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RCY-74167 _ AQABA_JORDAN _ MOORIM SP CO., LTD _ YMJAI793564651",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_088",
+  "subject": "RE_ Draft BL MMSS 2507 V.257087E NANTONG - amend BL 056",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_092",
+  "subject": "AFPTME - CEBU_PHILIPPINES - YM(YMJAI121965652) - 5SUS-04389 - 5250078364 - INTERNATIONAL FOREST PRODUCTS LLC - DP",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_095",
+  "subject": "AFEMY - TUTICORIN_INDIA - ONE(SINF41056481) - 5ALT-85079 - 5250072524 - BALL & DOGGETT AUSTRALIA PTY LTD - OA_CFR",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_100",
+  "subject": "Draft BL NAP 914 V.BS007 RUGAO/NANTONG/SHANGHAI - amend BL 053",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_105",
+  "subject": "AFPTME - VALPARAISO_CHILE - EVER(EGLV895392644220) - 5RUS-95939 - 5250071725 - KTP CO., LTD - OA_CFR",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_109",
+  "subject": "RE_ AIE - JEBEL ALI_UAE - ONE(SINF21158693) - 5ALT-87937 - 5250074160 - CLIFFORD PAPER INC - DP",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_114",
+  "subject": "Draft BL NAP 914 V.BS007 NHAVA SHEVA - amend BL 051",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_136",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RAE-22394 _ BUSAN_SOUTH KOREA _ PACIFIC OFFICE (M) SDN BHD _ HLCUSIN210099688",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_141",
+  "subject": "RE_ TO CONFIRM DOCS _ 5APH-77739 _ HOUSTON_US _ HABRAS INTERNATIONAL LIMITED _ SINF84322259",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_152",
+  "subject": "AIE - BALTIMORE_US - HAPAG(HLCUSIN434795527) - 5RSG-29293 - 5250071438 - ORIENT LINKS CO (LLC) - CFR",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_158",
+  "subject": "AFEMY - PYEONGTAEK_SOUTH KOREA - MSC(MEDUUD368663) - 5SUS-16389 - 5250074484 - TOAN LUC PAPER JOINT STOCK COMPANY - DP",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_161",
+  "subject": "RE_ AIE - APAPA_NIGERIA - HAPAG(HLCUSIN513271950) - 5RCY-58573 - 5250070652 - ROXCEL TRADING GMBH - OA",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_176",
+  "subject": "Draft BL MMSS 2507 V.257087E PORT KLANG (WESTPORT) - amend BL 053",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_186",
+  "subject": "RE_ AIE - APAPA_NIGERIA - YM(YMJAI854249321) - 5RUS-01601 - 5250076629 - UAB NOVAKOPA - OA",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_187",
+  "subject": "RE_ TO CONFIRM DOCS _ 5AKR-55770 _ FREMANTLE_AUSTRALIA _ TOAN LUC PAPER JOINT STOCK COMPANY _ YMJAI792171747",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_189",
+  "subject": "RE_ REQUEST BL DRAFT _ PO 25130_ UNCOATED WOODFREE PAPER IN REA__20MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_190",
+  "subject": "RE_ Draft BL INDO SUKSES 65 V.51NW1 RUGAO/NANTONG/SHANGHAI - amend BL 041",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_195",
+  "subject": "Draft BL LE HAVRE V.QI540A BUATAN - amend BL 046",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_199",
+  "subject": "RE_ TO CONFIRM DOCS _ 5ALT-20064 _ NEW YORK_US _ TOAN LUC PAPER JOINT STOCK COMPANY _ MCLSIN1741011",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_207",
+  "subject": "AFRT - HOUSTON_US - EVER(EGLV421776253492) - 5ALT-16873 - 5250079774 - KPP-ANTALIS (SINGAPORE) PTE. LTD. - OA_CFR",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_210",
+  "subject": "AFRT - KLAIPEDA_LITHUANIA - MONTER(MCLSIN4523805) - 5APH-28410 - 5250076727 - HABRAS INTERNATIONAL LIMITED - DP",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_220",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RUS-79473 _ GDANSK_POLAND _ EAST BRIGHT FZ-LLC _ MCLSIN2754801",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_223",
+  "subject": "TO CONFIRM DOCS _ 5ALT-67700 _ CEBU_PHILIPPINES _ CLIFFORD PAPER INC _ SIJ7848588",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_229",
+  "subject": "RE_ REQUEST BL DRAFT _ PO 25654_ MULTIPURPOSE PAPER - A4 - PAPE__23MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_237",
+  "subject": "RE_ AIE - BRISBANE_AUSTRALIA - ONE(SINF28703203) - 5RMY-76170 - 5250077587 - SAFQA LIMITED - OA_CFR",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_242",
+  "subject": "RE_ TO CONFIRM DOCS _ 5APH-32194 _ CALLAO_PERU _ 3S PAPER PRODUCTS SDN BHD _ SIN017226016",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_247",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RAE-11991 _ BUSAN_SOUTH KOREA _ INTERNATIONAL FOREST PRODUCTS LLC _ MCLSIN5508428",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_250",
+  "subject": "REQUEST BL DRAFT _ PO 26191_ FUJITO PAPERONE INKJET PAPER__72MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_259",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RCY-61284 _ KOPER_SLOVENIA _ PACIFIC OFFICE (M) SDN BHD _ OOLU7494653984",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_261",
+  "subject": "AFEMY - NEW YORK_US - YM(YMJAI045319433) - 5SUS-61498 - 5250077283 - CERIEX - DP",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_263",
+  "subject": "RE_ REQUEST BL DRAFT _ PO 25733_ MULTIPURPOSE PAPER - A4 - PAPE__230MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_265",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RSG-92845 _ SAVANNAH_US _ SAFQA LIMITED _ HLCUSIN991507859",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_271",
+  "subject": "RE_ TO CONFIRM DOCS _ 5SUS-48121 _ CALLAO_PERU _ PACIFIC OFFICE (M) SDN BHD _ SIJ0333736",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_281",
+  "subject": "REQUEST BL DRAFT _ PO 26238_ FUJITO PAPERONE INKJET PAPER__63MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_282",
+  "subject": "AFRT - KOPER_SLOVENIA - YM(YMJAI630397524) - 5ALT-33803 - 5250073968 - INTERNATIONAL FOREST PRODUCTS LLC - OA",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_288",
+  "subject": "Draft BL MMSS 2507 V.257087E NHAVA SHEVA - amend BL 052",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_292",
+  "subject": "AFEMY - NEW YORK_US - CMA(SIJ4111593) - 5AAT-04098 - 5250073665 - NAGAPPA EXPORTS - LC",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_299",
+  "subject": "TO CONFIRM DOCS _ 5RMY-43598 _ SAVANNAH_US _ NAGAPPA EXPORTS _ SIN296184462",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_301",
+  "subject": "RE_ AFEMY - PYEONGTAEK_SOUTH KOREA - HAPAG(HLCUSIN625889679) - 5RCY-94053 - 5250079672 - ROXCEL TRADING GMBH - DP",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_305",
+  "subject": "RE_ Draft BL MMSS 2507 V.257087E NANTONG - amend BL 056",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_309",
+  "subject": "RE_ AFEMY - JEBEL ALI_UAE - MONTER(MCLSIN0825559) - 5RFR-39611 - 5250072910 - PACIFIC OFFICE (M) SDN BHD - LC",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_318",
+  "subject": "TO CONFIRM DOCS _ 5RVN-69036 _ KLAIPEDA_LITHUANIA _ PACIFIC OFFICE (M) SDN BHD _ SINF49843624",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_319",
+  "subject": "Draft BL PACIFIC SUN 1 V.251073E NHAVA SHEVA - amend BL 057",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_321",
+  "subject": "RE_ TO CONFIRM DOCS _ 5AAT-33991 _ JEBEL ALI_UAE _ 3S PAPER PRODUCTS SDN BHD _ MCLSIN9857254",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_326",
+  "subject": "TO CONFIRM DOCS _ 5RSG-36829 _ TUTICORIN_INDIA _ NAGAPPA EXPORTS _ HLCUSIN272751648",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_337",
+  "subject": "RE_ AFEMY - NEW YORK_US - OOCL(OOLU8050171644) - 5APH-90647 - 5250077159 - ROXCEL TRADING GMBH - LC",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_341",
+  "subject": "REQUEST BL DRAFT _ PO 25384_ COATED IVORY BOARD__46MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_343",
+  "subject": "TO CONFIRM DOCS _ 5RFR-24120 _ CEBU_PHILIPPINES _ BALL & DOGGETT AUSTRALIA PTY LTD _ OOLU9743251225",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_350",
+  "subject": "TO CONFIRM DOCS _ 5RAE-81331 _ NEW YORK_US _ HABRAS INTERNATIONAL LIMITED _ SIN287232440",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_381",
+  "subject": "RE_ REQUEST BL DRAFT _ PO 25236_ ASIA SYMBOL FOOD SERVICE BOARD__100MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_384",
+  "subject": "RE_ TO CONFIRM DOCS _ 5APH-63767 _ CALLAO_PERU _ HABRAS INTERNATIONAL LIMITED _ MEDUUD328507",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_385",
+  "subject": "RE_ REQUEST BL DRAFT _ PO 25052_ ASIA SYMBOL FOOD SERVICE BOARD__22MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_401",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RVN-93974 _ KARACHI_PAKISTAN _ TOAN LUC PAPER JOINT STOCK COMPANY _ MEDUUD513717",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_419",
+  "subject": "RE_ TO CONFIRM DOCS _ 5AAT-90805 _ BALTIMORE_US _ CLIFFORD PAPER INC _ MCLSIN4633515",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_421",
+  "subject": "TO CONFIRM DOCS _ 5SUS-73605 _ APAPA_NIGERIA _ 3S PAPER PRODUCTS SDN BHD _ SIJ9578671",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_423",
+  "subject": "RE_ AFEMY - MOMBASA_KENYA - MONTER(MCLSIN9982508) - 5RSG-58068 - 5250078285 - ORIENT LINKS CO (LLC) - OA",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_424",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RVN-02293 _ FREMANTLE_AUSTRALIA _ CLIFFORD PAPER INC _ HLCUSIN399006314",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_432",
+  "subject": "TO CONFIRM DOCS _ 5RMY-22618 _ HOUSTON_US _ UAB NOVAKOPA _ SIN323415959",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_436",
+  "subject": "RE_ REQUEST BL DRAFT _ PO 25819_ PAPERONE DIGITAL COPIER PAPER__20MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_440",
+  "subject": "RE_ REQUEST BL DRAFT _ PO 26468_ ASIA SYMBOL FOOD SERVICE BOARD__69MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_442",
+  "subject": "TO CONFIRM DOCS _ 5ALT-80403 _ BALTIMORE_US _ EAST BRIGHT FZ-LLC _ OOLU0613394394",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_444",
+  "subject": "RE_ Draft BL INDO SUKSES 65 V.51NW1 BUATAN - amend BL 048",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_446",
+  "subject": "RE_ AIE - MERSIN_TURKEY - HAPAG(HLCUSIN588255629) - 5AAT-65619 - 5250074255 - CERIEX - CFR",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_447",
+  "subject": "AFEMY - PYEONGTAEK_SOUTH KOREA - MONTER(MCLSIN8292361) - 5APH-81904 - 5250078235 - ROXCEL TRADING GMBH - DP",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_448",
+  "subject": "RE_ TO CONFIRM DOCS _ 5APH-38130 _ GDANSK_POLAND _ BALL & DOGGETT AUSTRALIA PTY LTD _ EGLV561372308172",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_451",
+  "subject": "TO CONFIRM DOCS _ 5APH-74204 _ FREMANTLE_AUSTRALIA _ INTERNATIONAL FOREST PRODUCTS LLC _ SIN087182749",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_454",
+  "subject": "RE_ REQUEST BL DRAFT _ PO 26185_ PAPERBOARD__21MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_456",
+  "subject": "TO CONFIRM DOCS _ 5APH-20546 _ LONG BEACH_US _ HABRAS INTERNATIONAL LIMITED _ MEDUUD847169",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_459",
+  "subject": "TO CONFIRM DOCS _ 5RMY-34778 _ FREMANTLE_AUSTRALIA _ KTP CO., LTD _ SIJ7852491",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_465",
+  "subject": "Draft BL NAP 914 V.BS007 BUATAN - amend BL 040",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_476",
+  "subject": "RE_ Draft BL INDO SUKSES 65 V.51NW1 SINGAPORE - amend BL 050",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_480",
+  "subject": "RE_ REQUEST BL DRAFT _ PO 25466_ ASIA SYMBOL FOOD SERVICE BOARD__21MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_482",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RSG-48811 _ PYEONGTAEK_SOUTH KOREA _ KTP CO., LTD _ OOLU3701242446",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_486",
+  "subject": "REQUEST BL DRAFT _ PO 25302_ UNCOATED WOODFREE PAPER IN REA__345MT",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_493",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RCY-58695 _ JEBEL ALI_UAE _ KPP-ANTALIS (SINGAPORE) PTE. LTD. _ MCLSIN4389982",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_495",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RVN-97315 _ GDANSK_POLAND _ AL GURG STATIONERY LLC _ OOLU1187233351",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_501",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RSG-51584 _ HOUSTON_US _ KPP-ANTALIS (SINGAPORE) PTE. LTD. _ YMJAI905670867",
+  "reason": "wrong_doc_type",
+  "detail": "expected one SI and one draft BL, got email_501_SI.txt = SI, email_501_BL.txt = OTHER:commercial_invoice",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_501_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_501_BL.txt",
+    "format": "txt",
+    "kind": "OTHER:commercial_invoice",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_502",
+  "subject": "TO CONFIRM DOCS _ 5RSG-63369 _ ASHDOD_ISRAEL _ ROXCEL TRADING GMBH _ MCLSIN5054296",
+  "reason": "wrong_doc_type",
+  "detail": "expected one SI and one draft BL, got email_502_SI.txt = SI, email_502_BL.txt = OTHER:packing_list",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_502_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_502_BL.txt",
+    "format": "txt",
+    "kind": "OTHER:packing_list",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_503",
+  "subject": "AFEMY - HOCHIMINH CITY_VIETNAM - HAPAG(HLCUSIN016481880) - 5ALT-36381 - 5250076432 - INTERNATIONAL FOREST PRODUCTS LLC - OA_CFR",
+  "reason": "wrong_doc_type",
+  "detail": "expected one SI and one draft BL, got email_503_SI.txt = SI, email_503_BL.txt = OTHER:certificate_of_origin",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_503_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_503_BL.txt",
+    "format": "txt",
+    "kind": "OTHER:certificate_of_origin",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_504",
+  "subject": "REQUEST BL DRAFT _ PO 26823_ PAPERBOARD__210MT",
+  "reason": "wrong_doc_type",
+  "detail": "expected one SI and one draft BL, got email_504_SI.txt = SI, email_504_BL.txt = OTHER:packing_list",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_504_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_504_BL.txt",
+    "format": "txt",
+    "kind": "OTHER:packing_list",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_505",
+  "subject": "RE_ AFEMY - CEBU_PHILIPPINES - OOCL(OOLU8243017646) - 5AKR-31538 - 5250078824 - EAST BRIGHT FZ-LLC - DP",
+  "reason": "wrong_doc_type",
+  "detail": "expected one SI and one draft BL, got email_505_SI.txt = SI, email_505_BL.txt = OTHER:certificate_of_origin",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_505_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_505_BL.txt",
+    "format": "txt",
+    "kind": "OTHER:certificate_of_origin",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_506",
+  "subject": "RE_ AFRT - LONG BEACH_US - EVER(EGLV433335384951) - 5RSG-19787 - 5250071809 - EAST BRIGHT FZ-LLC - OA_CFR",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_507",
+  "subject": "RE_ TO CONFIRM DOCS _ 5AKR-00230 _ KOPER_SLOVENIA _ 3S PAPER PRODUCTS SDN BHD _ YMJAI530601198",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 1 attachment(s) found (SI)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_507_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_508",
+  "subject": "AIE - CALLAO_PERU - EVER(EGLV577449160936) - 5RUS-14911 - 5250078941 - KPP-ANTALIS (SINGAPORE) PTE. LTD. - LC",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_509",
+  "subject": "AFRT - CALLAO_PERU - YM(YMJAI926322399) - 5RVN-11404 - 5250072886 - INTERNATIONAL FOREST PRODUCTS LLC - CFR",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 1 attachment(s) found (SI)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_509_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_510",
+  "subject": "TO CONFIRM DOCS _ 5RVN-06271 _ MERSIN_TURKEY _ SAFQA LIMITED _ OOLU0811260030",
+  "reason": "missing_attachment",
+  "detail": "comparison needs an SI and a draft BL; only 0 attachment(s) found (nothing)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_511",
+  "subject": "RE_ TO CONFIRM DOCS _ 5SUS-40134 _ KOPER_SLOVENIA _ AL GURG STATIONERY LLC _ MCLSIN6917768",
+  "reason": "unreadable",
+  "detail": "email_511_BL.pdf: PDF could not be parsed (corrupt or truncated)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_511_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_511_BL.pdf",
+    "format": "pdf",
+    "kind": "UNREADABLE",
+    "ocr": false,
+    "error": "PDF could not be parsed (corrupt or truncated)"
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_514",
+  "subject": "RE_ Draft BL LE HAVRE V.QI540A NANTONG - amend BL 042",
+  "reason": "unreadable",
+  "detail": "notify_party: OCR passes disagree on the BL value",
+  "fields_needing_attention": [
+   {
+    "field": "notify_party",
+    "verdict": "uncertain",
+    "si": "EAST BRIGHT F2Z-LLC",
+    "bl": "EAST BRIGHT FZ-LLO",
+    "reason": "OCR passes disagree on the BL value",
+    "si_evidence": "Notify. EAST BRIGHT F2Z-LLC",
+    "bl_evidence": "Notify. EAST BRIGHT FZ-LLO"
+   }
+  ],
+  "all_fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "ASIA PACIFIC PAPERBOARD TRADING PTE LTD",
+    "bl": "ASIA PACIFIC PAPERBOARD TRADING PTELTD",
+    "reason": "",
+    "si_evidence": "Shipper: ASIA PACIFIC PAPERBOARD TRADING PTE LTD",
+    "bl_evidence": "Shipper: ASIA PACIFIC PAPERBOARD TRADING PTELTD"
+   },
+   {
+    "field": "consignee",
+    "verdict": "match",
+    "si": "EAST BRIGHT FZ-LLG",
+    "bl": "EAST BRIGHT FZ-LLC",
+    "reason": "",
+    "si_evidence": "Consignee: EAST BRIGHT FZ-LLG",
+    "bl_evidence": "Consignee: EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "uncertain",
+    "si": "EAST BRIGHT F2Z-LLC",
+    "bl": "EAST BRIGHT FZ-LLO",
+    "reason": "OCR passes disagree on the BL value",
+    "si_evidence": "Notify. EAST BRIGHT F2Z-LLC",
+    "bl_evidence": "Notify. EAST BRIGHT FZ-LLO"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "NANTONG, CHINA",
+    "bl": "NANTONG, CHIMA",
+    "reason": "",
+    "si_evidence": "Portof Loading: NANTONG, CHINA",
+    "bl_evidence": "Portof Loading. NANTONG, CHIMA"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "GDANSK POLAND",
+    "bl": "GDANSK, POLAND",
+    "reason": "",
+    "si_evidence": "Port of Discharge: GDANSK POLAND",
+    "bl_evidence": "Port of Discharge: GDANSK, POLAND"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "1x 20'FCL",
+    "bl": "1x 20'FCL",
+    "reason": "",
+    "si_evidence": "Containers 1x 20'FCL",
+    "bl_evidence": "Containers 1x 20'FCL"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "22.825 KG",
+    "bl": "22.825 KG",
+    "reason": "",
+    "si_evidence": "Gross Weight 22.825 KG",
+    "bl_evidence": "Gross Weight 22.825 KG"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_514_SI.pdf",
+    "format": "pdf_scan",
+    "kind": "SI",
+    "ocr": true,
+    "error": null
+   },
+   {
+    "path": "attachments/email_514_BL.pdf",
+    "format": "pdf_scan",
+    "kind": "BL",
+    "ocr": true,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_515",
+  "subject": "AFRT - AQABA_JORDAN - CMA(SIJ4056129) - 5RSG-95826 - 5250074186 - 3S PAPER PRODUCTS SDN BHD - OA_CFR",
+  "reason": "unreadable",
+  "detail": "email_515_BL.pdf: PDF could not be parsed (corrupt or truncated)",
+  "fields_needing_attention": [],
+  "all_fields": [],
+  "documents": [
+   {
+    "path": "attachments/email_515_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_515_BL.pdf",
+    "format": "pdf",
+    "kind": "UNREADABLE",
+    "ocr": false,
+    "error": "PDF could not be parsed (corrupt or truncated)"
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_516",
+  "subject": "RE_ AFEMY - CONAKRY_GUINEA - MONTER(MCLSIN6123859) - 5RCY-68239 - 5250074840 - KPP-ANTALIS (SINGAPORE) PTE. LTD. - OA_CFR",
+  "reason": "missing_value",
+  "detail": "gross_weight_kg: SI value is blank/placeholder ('N/A')",
+  "fields_needing_attention": [
+   {
+    "field": "gross_weight_kg",
+    "verdict": "missing",
+    "si": "N/A",
+    "bl": "235,550 KG",
+    "reason": "SI value is blank/placeholder ('N/A')",
+    "si_evidence": "Gross Weight毛重(KGS): N/A",
+    "bl_evidence": "Gross Weight (KG): 235,550 KG"
+   }
+  ],
+  "all_fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FINE PAPER TRADING",
+    "bl": "APRIL FINE PAPER TRADING",
+    "reason": "",
+    "si_evidence": "Shipper (Principal or Seller): APRIL FINE PAPER TRADING",
+    "bl_evidence": "Shipper: APRIL FINE PAPER TRADING"
+   },
+   {
+    "field": "consignee",
+    "verdict": "match",
+    "si": "KPP-ANTALIS (SINGAPORE) PTE. LTD.",
+    "bl": "KPP-ANTALIS (SINGAPORE) PTE. LTD.",
+    "reason": "",
+    "si_evidence": "Consignee: KPP-ANTALIS (SINGAPORE) PTE. LTD.",
+    "bl_evidence": "Consignee: KPP-ANTALIS (SINGAPORE) PTE. LTD."
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "KPP-ANTALIS (SINGAPORE) PTE. LTD.",
+    "bl": "KPP-ANTALIS (SINGAPORE) PTE. LTD.",
+    "reason": "",
+    "si_evidence": "Notify: KPP-ANTALIS (SINGAPORE) PTE. LTD.",
+    "bl_evidence": "Notify Party/Intermediate Consignee: KPP-ANTALIS (SINGAPORE) PTE. LTD."
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "NHAVA SHEVA, INDIA",
+    "bl": "NHAVA SHEVA, INDIA (INNSA)",
+    "reason": "",
+    "si_evidence": "PORT OF LOADING: NHAVA SHEVA, INDIA",
+    "bl_evidence": "Load Port: NHAVA SHEVA, INDIA (INNSA)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "CONAKRY, GUINEA",
+    "bl": "CONAKRY, GUINEA (GNCKY)",
+    "reason": "",
+    "si_evidence": "POD: CONAKRY, GUINEA",
+    "bl_evidence": "POD: CONAKRY, GUINEA (GNCKY)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "10 x 20'FCL",
+    "bl": "10 x 20'FCL",
+    "reason": "",
+    "si_evidence": "No. of Containers or Packages: 10 x 20'FCL",
+    "bl_evidence": "Container Count: 10 x 20'FCL"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "missing",
+    "si": "N/A",
+    "bl": "235,550 KG",
+    "reason": "SI value is blank/placeholder ('N/A')",
+    "si_evidence": "Gross Weight毛重(KGS): N/A",
+    "bl_evidence": "Gross Weight (KG): 235,550 KG"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_516_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_516_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_517",
+  "subject": "RE_ TO CONFIRM DOCS _ 5RCY-95001 _ CALLAO_PERU _ BALL & DOGGETT AUSTRALIA PTY LTD _ MEDUUD661016",
+  "reason": "missing_value",
+  "detail": "port_of_loading: SI value is blank/placeholder ('____MT'); port_of_discharge: SI value is blank/placeholder ('TBA')",
+  "fields_needing_attention": [
+   {
+    "field": "port_of_loading",
+    "verdict": "missing",
+    "si": "____MT",
+    "bl": "SINGAPORE (SGSIN)",
+    "reason": "SI value is blank/placeholder ('____MT')",
+    "si_evidence": "Port of Loading (POL): ____MT",
+    "bl_evidence": "Load Port: SINGAPORE (SGSIN)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "missing",
+    "si": "TBA",
+    "bl": "CALLAO, PERU (PECLL)",
+    "reason": "SI value is blank/placeholder ('TBA')",
+    "si_evidence": "Port of Discharge (POD): TBA",
+    "bl_evidence": "Port of Discharge: CALLAO, PERU (PECLL)"
+   }
+  ],
+  "all_fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FAR EAST (M) SDN BHD",
+    "bl": "APRIL FAR EAST (M) SDN BHD",
+    "reason": "",
+    "si_evidence": "Shipper/Exporter: APRIL FAR EAST (M) SDN BHD",
+    "bl_evidence": "SHIPPER: APRIL FAR EAST (M) SDN BHD"
+   },
+   {
+    "field": "consignee",
+    "verdict": "match",
+    "si": "BALL & DOGGETT AUSTRALIA PTY LTD",
+    "bl": "BALL & DOGGETT AUSTRALIA PTY LTD",
+    "reason": "",
+    "si_evidence": "To the Order of: BALL & DOGGETT AUSTRALIA PTY LTD",
+    "bl_evidence": "Consignee (Non-Negotiable): BALL & DOGGETT AUSTRALIA PTY LTD"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "BALL & DOGGETT AUSTRALIA PTY LTD",
+    "bl": "BALL & DOGGETT AUSTRALIA PTY LTD",
+    "reason": "",
+    "si_evidence": "NOTIFY PARTY: BALL & DOGGETT AUSTRALIA PTY LTD",
+    "bl_evidence": "Notify: BALL & DOGGETT AUSTRALIA PTY LTD"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "missing",
+    "si": "____MT",
+    "bl": "SINGAPORE (SGSIN)",
+    "reason": "SI value is blank/placeholder ('____MT')",
+    "si_evidence": "Port of Loading (POL): ____MT",
+    "bl_evidence": "Load Port: SINGAPORE (SGSIN)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "missing",
+    "si": "TBA",
+    "bl": "CALLAO, PERU (PECLL)",
+    "reason": "SI value is blank/placeholder ('TBA')",
+    "si_evidence": "Port of Discharge (POD): TBA",
+    "bl_evidence": "Port of Discharge: CALLAO, PERU (PECLL)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "15 x 20'GP",
+    "bl": "15 x 20'GP",
+    "reason": "",
+    "si_evidence": "Total Containers: 15 x 20'GP",
+    "bl_evidence": "No. of Containers or Packages: 15 x 20'GP"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "340,770 KG",
+    "bl": "340,770 KG",
+    "reason": "",
+    "si_evidence": "GROSS WEIGHT: 340,770 KG",
+    "bl_evidence": "Gross Weight (KG): 340,770 KG"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_517_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_517_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_518",
+  "subject": "RE_ Draft BL NAP 914 V.BS007 NANTONG - amend BL 045",
+  "reason": "missing_value",
+  "detail": "port_of_discharge: SI value is blank/placeholder ('N/A'); gross_weight_kg: SI value is blank/placeholder ('____MT')",
+  "fields_needing_attention": [
+   {
+    "field": "port_of_discharge",
+    "verdict": "missing",
+    "si": "N/A",
+    "bl": "APAPA, NIGERIA (NGAPP)",
+    "reason": "SI value is blank/placeholder ('N/A')",
+    "si_evidence": "PORT OF DISCHARGE: N/A",
+    "bl_evidence": "Port of Discharge: APAPA, NIGERIA (NGAPP)"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "missing",
+    "si": "____MT",
+    "bl": "134,586 KG",
+    "reason": "SI value is blank/placeholder ('____MT')",
+    "si_evidence": "GROSS WEIGHT: ____MT",
+    "bl_evidence": "Gross Wt (kgs): 134,586 KG"
+   }
+  ],
+  "all_fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FINE PAPER TRADING",
+    "bl": "APRIL FINE PAPER TRADING",
+    "reason": "",
+    "si_evidence": "Shipper (Principal or Seller): APRIL FINE PAPER TRADING",
+    "bl_evidence": "Shipper (Principal or Seller): APRIL FINE PAPER TRADING"
+   },
+   {
+    "field": "consignee",
+    "verdict": "match",
+    "si": "MOORIM SP CO., LTD",
+    "bl": "MOORIM SP CO., LTD",
+    "reason": "",
+    "si_evidence": "Consignee (Non-Negotiable): MOORIM SP CO., LTD",
+    "bl_evidence": "To the Order of: MOORIM SP CO., LTD"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "MOORIM SP CO., LTD",
+    "bl": "MOORIM SP CO., LTD",
+    "reason": "",
+    "si_evidence": "Notify: MOORIM SP CO., LTD",
+    "bl_evidence": "Notify: MOORIM SP CO., LTD"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "NANTONG, CHINA",
+    "bl": "NANTONG, CHINA (CNNTG)",
+    "reason": "",
+    "si_evidence": "Port of Loading (POL): NANTONG, CHINA",
+    "bl_evidence": "Load Port: NANTONG, CHINA (CNNTG)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "missing",
+    "si": "N/A",
+    "bl": "APAPA, NIGERIA (NGAPP)",
+    "reason": "SI value is blank/placeholder ('N/A')",
+    "si_evidence": "PORT OF DISCHARGE: N/A",
+    "bl_evidence": "Port of Discharge: APAPA, NIGERIA (NGAPP)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "6 x 20'GP",
+    "bl": "6 x 20'GP",
+    "reason": "",
+    "si_evidence": "No. of Containers or Packages: 6 x 20'GP",
+    "bl_evidence": "No. of Containers or Packages: 6 x 20'GP"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "missing",
+    "si": "____MT",
+    "bl": "134,586 KG",
+    "reason": "SI value is blank/placeholder ('____MT')",
+    "si_evidence": "GROSS WEIGHT: ____MT",
+    "bl_evidence": "Gross Wt (kgs): 134,586 KG"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_518_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_518_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_519",
+  "subject": "AFPTME - BUSAN_SOUTH KOREA - OOCL(OOLU8177602991) - 5APH-33373 - 5250071255 - UAB NOVAKOPA - LC",
+  "reason": "missing_value",
+  "detail": "shipper: SI value is blank/placeholder (''); container_count: SI value is blank/placeholder ('')",
+  "fields_needing_attention": [
+   {
+    "field": "shipper",
+    "verdict": "missing",
+    "si": "",
+    "bl": "ASIA PACIFIC PAPERBOARD TRADING PTE LTD",
+    "reason": "SI value is blank/placeholder ('')",
+    "si_evidence": "SHIPPER:",
+    "bl_evidence": "Shipper/Exporter: ASIA PACIFIC PAPERBOARD TRADING PTE LTD"
+   },
+   {
+    "field": "container_count",
+    "verdict": "missing",
+    "si": "",
+    "bl": "3 x 20'FCL",
+    "reason": "SI value is blank/placeholder ('')",
+    "si_evidence": "No. of Containers:",
+    "bl_evidence": "No. of Containers: 3 x 20'FCL"
+   }
+  ],
+  "all_fields": [
+   {
+    "field": "shipper",
+    "verdict": "missing",
+    "si": "",
+    "bl": "ASIA PACIFIC PAPERBOARD TRADING PTE LTD",
+    "reason": "SI value is blank/placeholder ('')",
+    "si_evidence": "SHIPPER:",
+    "bl_evidence": "Shipper/Exporter: ASIA PACIFIC PAPERBOARD TRADING PTE LTD"
+   },
+   {
+    "field": "consignee",
+    "verdict": "match",
+    "si": "UAB NOVAKOPA",
+    "bl": "UAB NOVAKOPA",
+    "reason": "",
+    "si_evidence": "CONSIGNEE: UAB NOVAKOPA",
+    "bl_evidence": "Consignee: UAB NOVAKOPA"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "UAB NOVAKOPA",
+    "bl": "UAB NOVAKOPA",
+    "reason": "",
+    "si_evidence": "NOTIFY PARTY: UAB NOVAKOPA",
+    "bl_evidence": "Notify: UAB NOVAKOPA"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "BUATAN, INDONESIA",
+    "bl": "BUATAN, INDONESIA (IDBUA)",
+    "reason": "",
+    "si_evidence": "PORT OF LOADING: BUATAN, INDONESIA",
+    "bl_evidence": "Load Port: BUATAN, INDONESIA (IDBUA)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "BUSAN, SOUTH KOREA",
+    "bl": "BUSAN, SOUTH KOREA (KRPUS)",
+    "reason": "",
+    "si_evidence": "Discharge Port: BUSAN, SOUTH KOREA",
+    "bl_evidence": "PORT OF DISCHARGE: BUSAN, SOUTH KOREA (KRPUS)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "missing",
+    "si": "",
+    "bl": "3 x 20'FCL",
+    "reason": "SI value is blank/placeholder ('')",
+    "si_evidence": "No. of Containers:",
+    "bl_evidence": "No. of Containers: 3 x 20'FCL"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "70,572 KG",
+    "bl": "70,572 KG",
+    "reason": "",
+    "si_evidence": "Gross Weight毛重(KGS): 70,572 KG",
+    "bl_evidence": "Gross Weight (KG): 70,572 KG"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_519_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_519_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ },
+ {
+  "email_id": "email_520",
+  "subject": "RE_ AIE - PYEONGTAEK_SOUTH KOREA - MSC(MEDUUD032119) - 5RSG-63852 - 5250077789 - CLIFFORD PAPER INC - CFR",
+  "reason": "missing_value",
+  "detail": "consignee: SI value is blank/placeholder ('')",
+  "fields_needing_attention": [
+   {
+    "field": "consignee",
+    "verdict": "missing",
+    "si": "",
+    "bl": "CLIFFORD PAPER INC",
+    "reason": "SI value is blank/placeholder ('')",
+    "si_evidence": "CONSIGNEE:",
+    "bl_evidence": "Consignee: CLIFFORD PAPER INC"
+   }
+  ],
+  "all_fields": [
+   {
+    "field": "shipper",
+    "verdict": "match",
+    "si": "APRIL FINE PAPER TRADING",
+    "bl": "APRIL FINE PAPER TRADING",
+    "reason": "",
+    "si_evidence": "Shipper/Exporter: APRIL FINE PAPER TRADING",
+    "bl_evidence": "Shipper: APRIL FINE PAPER TRADING"
+   },
+   {
+    "field": "consignee",
+    "verdict": "missing",
+    "si": "",
+    "bl": "CLIFFORD PAPER INC",
+    "reason": "SI value is blank/placeholder ('')",
+    "si_evidence": "CONSIGNEE:",
+    "bl_evidence": "Consignee: CLIFFORD PAPER INC"
+   },
+   {
+    "field": "notify_party",
+    "verdict": "match",
+    "si": "CLIFFORD PAPER INC",
+    "bl": "CLIFFORD PAPER INC",
+    "reason": "",
+    "si_evidence": "Notify: CLIFFORD PAPER INC",
+    "bl_evidence": "Notify Party/Intermediate Consignee: CLIFFORD PAPER INC"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "match",
+    "si": "SINGAPORE",
+    "bl": "SINGAPORE (SGSIN)",
+    "reason": "",
+    "si_evidence": "POL: SINGAPORE",
+    "bl_evidence": "Port of Loading (POL): SINGAPORE (SGSIN)"
+   },
+   {
+    "field": "port_of_discharge",
+    "verdict": "match",
+    "si": "PYEONGTAEK, SOUTH KOREA",
+    "bl": "PYEONGTAEK, SOUTH KOREA (KRPTK)",
+    "reason": "",
+    "si_evidence": "POD: PYEONGTAEK, SOUTH KOREA",
+    "bl_evidence": "Port of Discharge: PYEONGTAEK, SOUTH KOREA (KRPTK)"
+   },
+   {
+    "field": "container_count",
+    "verdict": "match",
+    "si": "6 x 40'HC",
+    "bl": "6 x 40'HC",
+    "reason": "",
+    "si_evidence": "No. of Containers: 6 x 40'HC",
+    "bl_evidence": "No. of Containers or Packages: 6 x 40'HC"
+   },
+   {
+    "field": "gross_weight_kg",
+    "verdict": "match",
+    "si": "122,640 KG",
+    "bl": "122,640 KG",
+    "reason": "",
+    "si_evidence": "Gross Wt (kgs): 122,640 KG",
+    "bl_evidence": "Gross Weight (KG): 122,640 KG"
+   }
+  ],
+  "documents": [
+   {
+    "path": "attachments/email_520_SI.txt",
+    "format": "txt",
+    "kind": "SI",
+    "ocr": false,
+    "error": null
+   },
+   {
+    "path": "attachments/email_520_BL.txt",
+    "format": "txt",
+    "kind": "BL",
+    "ocr": false,
+    "error": null
+   }
+  ],
+  "processing": "done",
+  "error": null,
+  "how_to_resolve": {
+   "decision": "OK|MISMATCH (+ defect_fields)",
+   "or corrections": {
+    "si": {
+     "<field>": "<value>"
+    },
+    "bl": {
+     "<field>": "<value>"
+    }
+   }
+  }
+ }
+]

@@ -1,0 +1,6 @@
+rapidfuzz>=3.0
+python-docx>=1.0
+openpyxl>=3.1
+pytesseract>=0.3.10
+Pillow>=10.0
+# system packages: poppler-utils (pdftotext, pdftoppm), tesseract-ocr

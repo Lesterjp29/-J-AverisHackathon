@@ -1,0 +1,76 @@
+{
+ "email_t01_format_only": {
+  "category": "BL_COMPARISON",
+  "status": "OK",
+  "review_reason": null,
+  "defect_fields": [],
+  "has_defect": false
+ },
+ "email_t02_mt_units": {
+  "category": "BL_COMPARISON",
+  "status": "OK",
+  "review_reason": null,
+  "defect_fields": [],
+  "has_defect": false
+ },
+ "email_t03_count_off_by_one": {
+  "category": "BL_COMPARISON",
+  "status": "MISMATCH",
+  "review_reason": null,
+  "defect_fields": [
+   "container_count"
+  ],
+  "has_defect": true
+ },
+ "email_t04_bl_deleted": {
+  "category": "BL_COMPARISON",
+  "status": "NEEDS_REVIEW",
+  "review_reason": "missing_attachment",
+  "defect_fields": [],
+  "has_defect": false
+ },
+ "email_t05_swapped_files": {
+  "category": "BL_COMPARISON",
+  "status": "OK",
+  "review_reason": null,
+  "defect_fields": [],
+  "has_defect": false
+ },
+ "email_t06_blank_value": {
+  "category": "BL_COMPARISON",
+  "status": "NEEDS_REVIEW",
+  "review_reason": "missing_value",
+  "defect_fields": [],
+  "has_defect": false
+ },
+ "email_t07_garbage_pdf": {
+  "category": "BL_COMPARISON",
+  "status": "NEEDS_REVIEW",
+  "review_reason": "unreadable",
+  "defect_fields": [],
+  "has_defect": false
+ },
+ "email_t08_misleading_subject": {
+  "category": "BL_COMPARISON",
+  "status": "OK",
+  "review_reason": null,
+  "defect_fields": [],
+  "has_defect": false
+ },
+ "email_t09_subject_says_docs": {
+  "category": "INVOICE_QUERY",
+  "status": "OK",
+  "review_reason": null,
+  "defect_fields": [],
+  "has_defect": false
+ },
+ "email_t10_one_real_defect": {
+  "category": "BL_COMPARISON",
+  "status": "MISMATCH",
+  "review_reason": null,
+  "defect_fields": [
+   "consignee"
+  ],
+  "has_defect": true
+ }
+}
