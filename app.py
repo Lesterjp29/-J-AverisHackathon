@@ -85,6 +85,15 @@ st.markdown("""
     .badge-review { background-color: #FFF6E5; color: #D97706; }
     .badge-neutral { background-color: #EDE9FE; color: #6D28D9; }
 
+    /* LLM Box */
+        .llm-box {
+        background: #F5F3FF;
+        border: 1px solid #DDD6FE;
+        border-radius: 10px;
+        padding: 10px 14px;
+        margin: 8px 0;
+    }
+    
     /* Action List Items */
     .action-item {
         background: #F8FAFC;
@@ -101,25 +110,31 @@ st.markdown("""
 
 OUT_DIR = Path("out")
 
+
 @st.cache_data
 def load_data():
     report_path = OUT_DIR / "report.json"
     review_path = OUT_DIR / "review_queue.json"
     sub_path = OUT_DIR / "submission.json"
 
-    raw_report = json.loads(report_path.read_text(encoding="utf-8")) if report_path.exists() else {}
-    reviews = json.loads(review_path.read_text(encoding="utf-8")) if review_path.exists() else []
-    subs = json.loads(sub_path.read_text(encoding="utf-8")) if sub_path.exists() else {}
+    raw_report = json.loads(report_path.read_text(
+        encoding="utf-8")) if report_path.exists() else {}
+    reviews = json.loads(review_path.read_text(
+        encoding="utf-8")) if review_path.exists() else []
+    subs = json.loads(sub_path.read_text(encoding="utf-8")
+                      ) if sub_path.exists() else {}
 
     report_list = []
     if isinstance(raw_report, dict):
         for k, v in raw_report.items():
-            entry = {"email_id": k, **(v if isinstance(v, dict) else {"details": v})}
+            entry = {"email_id": k, **
+                     (v if isinstance(v, dict) else {"details": v})}
             report_list.append(entry)
     elif isinstance(raw_report, list):
         report_list = raw_report
 
     return report_list, reviews, subs
+
 
 report_data, review_queue, submissions = load_data()
 
@@ -130,8 +145,9 @@ outcomes = {"OK": 0, "MISMATCH": 0, "NEEDS_REVIEW": 0}
 for item in report_data:
     intent = str(item.get("intent", "UNKNOWN")).upper()
     intents[intent] = intents.get(intent, 0) + 1
-    
-    st_val = str(item.get("status") or item.get("outcome") or item.get("result") or "").upper()
+
+    st_val = str(item.get("status") or item.get("outcome")
+                 or item.get("result") or "").upper()
     if "OK" in st_val or ("MATCH" in st_val and "MISMATCH" not in st_val):
         outcomes["OK"] += 1
     elif "MISMATCH" in st_val:
@@ -144,7 +160,8 @@ with st.sidebar:
     st.markdown("### 🚢 **DocuVerify**")
     st.caption("AI Shipping Doc Automation")
     st.write("")
-    nav_selection = st.radio("Navigation", ["Overview", "Review Queue", "Comparison Explorer", "Intent Distribution"], label_visibility="collapsed")
+    nav_selection = st.radio("Navigation", [
+                             "Overview", "Review Queue", "Comparison Explorer", "Intent Distribution"], label_visibility="collapsed")
     st.write("---")
     st.caption("Dataset Status: `Processed (520)`")
 
@@ -200,12 +217,13 @@ st.write("")
 # --- View Routing ---
 if nav_selection == "Overview":
     col_left, col_right = st.columns([5, 3])
-    
+
     with col_left:
         with st.container(border=True):
             st.markdown("### 📋 Urgent Items Needing Attention")
-            st.caption("Items flagged for OCR failures, missing attachments, or wrong document types.")
-            
+            st.caption(
+                "Items flagged for OCR failures, missing attachments, or wrong document types.")
+
             # Show preview of top review items
             preview_items = review_queue[:5] if review_queue else []
             for item in preview_items:
@@ -220,7 +238,7 @@ if nav_selection == "Overview":
                     <span class="badge badge-review">Review</span>
                 </div>
                 """, unsafe_allow_html=True)
-                
+
     with col_right:
         with st.container(border=True):
             st.markdown("### 📊 Cargo Intent Distribution")
@@ -228,38 +246,94 @@ if nav_selection == "Overview":
 
 elif nav_selection == "Review Queue":
     st.subheader(f"⚠️ Human Review Queue ({len(review_queue)} emails)")
-    st.caption("Inspect and supply manual decisions for ambiguous or unreadable documents.")
-    
+    st.caption(
+        "Inspect and supply manual decisions for ambiguous or unreadable documents.")
+
+    n_with_ai = sum(
+        1 for rev in review_queue
+        if any(f.get("llm_suggested_verdict") for f in (rev.get("all_fields") or []))
+    )
+    if n_with_ai:
+        st.info(f"🤖 {n_with_ai} of {len(review_queue)} items have an AI-suggested read on at least one field. "
+                "Suggestions are advisory only — you still make the final call.")
+
     for idx, rev in enumerate(review_queue):
         eid = rev.get("email_id") or rev.get("email") or f"Item {idx+1}"
         reason = rev.get("reason", "Flagged")
-        details = rev.get("details") or rev
-        
-        with st.expander(f"**{eid}** — {reason}", expanded=(idx < 2)):
+        all_fields = rev.get("all_fields") or []
+        llm_fields = [f for f in all_fields if f.get("llm_suggested_verdict")]
+        fields_to_show = rev.get("fields_needing_attention") or all_fields
+
+        title = f"**{eid}** — {reason}"
+        if llm_fields:
+            title += f"  🤖 {len(llm_fields)} AI suggestion(s)"
+
+        with st.expander(title, expanded=(idx < 2)):
             col_a, col_b = st.columns([3, 2])
+
             with col_a:
-                st.write("**Extracted Context / Error:**")
-                st.json(details)
+                st.write("**Fields needing attention:**")
+                if not fields_to_show:
+                    st.caption(
+                        "No field-level detail available — see raw evidence below.")
+
+                for f in fields_to_show:
+                    fname = f.get("field", "field")
+                    verdict = f.get("verdict", "")
+                    st.markdown(f"**`{fname}`** — *{verdict}*")
+
+                    fc1, fc2 = st.columns(2)
+                    fc1.metric("SI", f.get("si") or "—")
+                    fc2.metric("BL", f.get("bl") or "—")
+
+                    if f.get("reason"):
+                        st.caption(
+                            f"Why the system couldn't decide: {f['reason']}")
+
+                    sv = f.get("llm_suggested_verdict")
+                    if sv:
+                        icon = {"same": "🟢", "different": "🔴",
+                                "cannot_tell": "🟡"}.get(sv, "⚪")
+                        st.markdown(
+                            f"""<div class="llm-box">
+                                <span style="font-weight:700; color:#6D28D9;">{icon} AI read: {sv.upper()}</span><br>
+                                <span style="font-size:13px; color:#475569;">{f.get('llm_reasoning', '')}</span><br>
+                                <span style="font-size:11px; color:#94A3B8;">{f.get('llm_note', 'advisory only — confirm before resolving')}</span>
+                            </div>""",
+                            unsafe_allow_html=True,
+                        )
+                    st.divider()
+
+                with st.expander("Raw evidence / full JSON"):
+                    st.json(rev)
+
             with col_b:
                 st.write("**Resolution Action:**")
-                st.selectbox("Decision", ["Select an action...", "Approve SI", "Approve BL", "Request Re-upload", "Void Transaction"], key=f"d_{eid}")
-                st.text_input("Reviewer Notes", placeholder="e.g. Confirmed weight with carrier", key=f"n_{eid}")
+                st.selectbox("Decision",
+                             ["Select an action...", "Approve SI", "Approve BL",
+                              "Request Re-upload", "Void Transaction"],
+                             key=f"d_{eid}")
+                st.text_input(
+                    "Reviewer Notes", placeholder="e.g. Confirmed weight with carrier", key=f"n_{eid}")
                 st.button("Save Resolution", key=f"b_{eid}")
 
 elif nav_selection == "Comparison Explorer":
     st.subheader("🔍 SI vs BL Comparison Explorer")
-    fltr = st.selectbox("Status Filter", ["ALL", "MISMATCH", "OK", "NEEDS_REVIEW"])
-    
+    fltr = st.selectbox(
+        "Status Filter", ["ALL", "MISMATCH", "OK", "NEEDS_REVIEW"])
+
     for item in report_data:
-        st_val = str(item.get("status") or item.get("outcome") or item.get("result") or "").upper()
-        norm_status = "OK" if "OK" in st_val or ("MATCH" in st_val and "MISMATCH" not in st_val) else ("MISMATCH" if "MISMATCH" in st_val else "NEEDS_REVIEW")
-        
+        st_val = str(item.get("status") or item.get("outcome")
+                     or item.get("result") or "").upper()
+        norm_status = "OK" if "OK" in st_val or ("MATCH" in st_val and "MISMATCH" not in st_val) else (
+            "MISMATCH" if "MISMATCH" in st_val else "NEEDS_REVIEW")
+
         if fltr != "ALL" and norm_status != fltr:
             continue
-            
+
         eid = item.get("email_id") or "Unknown"
         color = "badge-ok" if norm_status == "OK" else "badge-mismatch" if norm_status == "MISMATCH" else "badge-review"
-        
+
         with st.expander(f"**{eid}** — {norm_status}"):
             st.json(item)
 

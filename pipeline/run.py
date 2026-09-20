@@ -22,6 +22,7 @@ from .compare import Vocab, compare_docs, table_consistency
 from .extract import FIELDS, extract, party_lines
 from .normalize import canon_name, canon_port
 from .readers import Doc, detect_kind, read_any
+from .llm import llm_classify_fallback, llm_extract_fallback, llm_resolve_uncertain
 
 ROLE_ORDER = {"SI": 0, "BL": 1}
 
@@ -72,18 +73,45 @@ def check_documents(email: dict, inbox, corrections: dict | None = None, vocab: 
                 "review_detail": "expected one SI and one draft BL, got " +
                                  ", ".join(f"{Path(d.path).name} = {d.kind}" for d in docs)}
 
-    si_doc, bl_doc = sorted(docs, key=lambda d: ROLE_ORDER[d.kind])   # by CONTENT, not filename
+    # by CONTENT, not filename
+    si_doc, bl_doc = sorted(docs, key=lambda d: ROLE_ORDER[d.kind])
     swapped = si_doc.path != atts[0]
     si_f, bl_f = extract(si_doc), extract(bl_doc)
-    si_p = [extract(Doc(si_doc.path, "ocr", lines=p, ocr=True)) for p in si_doc.passes] if si_doc.ocr else None
-    bl_p = [extract(Doc(bl_doc.path, "ocr", lines=p, ocr=True)) for p in bl_doc.passes] if bl_doc.ocr else None
+
+    # *AI – When the regex/fuzzy label matcher finds nothing (a field located by extract.py is never touched)
+    for fn in FIELDS:
+        if si_f[fn] is None:
+            sugg = llm_extract_fallback(fn, si_doc.lines)
+            if sugg:
+                si_f[fn] = Field(raw=sugg["value"], block=[sugg["value"]], blank=False,
+                                 evidence=f"LLM extraction fallback (confidence {sugg['confidence']:.2f})")
+        if bl_f[fn] is None:
+            sugg = llm_extract_fallback(fn, bl_doc.lines)
+            if sugg:
+                bl_f[fn] = Field(raw=sugg["value"], block=[sugg["value"]], blank=False,
+                                 evidence=f"LLM extraction fallback (confidence {sugg['confidence']:.2f})")
+
+    si_p = [extract(Doc(si_doc.path, "ocr", lines=p, ocr=True))
+            for p in si_doc.passes] if si_doc.ocr else None
+    bl_p = [extract(Doc(bl_doc.path, "ocr", lines=p, ocr=True))
+            for p in bl_doc.passes] if bl_doc.ocr else None
 
     if corrections:                                   # human-corrected values re-enter here
         from .review import apply_corrections
         apply_corrections(si_f, bl_f, corrections)
         si_p = bl_p = None
 
-    results = compare_docs(si_f, bl_f, si_passes=si_p, bl_passes=bl_p, si_ocr=si_doc.ocr, bl_ocr=bl_doc.ocr, vocab=vocab)
+    results = compare_docs(si_f, bl_f, si_passes=si_p, bl_passes=bl_p,
+                           si_ocr=si_doc.ocr, bl_ocr=bl_doc.ocr, vocab=vocab)
+
+    # *AI – Uses LLM for fields flagged as "uncertain"
+    for r in results:
+        if r.verdict == "uncertain":
+            sugg = llm_resolve_uncertain(r, r.si_evidence, r.bl_evidence)
+            if sugg:
+                for k, v in sugg.items():
+                    # shows up automatically in r.as_dict()
+                    setattr(r, k, v)
 
     # a document that contradicts itself is not trustworthy enough to call OK
     for d, f in ((si_doc, si_f), (bl_doc, bl_f)):
@@ -100,10 +128,12 @@ def check_documents(email: dict, inbox, corrections: dict | None = None, vocab: 
     unc = [r for r in results if r.verdict == "uncertain"]
 
     if mism:                                          # a confirmed difference is reportable even if other fields are blank
-        res.update(status="MISMATCH", has_defect=True, defect_fields=[r.field for r in mism])
+        res.update(status="MISMATCH", has_defect=True,
+                   defect_fields=[r.field for r in mism])
         pending = miss + unc
         if pending:
-            res["review_detail"] = "also needs a person: " + ", ".join(f"{r.field} ({r.reason})" for r in pending)
+            res["review_detail"] = "also needs a person: " + \
+                ", ".join(f"{r.field} ({r.reason})" for r in pending)
     elif miss:
         res.update(status="NEEDS_REVIEW", review_reason="missing_value",
                    review_detail="; ".join(f"{r.field}: {r.reason}" for r in miss + unc))
@@ -113,12 +143,14 @@ def check_documents(email: dict, inbox, corrections: dict | None = None, vocab: 
                    review_detail="; ".join(f"{r.field}: {r.reason}" for r in unc))
     else:
         res["status"] = "OK"
+
     return res
 
 
 def process(email: dict, inbox, resolutions: dict, vocab: Vocab | None = None) -> dict:
     eid = email["email_id"]
-    base = {"email_id": eid, "subject": email["subject"], "processing": "done", "error": None}
+    base = {"email_id": eid,
+            "subject": email["subject"], "processing": "done", "error": None}
     try:
         kinds = []
         for a in email.get("attachments", []):
@@ -128,10 +160,12 @@ def process(email: dict, inbox, resolutions: dict, vocab: Vocab | None = None) -
         base.update(c)
         if c["category"] != BL_COMPARISON:
             return base
-        res = check_documents(email, inbox, (resolutions.get(eid) or {}).get("corrections"), vocab)
+        res = check_documents(
+            email, inbox, (resolutions.get(eid) or {}).get("corrections"), vocab)
         base.update(res)
         dec = resolutions.get(eid)
-        if dec and dec.get("decision"):               # reviewer confirmed the outcome outright
+        # reviewer confirmed the outcome outright
+        if dec and dec.get("decision"):
             base.update(status=dec["decision"], has_defect=dec["decision"] == "MISMATCH",
                         defect_fields=dec.get("defect_fields", []), review_reason=None,
                         review_detail=None, resolved_by=dec.get("reviewer", "human"),
@@ -146,6 +180,16 @@ def process(email: dict, inbox, resolutions: dict, vocab: Vocab | None = None) -
                     has_defect=False, defect_fields=[], fields=[])
         if "category" not in base:
             base["category"] = "GENERAL"
+
+        c = classify(email, kinds)
+    # temporarily, right after classify(email, kinds) in run.py
+    print(f"[{eid}] rule confidence={c['confidence']}")
+    # only fires if c["confidence"] < 0.75
+    llm_c = llm_classify_fallback(email, c)
+    if llm_c:
+        c = llm_c
+    base.update(c)
+
     return base
 
 
@@ -181,24 +225,31 @@ def write_report_md(results: list[dict], path: Path):
         if r["status"] == "OK":
             L.append(f"| {r['email_id']} | No mismatch detected | — |")
         elif r["status"] == "MISMATCH":
-            bits = [f"**{f['field']}** SI: {f['si']} / BL: {f['bl']}" for f in r["fields"] if f["verdict"] == "mismatch"]
-            L.append(f"| {r['email_id']} | MISMATCH | " + "<br>".join(bits) + " |")
+            bits = [f"**{f['field']}** SI: {f['si']} / BL: {f['bl']}" for f in r["fields"]
+                    if f["verdict"] == "mismatch"]
+            L.append(f"| {r['email_id']} | MISMATCH | " +
+                     "<br>".join(bits) + " |")
         else:
-            L.append(f"| {r['email_id']} | NEEDS REVIEW ({r['review_reason']}) | {r.get('review_detail')} |")
+            L.append(
+                f"| {r['email_id']} | NEEDS REVIEW ({r['review_reason']}) | {r.get('review_detail')} |")
     path.write_text("\n".join(L) + "\n", encoding="utf-8")
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("source", nargs="?", default=".", help="data folder or http://host:8080")
+    ap.add_argument("source", nargs="?", default=".",
+                    help="data folder or http://host:8080")
     ap.add_argument("--out", default="out")
-    ap.add_argument("--resolutions", help="JSON of human decisions/corrections keyed by email_id")
-    ap.add_argument("--retry", nargs="*", help="re-run only these email_ids (merged into existing report.json)")
+    ap.add_argument(
+        "--resolutions", help="JSON of human decisions/corrections keyed by email_id")
+    ap.add_argument("--retry", nargs="*",
+                    help="re-run only these email_ids (merged into existing report.json)")
     ap.add_argument("--ask-send-as", choices=["GENERAL", "BL_COMPARISON"], default=None,
                     help="label for 'please send the draft BL' emails (default GENERAL); score both ways")
     ap.add_argument("--allow-missing-tools", action="store_true",
                     help="continue even if poppler/tesseract are missing (PDFs then go to review as unreadable)")
-    ap.add_argument("--submit", action="store_true", help="POST submission to the server (HTTP source only)")
+    ap.add_argument("--submit", action="store_true",
+                    help="POST submission to the server (HTTP source only)")
     a = ap.parse_args(argv)
 
     from .env import preflight
@@ -218,29 +269,36 @@ def main(argv=None):
     inbox = Inbox(a.source)
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
-    resolutions = json.loads(Path(a.resolutions).read_text(encoding="utf-8")) if a.resolutions else {}
+    resolutions = json.loads(Path(a.resolutions).read_text(
+        encoding="utf-8")) if a.resolutions else {}
 
     emails = inbox.emails()
     prior = {}
     if a.retry and (out / "report.json").exists():
-        prior = {r["email_id"]: r for r in json.loads((out / "report.json").read_text(encoding="utf-8"))}
-        emails = [e for e in emails if e["email_id"] in set(a.retry) or e["email_id"] not in prior]
+        prior = {r["email_id"]: r for r in json.loads(
+            (out / "report.json").read_text(encoding="utf-8"))}
+        emails = [e for e in emails if e["email_id"]
+                  in set(a.retry) or e["email_id"] not in prior]
 
     vocab = build_vocab(inbox)
-    fresh = {e["email_id"]: process(e, inbox, resolutions, vocab) for e in emails}
+    fresh = {e["email_id"]: process(
+        e, inbox, resolutions, vocab) for e in emails}
     merged = {**prior, **fresh}
     order = [e["email_id"] for e in inbox.emails()]
     results = [merged[i] for i in order]
 
-    (out / "report.json").write_text(json.dumps(results, indent=1, ensure_ascii=False), encoding="utf-8")
+    (out / "report.json").write_text(json.dumps(results,
+                                                indent=1, ensure_ascii=False), encoding="utf-8")
     write_report_md(results, out / "report.md")
     (out / "review_queue.json").write_text(json.dumps(
-        [review_item(r) for r in results if r.get("status") == "NEEDS_REVIEW" and r["category"] == BL_COMPARISON],
+        [review_item(r) for r in results if r.get("status") ==
+         "NEEDS_REVIEW" and r["category"] == BL_COMPARISON],
         indent=1, ensure_ascii=False), encoding="utf-8")
     sub = {r["email_id"]: to_submission(r) for r in results}
     (out / "submission.json").write_text(json.dumps(sub, indent=1), encoding="utf-8")
 
-    failed = [r["email_id"] for r in results if r.get("processing") == "FAILED"]
+    failed = [r["email_id"]
+              for r in results if r.get("processing") == "FAILED"]
     print(f"{len(results)} emails -> {out}/  (failed: {failed or 'none'})")
     if a.submit:
         print(json.dumps(inbox.submit(sub), indent=1))
