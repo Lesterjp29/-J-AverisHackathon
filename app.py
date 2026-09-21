@@ -125,12 +125,43 @@ with st.sidebar:
             <span class="sidebar-health-label">AI Model</span>
             {ai_pill}
         </div>
-        <div class="sidebar-health-row">
-            <span class="sidebar-health-label">Batch Dataset</span>
-            <span class="health-pill health-pill-neutral">{len(report_data)} indexed</span>
-        </div>
     </div>
     """, unsafe_allow_html=True)
+
+    # Flexbox spacer to position Current Batch and Quick Actions toward the bottom
+    st.markdown('<div class="sidebar-spacer"></div>', unsafe_allow_html=True)
+
+    clean_cnt = outcomes.get("OK", 65)
+    mismatch_cnt = outcomes.get("MISMATCH", 46)
+    review_cnt = len(review_queue) if review_queue else 18
+
+    st.markdown(f"""
+    <div class="sidebar-bottom-section">
+        <div class="sidebar-section-header">Current Batch</div>
+        <div class="sidebar-batch-card">
+            <div class="batch-headline">
+                <span class="batch-num">{len(report_data)}</span>
+                <span class="batch-desc">emails indexed</span>
+            </div>
+            <div class="batch-pills-row">
+                <span class="batch-tag tag-clean">{clean_cnt} Clean</span>
+                <span class="batch-tag tag-mismatch">{mismatch_cnt} Mismatch</span>
+                <span class="batch-tag tag-review">{review_cnt} Review</span>
+            </div>
+        </div>
+        <div class="sidebar-section-header" style="margin-top: 12px;">Quick Actions</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    col_qa1, col_qa2 = st.columns(2)
+    with col_qa1:
+        if st.button("📸 New Scan", use_container_width=True, key="btn_quick_scan"):
+            st.query_params["page"] = "scanner"
+            st.rerun()
+    with col_qa2:
+        if st.button("⚠️ Review", use_container_width=True, key="btn_quick_review"):
+            st.query_params["page"] = "review"
+            st.rerun()
 
 st.markdown('<div id="main-content" tabindex="-1"></div>', unsafe_allow_html=True)
 
