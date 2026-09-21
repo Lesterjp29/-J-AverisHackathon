@@ -1,6 +1,7 @@
 import streamlit as st
 import json
 from pathlib import Path
+import requests
 
 # --- Page Config ---
 st.set_page_config(
@@ -9,6 +10,8 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+API_URL = "https://averis-api-444546301101.us-central1.run.app/results"
 
 # --- Custom Styling: Modern Pastel Card System ---
 st.markdown("""
@@ -99,27 +102,34 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-OUT_DIR = Path("out")
+#OUT_DIR = Path("out")
 
 @st.cache_data
 def load_data():
-    report_path = OUT_DIR / "report.json"
-    review_path = OUT_DIR / "review_queue.json"
-    sub_path = OUT_DIR / "submission.json"
+    try:
+        response = requests.get(API_URL, timeout=30)
+        response.raise_for_status()
+        data = response.json()
 
-    raw_report = json.loads(report_path.read_text(encoding="utf-8")) if report_path.exists() else {}
-    reviews = json.loads(review_path.read_text(encoding="utf-8")) if review_path.exists() else []
-    subs = json.loads(sub_path.read_text(encoding="utf-8")) if sub_path.exists() else {}
+        raw_report = data.get("report", [])
+        reviews = data.get("reviews_queue", [])
+        subs = data.get("submissions", {})
 
-    report_list = []
-    if isinstance(raw_report, dict):
-        for k, v in raw_report.items():
-            entry = {"email_id": k, **(v if isinstance(v, dict) else {"details": v})}
-            report_list.append(entry)
-    elif isinstance(raw_report, list):
-        report_list = raw_report
+        report_list = []
+        if isinstance(raw_report, dict):
+            for k, v in raw_report.items():
+                entry = {"email_id": k, **(v if isinstance(v, dict) else {"details": v})}
+                report_list.append(entry)
+        elif isinstance(raw_report, list):
+            report_list = raw_report
 
-    return report_list, reviews, subs
+        return report_list, reviews, subs
+    except requests.exceptions.RequestException as e:
+        st.error(f"Unable to connect to API: {e}")
+        return [], [], {}
+    except Exception as e:
+        st.error(f"Failed to load API data: {e}")
+        return [], [], {}
 
 report_data, review_queue, submissions = load_data()
 
