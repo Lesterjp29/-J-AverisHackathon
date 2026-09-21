@@ -149,19 +149,8 @@ with st.sidebar:
                 <span class="batch-tag tag-review">{review_cnt} Review</span>
             </div>
         </div>
-        <div class="sidebar-section-header" style="margin-top: 12px;">Quick Actions</div>
     </div>
     """, unsafe_allow_html=True)
-
-    col_qa1, col_qa2 = st.columns(2)
-    with col_qa1:
-        if st.button("📸 New Scan", use_container_width=True, key="btn_quick_scan"):
-            st.query_params["page"] = "scanner"
-            st.rerun()
-    with col_qa2:
-        if st.button("⚠️ Review", use_container_width=True, key="btn_quick_review"):
-            st.query_params["page"] = "review"
-            st.rerun()
 
 st.markdown('<div id="main-content" tabindex="-1"></div>', unsafe_allow_html=True)
 
