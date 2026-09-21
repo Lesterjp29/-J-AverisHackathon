@@ -22,7 +22,7 @@ st.set_page_config(
 
 # Match custom surfaces to the native Streamlit theme in .streamlit/config.toml.
 st.markdown(f"<style>{Path(__file__).with_name('ui.css').read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
-st.markdown('<a class="skip-link" href="#main-content">Skip to main content</a>', unsafe_allow_html=True)
+
 
 OUT_DIR = Path("out")
 RESOLUTIONS_FILE = Path("resolutions.json")
