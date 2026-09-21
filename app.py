@@ -16,7 +16,7 @@ if _env_file.exists():
 import streamlit as st
 import ui_helpers
 importlib.reload(ui_helpers)
-from ui_helpers import comparison_table, summary_table, report_status, text as html_text
+from ui_helpers import comparison_table, summary_table, report_status, format_review_issue, text as html_text
 
 try:
     import pipeline.llm
@@ -45,6 +45,15 @@ st.markdown(f"<style>{Path(__file__).with_name('ui.css').read_text(encoding='utf
 
 OUT_DIR = Path("out")
 RESOLUTIONS_FILE = Path("resolutions.json")
+
+
+def load_resolutions() -> dict:
+    if RESOLUTIONS_FILE.exists():
+        try:
+            return json.loads(RESOLUTIONS_FILE.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+    return {}
 
 
 @st.cache_data
@@ -76,15 +85,17 @@ report_data, review_queue, submissions = load_data()
 
 # Calculate stats
 intents = {}
-outcomes = {"OK": 0, "MISMATCH": 0, "NEEDS_REVIEW": 0}
+outcomes = {"OK": 0, "MISMATCH": 0, "NEEDS_REVIEW": 0, "OTHER": 0}
 
 for item in report_data:
     intent = str(item.get("category") or item.get("intent", "UNKNOWN")).upper()
     intents[intent] = intents.get(intent, 0) + 1
 
     status = report_status(item)
-    if status in outcomes:
+    if status in ("OK", "MISMATCH", "NEEDS_REVIEW"):
         outcomes[status] += 1
+    else:
+        outcomes["OTHER"] += 1
 
 # Check AI status
 try:
@@ -154,9 +165,10 @@ with st.sidebar:
     # Flexbox spacer to position Current Batch and Quick Actions toward the bottom
     st.markdown('<div class="sidebar-spacer"></div>', unsafe_allow_html=True)
 
-    clean_cnt = outcomes.get("OK", 65)
-    mismatch_cnt = outcomes.get("MISMATCH", 46)
-    review_cnt = len(review_queue) if review_queue else 18
+    clean_cnt = outcomes.get("OK", 0)
+    mismatch_cnt = outcomes.get("MISMATCH", 0)
+    review_cnt = outcomes.get("NEEDS_REVIEW", 0)
+    other_cnt = outcomes.get("OTHER", 0)
 
     st.markdown(f"""
     <div class="sidebar-bottom-section">
@@ -170,6 +182,7 @@ with st.sidebar:
                 <span class="batch-tag tag-clean">{clean_cnt} Clean</span>
                 <span class="batch-tag tag-mismatch">{mismatch_cnt} Mismatch</span>
                 <span class="batch-tag tag-review">{review_cnt} Review</span>
+                <span class="batch-tag tag-other">{other_cnt} Other</span>
             </div>
         </div>
     </div>
@@ -188,19 +201,21 @@ if nav_selection == "📊 Dashboard Overview":
     </div>
     """, unsafe_allow_html=True)
 
-    total_ingested = len(report_data) if report_data else 520
-    clean_matches = outcomes["OK"] if outcomes["OK"] else 65
-    mismatches = outcomes["MISMATCH"] if outcomes["MISMATCH"] else 46
-    action_required = len(review_queue) if review_queue else 18
+    total_ingested = len(report_data)
+    clean_matches = outcomes["OK"]
+    mismatches = outcomes["MISMATCH"]
+    action_required = outcomes["NEEDS_REVIEW"]
+    other_emails = outcomes["OTHER"]
+    n_intents = len(intents)
 
-    c1, c2, c3, c4 = st.columns(4)
+    c1, c2, c3, c4, c5 = st.columns(5)
 
     with c1:
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-title">TOTAL INGESTED</div>
             <div class="metric-value">{total_ingested}</div>
-            <div><span class="pill-badge">5 Intents Active</span></div>
+            <div><span class="pill-badge">{n_intents} Intents Active</span></div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -225,9 +240,18 @@ if nav_selection == "📊 Dashboard Overview":
     with c4:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-title">ACTION REQUIRED</div>
+            <div class="metric-title">NEEDS REVIEW</div>
             <div class="metric-value">{action_required}</div>
             <div><span class="pill-badge">Human Review</span></div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c5:
+        st.markdown(f"""
+        <div class="metric-card">
+            <div class="metric-title">OTHER EMAILS</div>
+            <div class="metric-value">{other_emails}</div>
+            <div><span class="pill-badge">Non-BL Emails</span></div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -244,17 +268,31 @@ if nav_selection == "📊 Dashboard Overview":
             preview_items = review_queue[:5] if review_queue else []
             if not preview_items:
                 st.success("No urgent items pending review!")
+            res_map = load_resolutions()
             for item in preview_items:
                 eid = item.get("email_id") or item.get("email") or "Unknown"
                 reason = item.get("reason", "Needs validation")
                 detail = item.get("detail", "")
+                friendly_reason, friendly_detail = format_review_issue(reason, detail)
+                res_info = res_map.get(eid)
+                badge_html = f'<span class="badge badge-ok" style="white-space:nowrap; margin-top:2px;">Resolved: {html_text(res_info["decision"])}</span>' if res_info else '<span class="badge badge-review" style="white-space:nowrap; margin-top:2px;">Pending</span>'
+                user_note_html = f'<div style="margin-top:6px; font-size:12px; color:#0369A1; background:#F0F9FF; border:1px solid #BAE6FD; padding:4px 8px; border-radius:6px; line-height:1.4;">📝 <strong>Reviewer Note:</strong> {html_text(res_info["note"])}</div>' if res_info and res_info.get("note") else ''
                 st.markdown(f"""
-                <div class="action-item">
-                    <div>
-                        <strong>{html_text(eid)}</strong> — {html_text(reason)}
-                        <div class="action-detail">{html_text(detail)}</div>
+                <div class="action-item" style="padding:14px 18px; border-radius:10px; margin-bottom:10px; background:#FFFFFF; border:1px solid #E2E8F0; display:flex; justify-content:space-between; align-items:flex-start; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+                    <div style="flex:1; padding-right:12px;">
+                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;">
+                            <strong style="color:#0F172A; font-size:14px;">{html_text(eid)}</strong>
+                            <span style="color:#CBD5E1;">•</span>
+                            <span style="font-weight:600; font-size:12px; color:#92400E; background:#FEF3C7; padding:2px 8px; border-radius:6px; border:1px solid #FDE68A;">
+                                {html_text(friendly_reason)}
+                            </span>
+                        </div>
+                        <div class="action-detail" style="color:#475569; font-size:13px; line-height:1.45; margin-top:2px;">
+                            {html_text(friendly_detail)}
+                        </div>
+                        {user_note_html}
                     </div>
-                    <span class="badge badge-review">Pending</span>
+                    {badge_html}
                 </div>
                 """, unsafe_allow_html=True)
 
@@ -388,12 +426,13 @@ elif nav_selection == "📸 Document Scanner":
                 </div>
                 """, unsafe_allow_html=True)
             elif status == "NEEDS_REVIEW":
+                friendly_reason, friendly_detail = format_review_issue(review_reason, review_detail)
                 st.markdown(f"""
                 <div role="status" aria-live="polite" class="verdict-card verdict-review">
                     <div class="verdict-icon" aria-hidden="true">⚠️</div>
                     <div class="verdict-text">
-                        <h2 style="color: #92400E;">Needs Human Attention ({html_text(review_reason)})</h2>
-                        <p>{html_text(review_detail or 'One or more fields requires human verification.')}</p>
+                        <h2 style="color: #92400E;">Needs Human Attention: {html_text(friendly_reason)}</h2>
+                        <p>{html_text(friendly_detail)}</p>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -553,15 +592,27 @@ elif nav_selection == "⚠️ Review Queue":
         llm_fields = [f for f in all_fields if f.get("llm_suggested_verdict")]
         fields_to_show = rev.get("fields_needing_attention") or all_fields
 
-        title = f"**{eid}** — {reason}"
-        if llm_fields:
+        res_map = load_resolutions()
+        saved_res = res_map.get(eid, {})
+        is_resolved = bool(saved_res)
+
+        friendly_reason, friendly_detail = format_review_issue(reason, detail)
+        title = f"**{eid}** — {friendly_reason}"
+        if is_resolved:
+            title += f"  ✅ [Resolved: {saved_res.get('decision')}]"
+        elif llm_fields:
             title += f"  🤖 ({len(llm_fields)} AI suggestions)"
 
-        with st.expander(title, expanded=(idx == review_start)):
+        # Only expand the first item if it is NOT yet resolved and hasn't been manually collapsed
+        should_expand = (idx == review_start and not is_resolved and not st.session_state.get(f"collapsed_{eid}"))
+
+        with st.expander(title, expanded=should_expand):
             col_a, col_b = st.columns([3, 2])
 
             with col_a:
-                st.markdown(f"**Issue Detail:** `{detail}`")
+                st.markdown(f"**Issue Description:** {friendly_detail}")
+                if detail and detail != friendly_detail:
+                    st.caption(f"Technical note: `{detail}`")
                 st.write("")
                 for f in fields_to_show:
                     fname = f.get("field", "field")
@@ -588,44 +639,58 @@ elif nav_selection == "⚠️ Review Queue":
                         )
                     st.divider()
 
+                # Reviewer Note placed in the white space on the left below the technical note
+                st.markdown("<div style='margin-top:12px;'></div>", unsafe_allow_html=True)
+                draft = st.session_state.get("review_drafts", {}).get(eid, {})
+                initial_note = draft.get("note") if draft.get("note") is not None else saved_res.get("note", "")
+                notes = st.text_area(
+                    "📝 Reviewer Note",
+                    placeholder="Enter operator / audit notes here (e.g. Confirmed Commercial Invoice attached; requested carrier draft BL)…",
+                    value=initial_note,
+                    key=f"n_{eid}",
+                    height=95,
+                    on_change=remember_review_draft,
+                    args=(eid,),
+                    help="Notes are saved with the shipment resolution audit trail and collapse with this card."
+                )
+
             with col_b:
                 with st.container(border=True):
                     st.markdown("**Resolution Action**")
                     draft = st.session_state.get("review_drafts", {}).get(eid, {})
                     decisions = ["Select resolution…", "OK (Approve as Match)", "MISMATCH (Flag Defect)"]
+                    default_dec = draft.get("decision") or (
+                        "OK (Approve as Match)" if saved_res.get("decision") == "OK"
+                        else ("MISMATCH (Flag Defect)" if saved_res.get("decision") == "MISMATCH" else decisions[0])
+                    )
                     decision = st.selectbox(
                         "Decision",
                         decisions,
-                        index=decisions.index(draft.get("decision", decisions[0])),
+                        index=decisions.index(default_dec) if default_dec in decisions else 0,
                         key=f"d_{eid}",
                         on_change=remember_review_draft,
                         args=(eid,),
                     )
-                    notes = st.text_input(
-                        "Reviewer Note",
-                        placeholder="e.g. Confirmed the weight with the customer…",
-                        autocomplete="off",
-                        value=draft.get("note", ""),
-                        key=f"n_{eid}",
-                        on_change=remember_review_draft,
-                        args=(eid,),
-                    )
                     st.caption("Draft notes stay available while you switch pages in this session. Confirm to save your resolution.")
-                    if st.button("💾 Confirm Resolution", key=f"btn_{eid}", type="primary"):
+                    if st.button("💾 Confirm Resolution", key=f"btn_{eid}", type="primary", use_container_width=True):
                         if decision.startswith("OK") or decision.startswith("MISMATCH"):
-                            # Save to resolutions.json
-                            res_map = {}
-                            if RESOLUTIONS_FILE.exists():
-                                try:
-                                    res_map = json.loads(RESOLUTIONS_FILE.read_text(encoding="utf-8"))
-                                except Exception:
-                                    res_map = {}
                             dec_val = "OK" if decision.startswith("OK") else "MISMATCH"
-                            res_map[eid] = {"decision": dec_val, "reviewer": "human_reviewer", "note": notes}
-                            RESOLUTIONS_FILE.write_text(json.dumps(res_map, indent=2), encoding="utf-8")
+                            save_map = load_resolutions()
+                            save_map[eid] = {"decision": dec_val, "reviewer": "human_reviewer", "note": notes}
+                            RESOLUTIONS_FILE.write_text(json.dumps(save_map, indent=2), encoding="utf-8")
+                            st.session_state.setdefault("review_drafts", {})[eid] = {"decision": decision, "note": notes}
+                            st.session_state[f"collapsed_{eid}"] = True
                             st.success(f"Resolution saved for {eid} ({dec_val})!")
+                            st.rerun()
                         else:
                             st.warning("Please choose a valid resolution action.")
+
+                    if is_resolved:
+                        st.markdown(f"""
+                        <div style="margin-top:12px; font-size:12px; font-weight:700; color:#166534; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:6px; padding:6px 10px; text-align:center;">
+                            ✅ Status: Resolved as {html_text(saved_res.get("decision"))}
+                        </div>
+                        """, unsafe_allow_html=True)
 
 # ==============================================================================
 # VIEW 4: 🔍 COMPARISON EXPLORER

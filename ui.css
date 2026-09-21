@@ -105,6 +105,11 @@ a[href="#main-content"] {
     color: #b45309;
     border: 1px solid #fde68a;
 }
+.tag-other {
+    background: #e0e7ff;
+    color: #3730a3;
+    border: 1px solid #c7d2fe;
+}
 
 /* Sidebar quick action buttons */
 [data-testid="stSidebar"] .stButton > button {
