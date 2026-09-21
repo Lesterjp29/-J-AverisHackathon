@@ -278,23 +278,23 @@ if nav_selection == "📊 Dashboard Overview":
                 badge_html = f'<span class="badge badge-ok" style="white-space:nowrap; margin-top:2px;">Resolved: {html_text(res_info["decision"])}</span>' if res_info else '<span class="badge badge-review" style="white-space:nowrap; margin-top:2px;">Pending</span>'
                 user_note_html = f'<div style="margin-top:6px; font-size:12px; color:#0369A1; background:#F0F9FF; border:1px solid #BAE6FD; padding:4px 8px; border-radius:6px; line-height:1.4;">📝 <strong>Reviewer Note:</strong> {html_text(res_info["note"])}</div>' if res_info and res_info.get("note") else ''
                 st.markdown(f"""
-                <div class="action-item" style="padding:14px 18px; border-radius:10px; margin-bottom:10px; background:#FFFFFF; border:1px solid #E2E8F0; display:flex; justify-content:space-between; align-items:flex-start; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
-                    <div style="flex:1; padding-right:12px;">
-                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;">
-                            <strong style="color:#0F172A; font-size:14px;">{html_text(eid)}</strong>
-                            <span style="color:#CBD5E1;">•</span>
-                            <span style="font-weight:600; font-size:12px; color:#92400E; background:#FEF3C7; padding:2px 8px; border-radius:6px; border:1px solid #FDE68A;">
-                                {html_text(friendly_reason)}
-                            </span>
-                        </div>
-                        <div class="action-detail" style="color:#475569; font-size:13px; line-height:1.45; margin-top:2px;">
-                            {html_text(friendly_detail)}
-                        </div>
-                        {user_note_html}
-                    </div>
-                    {badge_html}
-                </div>
-                """, unsafe_allow_html=True)
+<div class="action-item" style="padding:14px 18px; border-radius:10px; margin-bottom:10px; background:#FFFFFF; border:1px solid #E2E8F0; display:flex; justify-content:space-between; align-items:flex-start; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+<div style="flex:1; padding-right:12px;">
+<div style="display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;">
+<strong style="color:#0F172A; font-size:14px;">{html_text(eid)}</strong>
+<span style="color:#CBD5E1;">•</span>
+<span style="font-weight:600; font-size:12px; color:#92400E; background:#FEF3C7; padding:2px 8px; border-radius:6px; border:1px solid #FDE68A;">
+{html_text(friendly_reason)}
+</span>
+</div>
+<div class="action-detail" style="color:#475569; font-size:13px; line-height:1.45; margin-top:2px;">
+{html_text(friendly_detail)}
+</div>
+{user_note_html}
+</div>
+{badge_html}
+</div>
+""", unsafe_allow_html=True)
 
     with col_right:
         with st.container(border=True):
