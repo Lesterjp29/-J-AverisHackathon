@@ -229,15 +229,9 @@ if nav_selection == "📊 Dashboard Overview":
 # ==============================================================================
 elif nav_selection == "📸 Document Scanner":
     st.markdown("""
-    <div class="scanner-hero">
+    <div class="dashboard-header">
         <h1>Document Scanner</h1>
-        <p>Verify Shipping Instructions (SI) against draft Bills of Lading (BL). Works with phone photos, flatbed scans, PDFs, and digital files.</p>
-        <div>
-            <span class="pill-tag">📄 SI &amp; BL Comparison</span>
-            <span class="pill-tag">⚡ Quick Verification</span>
-            <span class="pill-tag">📷 Photo Quality Inspector</span>
-            <span class="pill-tag">🤖 Advisory AI Assistance</span>
-        </div>
+        <p>Verify Shipping Instructions (SI) against draft Bills of Lading (BL). Supports phone photos, flatbed scans, PDFs, and digital files.</p>
     </div>
     """, unsafe_allow_html=True)
 

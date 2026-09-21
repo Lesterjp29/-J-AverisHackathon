@@ -237,36 +237,6 @@ a[href="#main-content"] {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
 }
 
-.scanner-hero {
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-    color: #ffffff;
-    border-radius: 18px;
-    padding: 26px 30px;
-    margin-bottom: 24px;
-    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.18);
-}
-.scanner-hero h2 {
-    color: #ffffff;
-    font-size: 22px;
-    font-weight: 800;
-    margin: 0 0 6px 0;
-}
-.scanner-hero p {
-    color: #e0e7ff;
-    font-size: 14px;
-    margin: 0 0 14px 0;
-}
-.pill-tag {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    color: #ffffff;
-    padding: 4px 12px;
-    border-radius: 9999px;
-    font-size: 12px;
-    font-weight: 600;
-    margin-right: 8px;
-}
 
 .verdict-card {
     border-radius: 16px;
