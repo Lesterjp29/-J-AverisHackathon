@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shipping document verification</title>
+<style>
+:root{
+  --bg:#f5f6f8; --panel:#ffffff; --ink:#18202f; --muted:#667085; --line:#e4e7ec; --soft:#f2f4f7;
+  --ok:#137a49; --ok-bg:#e3f5ea; --bad:#b42318; --bad-bg:#fdecea; --warn:#9a5b00; --warn-bg:#fff2d1;
+  --accent:#2b59e6; --accent-bg:#e8eefd; --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#0f141d; --panel:#171e2b; --ink:#e7ebf3; --muted:#98a2b3; --line:#283244; --soft:#1e2737;
+    --ok:#5fd398; --ok-bg:#13301f; --bad:#ff8b7e; --bad-bg:#3a1a17; --warn:#f3bf62; --warn-bg:#392a0c;
+    --accent:#86a5ff; --accent-bg:#1b2645; --shadow:none;}
+}
+*{box-sizing:border-box}
+html{color-scheme:light dark}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{margin:0;font-weight:650}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;font-size:12.5px}
+.muted{color:var(--muted)} .small{font-size:12.5px} .hidden{display:none!important}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--line)}
+.bar{max-width:1320px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;line-height:1.2;margin-right:auto}
+.brand h1{font-size:16px} .brand span{font-size:12px;color:var(--muted)}
+.tabs{max-width:1320px;margin:0 auto;padding:0 20px;display:flex;gap:4px}
+.tab{background:none;border:0;border-bottom:2px solid transparent;padding:9px 12px;color:var(--muted);cursor:pointer;font-weight:550}
+.tab:hover{color:var(--ink)} .tab.on{color:var(--accent);border-color:var(--accent)}
+.badge{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:10px;background:var(--warn-bg);color:var(--warn);font-size:12px;text-align:center}
+main{max-width:1320px;margin:0 auto;padding:20px}
+
+/* controls */
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:7px 13px;cursor:pointer;font-weight:550}
+.btn:hover{background:var(--soft)} .btn:disabled{opacity:.55;cursor:default}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{filter:brightness(1.08);background:var(--accent)}
+.btn.danger{color:var(--bad)} .btn.sm{padding:4px 9px;font-size:12.5px}
+select,input[type=text],input[type=search],textarea{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:7px 10px}
+select:focus,input:focus,textarea:focus,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.runbox{display:flex;align-items:center;gap:8px}
+.progress{height:4px;background:var(--soft)} .progress>div{height:100%;background:var(--accent);transition:width .25s}
+
+/* cards + metrics */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.pad{padding:16px 18px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.metric{padding:14px 16px}
+.metric .n{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.metric .l{color:var(--muted);font-size:12.5px}
+.metric.ok .n{color:var(--ok)} .metric.bad .n{color:var(--bad)} .metric.warn .n{color:var(--warn)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px}
+.bars{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+.brow{display:grid;grid-template-columns:150px 1fr 40px;gap:10px;align-items:center}
+.brow .t{height:9px;border-radius:5px;background:var(--soft);overflow:hidden}
+.brow .t>i{display:block;height:100%;background:var(--accent);border-radius:5px}
+.brow.ok .t>i{background:var(--ok)} .brow.bad .t>i{background:var(--bad)} .brow.warn .t>i{background:var(--warn)}
+.brow .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+
+/* chips */
+.chip{display:inline-block;border-radius:999px;padding:1px 9px;font-size:12px;font-weight:600;white-space:nowrap;background:var(--soft);color:var(--muted)}
+.chip.ok{background:var(--ok-bg);color:var(--ok)} .chip.bad{background:var(--bad-bg);color:var(--bad)}
+.chip.warn{background:var(--warn-bg);color:var(--warn)} .chip.acc{background:var(--accent-bg);color:var(--accent)}
+
+/* tables */
+.tblwrap{overflow:auto;border-radius:12px}
+table{border-collapse:collapse;width:100%}
+th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;padding:9px 12px;border-bottom:1px solid var(--line);background:var(--panel);position:sticky;top:0}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tr.click{cursor:pointer} tr.click:hover td{background:var(--soft)}
+.cmp td.f{width:150px;font-weight:600} .cmp tr.mismatch td{background:var(--bad-bg)}
+.cmp tr.missing td,.cmp tr.uncertain td{background:var(--warn-bg)}
+.cmp tr.match td{color:var(--muted)} .cmp tr.mismatch td .v{font-weight:650} .cmp td .v{word-break:break-word}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.filters input[type=search]{min-width:260px}
+.trunc{max-width:520px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(10,15,25,.45);z-index:40}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(860px,100%);background:var(--bg);z-index:41;overflow:auto;box-shadow:-8px 0 30px rgba(0,0,0,.25)}
+.drawer .head{position:sticky;top:0;background:var(--panel);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;gap:12px;align-items:flex-start}
+.drawer .body{padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.x{margin-left:auto;font-size:20px;line-height:1;background:none;border:0;cursor:pointer;color:var(--muted)}
+pre.body{margin:0;white-space:pre-wrap;word-break:break-word;font:inherit;background:var(--soft);border-radius:8px;padding:10px 12px;max-height:240px;overflow:auto}
+pre.doc{margin:0;white-space:pre;overflow:auto;background:var(--soft);border-radius:8px;padding:10px 12px;max-height:340px;font-size:12px}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:6px 12px}
+.kv dt{color:var(--muted)} .kv dd{margin:0}
+
+/* review */
+.rcard{margin-bottom:14px}
+.rhead{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid var(--line)}
+.rbody{padding:14px 18px;display:flex;flex-direction:column;gap:14px}
+.callout{border-left:3px solid var(--warn);background:var(--warn-bg);padding:9px 12px;border-radius:0 8px 8px 0}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg label{border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;background:var(--panel)}
+.seg label:has(input:checked){border-color:var(--accent);background:var(--accent-bg);color:var(--accent);font-weight:600}
+.seg input{margin-right:6px}
+.egrid{display:grid;grid-template-columns:150px 1fr 1fr;gap:6px 10px;align-items:center}
+.egrid .h{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.egrid input{width:100%} .egrid .flag{color:var(--warn);font-weight:650}
+.checks{display:flex;flex-wrap:wrap;gap:8px}
+.checks label{border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:var(--panel);cursor:pointer}
+.checks label:has(input:checked){border-color:var(--bad);background:var(--bad-bg);color:var(--bad)}
+.frow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.frow input[type=text]{flex:1;min-width:160px}
+.msg{min-height:20px}.msg.err{color:var(--bad)}.msg.ok{color:var(--ok)}.msg.warn{color:var(--warn)}
+.srcgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.srcgrid img{max-width:100%;border:1px solid var(--line);border-radius:8px;background:#fff}
+@media (max-width:760px){.srcgrid{grid-template-columns:1fr}.egrid{grid-template-columns:1fr}}
+details>summary{cursor:pointer;color:var(--accent);font-weight:550;padding:2px 0}
+.empty{padding:60px 20px;text-align:center}
+.empty h2{margin-bottom:6px}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12.5px;background:var(--panel)}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block} .pill.bad i{background:var(--bad)}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:9px;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.on{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="brand"><h1>Shipping document verification</h1><span id="src">&nbsp;</span></div>
+    <div class="runbox">
+      <label class="small muted" for="asksend">"Send draft BL" emails as</label>
+      <select id="asksend" title="Emails that ask someone to SEND the draft BL (no comparison, no attachments). Score both ways and keep the better one.">
+        <option value="GENERAL">GENERAL</option><option value="BL_COMPARISON">BL_COMPARISON (needs review)</option>
+      </select>
+      <button class="btn primary" id="run">Run pipeline</button>
+    </div>
+    <details style="position:relative">
+      <summary class="btn" style="list-style:none;color:var(--ink)">Export ▾</summary>
+      <div class="card pad" style="position:absolute;right:0;top:38px;z-index:30;width:250px;display:flex;flex-direction:column;gap:6px">
+        <a href="/api/export?name=report.md" class="btn sm" style="text-decoration:none">Report (report.md)</a>
+        <a href="/api/export?name=mismatches.csv" class="btn sm" style="text-decoration:none">Mismatches (CSV)</a>
+        <a href="/api/export?name=review_queue.json" class="btn sm" style="text-decoration:none">Review queue (JSON)</a>
+        <a href="/api/export?name=submission.json" class="btn sm" style="text-decoration:none">Submission (JSON)</a>
+        <a href="/api/export?name=resolutions.json" class="btn sm" style="text-decoration:none">Human decisions (JSON)</a>
+        <button class="btn sm hidden" id="submit">Submit to scoreboard</button>
+      </div>
+    </details>
+  </div>
+  <div class="progress hidden" id="prog"><div style="width:0"></div></div>
+  <nav class="tabs" id="tabs">
+    <button class="tab on" data-tab="overview">Overview</button>
+    <button class="tab" data-tab="emails">Emails</button>
+    <button class="tab" data-tab="review">Review queue<span class="badge hidden" id="qbadge">0</span></button>
+    <button class="tab" data-tab="mismatch">Mismatch report</button>
+  </nav>
+</header>
+<main id="main"></main>
+<div id="toast"></div>
+<div id="drawer-root"></div>
+
+<script>
+"use strict";
+const FIELD = {shipper:"Shipper",consignee:"Consignee",notify_party:"Notify party",port_of_loading:"Port of loading",
+  port_of_discharge:"Port of discharge",container_count:"Container count",gross_weight_kg:"Gross weight (kg)"};
+const REASON = {wrong_doc_type:"Wrong document type",missing_attachment:"Missing attachment",
+  unreadable:"Unreadable / unreliable read",missing_value:"Missing or blank value"};
+const REASON_HELP = {
+  wrong_doc_type:"One attachment is not an SI or a draft BL. Enter all seven values from the right documents, or confirm an outcome.",
+  missing_attachment:"An SI and a draft BL are both needed. Enter all seven values for both sides, or confirm an outcome.",
+  unreadable:"A file could not be read reliably. Open the source, then enter the values or confirm an outcome.",
+  missing_value:"A required value is blank or a placeholder. Enter the real value; the comparison re-runs automatically."};
+const CAT = {BL_COMPARISON:"Comparison request",SI_REQUEST:"New SI request",INVOICE_QUERY:"Invoice query",GENERAL:"General",SPAM:"Spam"};
+const BLANK = /^(n\/?a|tba|tbc|tbd|nil|none|-+|_+.*|\?+.*|\.+|unknown)$/i;
+
+const S = {tab:"overview", st:null, rows:[], rev:{queue:[],resolved:[]}, mm:null, f:{cat:"",status:"",q:""}, timer:null};
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fl = f => FIELD[f] || f;
+
+async function api(path, body) {
+  const opt = body === undefined ? {} : {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)};
+  const r = await fetch(path, opt);
+  const j = await r.json().catch(() => ({error:"Bad response from server"}));
+  if (!r.ok || j.error) throw new Error(j.error || r.statusText);
+  return j;
+}
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 2600); }
+
+const statusChip = (r) => {
+  if (r.category !== "BL_COMPARISON") return `<span class="chip">—</span>`;
+  const s = r.status;
+  if (s === "OK") return `<span class="chip ok">No mismatch detected</span>`;
+  if (s === "MISMATCH") return `<span class="chip bad">Mismatch</span>`;
+  return `<span class="chip warn">Needs review</span>`;
+};
+const catChip = c => `<span class="chip ${c==="BL_COMPARISON"?"acc":""}">${esc(CAT[c]||c)}</span>`;
+
+/* ---------------------------------------------------------------- data */
+async function refresh() {
+  S.st = await api("/api/state");
+  const n = S.st.counts;
+  if (S.st.has_results) {
+    [S.rows, S.rev] = await Promise.all([api("/api/results"), api("/api/review")]);
+    if (S.tab === "mismatch" || S.mm) S.mm = await api("/api/mismatches");
+  }
+  $("#src").textContent = `${S.st.source}  →  ${S.st.out}/`;
+  $("#asksend").value = S.st.ask_send_as;
+  $("#submit").classList.toggle("hidden", !S.st.is_http);
+  const q = S.rev.queue.length;
+  $("#qbadge").textContent = q; $("#qbadge").classList.toggle("hidden", !q);
+  updateProgress();
+  render();
+}
+function updateProgress() {
+  const p = S.st.progress, box = $("#prog");
+  box.classList.toggle("hidden", !p.running);
+  $("#run").disabled = p.running;
+  $("#run").textContent = p.running ? `Running… ${p.done}/${p.total}` : (S.st.has_results ? "Re-run pipeline" : "Run pipeline");
+  if (p.running) { $("div", box).style.width = (p.total ? 100*p.done/p.total : 5) + "%"; }
+}
+function startPolling() {
+  clearInterval(S.timer);
+  S.timer = setInterval(async () => {
+    S.st = await api("/api/state"); updateProgress();
+    if (!S.st.progress.running) { clearInterval(S.timer); await refresh();
+      toast(S.st.progress.error ? "Pipeline failed: " + S.st.progress.error : "Pipeline finished"); }
+  }, 700);
+}
+
+/* ---------------------------------------------------------------- views */
+function render() {
+  $$(".tab").forEach(t => t.classList.toggle("on", t.dataset.tab === S.tab));
+  const m = $("#main");
+  if (!S.st) return;
+  if (!S.st.has_results) { m.innerHTML = emptyState(); return; }
+  if (S.tab === "overview") m.innerHTML = overview();
+  else if (S.tab === "emails") { m.innerHTML = emailsView(); bindEmails(); }
+  else if (S.tab === "review") { m.innerHTML = reviewView(); }
+  else if (S.tab === "mismatch") { m.innerHTML = mismatchView(); }
+}
+function emptyState() {
+  const e = S.st.env, miss = Object.entries(e).filter(([,v]) => !v).map(([k]) => k);
+  return `<div class="card empty">
+    <h2>No results yet</h2>
+    <p class="muted">${S.st.total_in_source} emails found in <span class="mono">${esc(S.st.source)}</span>.
+    Run the pipeline to classify them, compare every SI against its draft BL, and build the review queue.</p>
+    ${S.st.connect_error ? `<p class="callout" style="display:inline-block;text-align:left">${esc(S.st.connect_error)}</p>` : ""}
+    ${miss.length ? `<p class="callout" style="display:inline-block;text-align:left"><b>Missing tools:</b> ${miss.join(", ")}.
+      PDFs cannot be read without poppler; scans need Tesseract. See the README.</p>` : ""}
+    <p><button class="btn primary" onclick="runPipeline()">Run pipeline</button></p>
+    <p>${Object.entries(e).map(([k,v]) => `<span class="pill ${v?"":"bad"}"><i></i>${k}</span>`).join(" ")}</p></div>`;
+}
+function bars(obj, label, cls = "") {
+  const ent = Object.entries(obj).sort((a,b) => b[1]-a[1]), max = Math.max(1, ...ent.map(e => e[1]));
+  if (!ent.length) return `<p class="muted small">Nothing to show.</p>`;
+  return `<div class="bars">${ent.map(([k,v]) => `<div class="brow ${typeof cls==="function"?cls(k):cls}"><span>${esc(label(k))}</span>
+    <div class="t"><i style="width:${100*v/max}%"></i></div><span class="v">${v}</span></div>`).join("")}</div>`;
+}
+function overview() {
+  const c = S.st.counts, s = c.status, q = S.rev.queue.length;
+  const oc = k => ({OK:"ok",MISMATCH:"bad",NEEDS_REVIEW:"warn"})[k] || "";
+  return `
+  <div class="metrics">
+    <div class="card metric"><div class="n">${c.emails}</div><div class="l">Emails processed</div></div>
+    <div class="card metric"><div class="n">${c.comparisons}</div><div class="l">Comparison requests</div></div>
+    <div class="card metric ok"><div class="n">${s.OK||0}</div><div class="l">No mismatch detected</div></div>
+    <div class="card metric bad"><div class="n">${s.MISMATCH||0}</div><div class="l">Mismatch found</div></div>
+    <div class="card metric warn"><div class="n">${q}</div><div class="l">Waiting for a person</div></div>
+    <div class="card metric"><div class="n">${c.resolved}</div><div class="l">Resolved by a person</div></div>
+  </div>
+  ${c.failed ? `<div class="callout" style="margin-bottom:14px"><b>${c.failed} email(s) failed to process.</b> They are in the review queue with the error; open one and use “Re-run this email”.</div>` : ""}
+  <div class="grid2">
+    <div class="card pad"><h3>What the inbox contained</h3>${bars(c.categories, k => CAT[k]||k)}</div>
+    <div class="card pad"><h3>Comparison outcomes</h3>${bars(s, k => ({OK:"No mismatch",MISMATCH:"Mismatch",NEEDS_REVIEW:"Needs review"})[k]||k, oc)}</div>
+    <div class="card pad"><h3>Which fields differ</h3>${bars(c.defect_fields, fl, "bad")}</div>
+    <div class="card pad"><h3>Why cases went to a person</h3>${bars(c.review_reasons, k => REASON[k]||k, "warn")}
+      ${q ? `<p><button class="btn sm" onclick="go('review')">Open review queue →</button></p>` : ""}</div>
+  </div>`;
+}
+
+/* ---- emails */
+function emailsView() {
+  const f = S.f;
+  const cats = Object.keys(S.st.counts.categories);
+  return `<div class="filters">
+    <input type="search" id="q" placeholder="Search id or subject…" value="${esc(f.q)}">
+    <select id="fcat"><option value="">All categories</option>${cats.map(c => `<option value="${c}" ${f.cat===c?"selected":""}>${esc(CAT[c]||c)}</option>`).join("")}</select>
+    <select id="fstatus"><option value="">Any outcome</option>
+      ${[["OK","No mismatch detected"],["MISMATCH","Mismatch"],["NEEDS_REVIEW","Needs review"]].map(([v,t]) => `<option value="${v}" ${f.status===v?"selected":""}>${t}</option>`).join("")}</select>
+    <span class="muted small" id="count"></span></div>
+  <div class="card tblwrap" style="max-height:calc(100vh - 250px)"><table><thead><tr>
+    <th>Email</th><th>Subject</th><th>Category</th><th>Outcome</th><th>What needs attention</th></tr></thead>
+    <tbody id="rows"></tbody></table></div>`;
+}
+function filteredRows() {
+  const {cat, status, q} = S.f, ql = q.toLowerCase();
+  return S.rows.filter(r => (!cat || r.category === cat) && (!status || r.status === status) &&
+    (!ql || r.email_id.toLowerCase().includes(ql) || (r.subject||"").toLowerCase().includes(ql)));
+}
+function bindEmails() {
+  const draw = () => {
+    const rs = filteredRows();
+    $("#count").textContent = `${rs.length} of ${S.rows.length}`;
+    $("#rows").innerHTML = rs.slice(0, 600).map(r => `<tr class="click" data-id="${r.email_id}">
+      <td class="mono">${r.email_id}</td><td><div class="trunc">${esc(r.subject)}</div></td><td>${catChip(r.category)}</td>
+      <td>${statusChip(r)} ${r.resolved ? '<span class="chip acc">human-resolved</span>' : ""}</td>
+      <td class="small">${r.defect_fields.length ? r.defect_fields.map(fl).join(", ") : (r.review_reason ? esc(REASON[r.review_reason]||r.review_reason) : "")}</td></tr>`).join("");
+  };
+  draw();
+  $("#q").oninput = e => { S.f.q = e.target.value; draw(); };
+  $("#fcat").onchange = e => { S.f.cat = e.target.value; draw(); };
+  $("#fstatus").onchange = e => { S.f.status = e.target.value; draw(); };
+  $("#rows").onclick = e => { const tr = e.target.closest("tr[data-id]"); if (tr) openDrawer(tr.dataset.id); };
+}
+
+/* ---- shared: comparison table */
+function cmpTable(fields, flagged = []) {
+  if (!fields || !fields.length) return `<p class="muted small">No field comparison (the documents could not be compared).</p>`;
+  const label = {match:"match", mismatch:"MISMATCH", missing:"missing", uncertain:"uncertain"};
+  return `<div class="tblwrap card"><table class="cmp"><thead><tr><th>Field</th><th>SI</th><th>BL</th><th>Result</th></tr></thead><tbody>
+  ${fields.map(f => `<tr class="${f.verdict}"><td class="f">${fl(f.field)}</td>
+    <td><span class="v">${f.si == null ? '<span class="muted">—</span>' : esc(f.si)}</span></td>
+    <td><span class="v">${f.bl == null ? '<span class="muted">—</span>' : esc(f.bl)}</span></td>
+    <td><b>${label[f.verdict]}</b>${f.verdict !== "match" && f.reason ? `<div class="small muted">${esc(f.reason)}</div>` : ""}</td></tr>`).join("")}
+  </tbody></table></div>`;
+}
+
+/* ---- source viewer (lazy) */
+function srcViewer(eid, atts, docs) {
+  if (!atts.length) return `<p class="muted small">No attachments on this email.</p>`;
+  return `<div class="srcgrid">${atts.map((a, i) => {
+    const d = (docs || [])[i] || {};
+    return `<div><div class="small" style="margin-bottom:6px"><b>${esc(a.split("/").pop())}</b>
+      ${d.kind ? `<span class="chip">${esc(d.kind)}</span>` : ""}${d.ocr ? ' <span class="chip acc">scanned · OCR</span>' : ""}
+      ${d.error ? `<span class="chip bad">${esc(d.error)}</span>` : ""}</div>
+      <div class="srcslot" data-id="${eid}" data-i="${i}"><button class="btn sm" data-load="1">Show document</button></div></div>`;
+  }).join("")}</div>`;
+}
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-load]"); if (!b) return;
+  const slot = b.closest(".srcslot"); slot.innerHTML = `<span class="muted small">Loading…</span>`;
+  try {
+    const d = await api(`/api/doc?id=${slot.dataset.id}&i=${slot.dataset.i}`);
+    slot.innerHTML = (d.page_image ? `<a href="/api/page?id=${slot.dataset.id}&i=${slot.dataset.i}&n=1&r=200" target="_blank" rel="noopener" title="Click to enlarge"><img loading="lazy" alt="page 1 of ${esc(d.name)}" src="/api/page?id=${slot.dataset.id}&i=${slot.dataset.i}&n=1" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'muted small',textContent:'(page image unavailable — poppler needed)'}))"></a><div class="small muted">Click the page to enlarge</div>` : "")
+      + (d.lines.length ? `<details ${d.page_image ? "" : "open"}><summary>${d.ocr ? "OCR text" : "Extracted text"}</summary><pre class="doc">${esc(d.lines.join("\n"))}</pre></details>` : "");
+  } catch (err) { slot.innerHTML = `<span class="chip bad">${esc(err.message)}</span>`; }
+});
+
+/* ---- drawer */
+async function openDrawer(id) {
+  const root = $("#drawer-root");
+  root.innerHTML = `<div class="scrim" onclick="closeDrawer()"></div><aside class="drawer"><div class="head"><b>${id}</b><button class="x" onclick="closeDrawer()" aria-label="Close">×</button></div><div class="body"><span class="muted">Loading…</span></div></aside>`;
+  try {
+    const d = await api("/api/email?id=" + id), r = d.result, e = d.email;
+    const isCmp = r.category === "BL_COMPARISON", inQ = isCmp && r.status === "NEEDS_REVIEW";
+    root.querySelector(".drawer").innerHTML = `
+      <div class="head"><div><div class="mono muted">${id}</div><h3>${esc(e.subject)}</h3>
+        <div style="margin-top:6px">${catChip(r.category)} ${statusChip(r)}
+        ${r.resolved_by ? `<span class="chip acc">resolved by ${esc(r.resolved_by)}</span>` : ""}</div></div>
+        <button class="x" onclick="closeDrawer()" aria-label="Close">×</button></div>
+      <div class="body">
+        ${isCmp && r.status === "OK" ? `<div class="card pad"><b style="color:var(--ok)">No mismatch detected.</b> All seven fields agree.</div>` : ""}
+        ${isCmp && r.status === "MISMATCH" ? `<div class="card pad"><b style="color:var(--bad)">Needs attention:</b> ${r.defect_fields.map(fl).join(", ")}</div>` : ""}
+        ${r.review_detail && r.status !== "OK" ? `<div class="callout">${esc(r.review_detail)}</div>` : ""}
+        ${isCmp ? `<div><h3 style="margin-bottom:8px">Field comparison <span class="muted small">(SI is the reference)</span></h3>${cmpTable(r.fields)}</div>` : ""}
+        <div><h3 style="margin-bottom:8px">How it was classified</h3>
+          <dl class="kv"><dt>Category</dt><dd>${esc(CAT[r.category]||r.category)}</dd>
+          <dt>Confidence</dt><dd>${Math.round((r.confidence||0)*100)}%</dd>
+          <dt>Reason</dt><dd>${esc(r.reason)}</dd>
+          ${r.processing === "FAILED" ? `<dt>Error</dt><dd class="chip bad">${esc(r.error)}</dd>` : ""}
+          ${r.swapped_attachment_order ? `<dt>Note</dt><dd>Attachment filenames were swapped; roles were taken from document content.</dd>` : ""}
+          ${r.manual_entry ? `<dt>Note</dt><dd>Compared from values typed by a reviewer.</dd>` : ""}</dl></div>
+        <div><h3 style="margin-bottom:8px">Email</h3><pre class="body">${esc(e.body)}</pre></div>
+        ${(e.attachments||[]).length ? `<div><h3 style="margin-bottom:8px">Attachments</h3>${srcViewer(id, e.attachments, r.documents)}</div>` : ""}
+        <div class="frow">${inQ ? `<button class="btn primary" onclick="closeDrawer();go('review')">Open in review queue</button>` : ""}
+          <button class="btn" id="retry">Re-run this email</button>
+          ${d.resolution ? `<button class="btn danger" id="undo">Undo human decision</button>` : ""}</div>
+      </div>`;
+    $("#retry").onclick = async () => { await api("/api/retry", {email_id:id}); await refresh(); openDrawer(id); toast("Re-processed " + id); };
+    if ($("#undo")) $("#undo").onclick = async () => { await api("/api/unresolve", {email_id:id}); await refresh(); openDrawer(id); toast("Decision removed"); };
+  } catch (err) { $(".drawer .body").innerHTML = `<div class="callout">${esc(err.message)}</div>`; }
+}
+function closeDrawer() { $("#drawer-root").innerHTML = ""; }
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+
+/* ---- review queue */
+function reviewView() {
+  const {queue, resolved} = S.rev;
+  return `<div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px"><h2>Waiting for a person (${queue.length})</h2>
+    <span class="muted small">The system did not guess. Each case shows why, what it read, and the source.</span></div>
+    ${queue.length ? queue.map(reviewCard).join("") : `<div class="card empty"><h2>Queue is empty</h2><p class="muted">Every comparison has an outcome.</p></div>`}
+    ${resolved.length ? `<h2 style="margin:26px 0 12px">Resolved by a person (${resolved.length})</h2>
+    <div class="card tblwrap"><table><thead><tr><th>Email</th><th>Outcome</th><th>Reviewer</th><th>Note</th><th></th></tr></thead><tbody>
+    ${resolved.map(x => `<tr><td class="mono"><a href="#" onclick="openDrawer('${x.email_id}');return false">${x.email_id}</a></td>
+      <td>${statusChip(x.result)}${x.result.status === "MISMATCH" ? ` <span class="small muted">${x.result.defect_fields.map(fl).join(", ")}</span>` : ""}</td>
+      <td>${esc(x.resolution.reviewer)}<div class="small muted">${esc(x.resolution.at||"")}</div></td>
+      <td>${esc(x.resolution.note||"")}</td>
+      <td><button class="btn sm danger" data-undo="${x.email_id}">Undo</button></td></tr>`).join("")}</tbody></table></div>` : ""}`;
+}
+function reviewCard(it) {
+  const r = it.result, id = it.email_id, byField = Object.fromEntries((r.fields||[]).map(f => [f.field, f]));
+  const flagged = new Set((it.fields_needing_attention||[]).map(f => f.field));
+  const saved = (it.resolution && it.resolution.corrections) || {};
+  const val = (f, side) => {
+    if (saved[side] && saved[side][f]) return saved[side][f];          // partial fix saved earlier
+    const v = byField[f] ? byField[f][side] : (r.prefill && r.prefill[side] ? r.prefill[side][f] : null);
+    return v == null || BLANK.test(String(v).trim()) ? "" : v; };
+  const pre = !(r.fields||[]).length && r.prefill && (Object.keys(r.prefill.si||{}).length || Object.keys(r.prefill.bl||{}).length);
+  return `<div class="card rcard" data-card="${id}">
+    <div class="rhead"><span class="mono"><b>${id}</b></span><span class="chip warn">${esc(REASON[it.reason]||it.reason||"Needs review")}</span>
+      <span class="trunc muted" style="max-width:520px">${esc(it.subject)}</span>
+      <button class="btn sm" style="margin-left:auto" onclick="openDrawer('${id}')">Details</button></div>
+    <div class="rbody">
+      <div class="callout"><b>Why:</b> ${esc(it.detail || "")}<div class="small muted" style="margin-top:3px">${esc(REASON_HELP[it.reason]||"")}</div></div>
+      ${(r.fields||[]).length ? `<details ${flagged.size ? "open" : ""}><summary>What was read (SI vs BL)</summary>${cmpTable(r.fields)}</details>` : ""}
+      <details><summary>Source documents</summary><div style="margin-top:8px">${srcViewer(id, it.attachments, r.documents)}</div></details>
+      <div class="form" data-id="${id}">
+        <div class="seg" role="radiogroup" aria-label="Action">
+          <label><input type="radio" name="act-${id}" value="CORRECT" checked>Enter correct values</label>
+          <label><input type="radio" name="act-${id}" value="OK">Confirm: no mismatch</label>
+          <label><input type="radio" name="act-${id}" value="MISMATCH">Confirm: mismatch</label></div>
+        <div class="panel" data-p="CORRECT" style="margin-top:12px"><div class="egrid">
+          <span class="h">Field</span><span class="h">SI value</span><span class="h">BL value</span>
+          ${Object.keys(FIELD).map(f => `<span class="${flagged.has(f) ? "flag" : ""}">${fl(f)}${flagged.has(f) ? " ●" : ""}</span>
+            <input type="text" data-side="si" data-f="${f}" value="${esc(val(f,"si"))}" placeholder="${flagged.has(f) ? "needs a value" : ""}">
+            <input type="text" data-side="bl" data-f="${f}" value="${esc(val(f,"bl"))}" placeholder="${flagged.has(f) ? "needs a value" : ""}">`).join("")}
+        </div>${pre ? `<p class="small" style="color:var(--ok)">Values already read from the readable document(s) are pre-filled. Check them, then complete the rest.</p>` : ""}<p class="muted small">● = the field that triggered the review. Whatever you enter here is compared with the same code as the automatic path. For a missing or wrong document, fill all seven fields on both sides.</p></div>
+        <div class="panel hidden" data-p="MISMATCH" style="margin-top:12px"><div class="small muted" style="margin-bottom:6px">Which fields genuinely differ?</div>
+          <div class="checks">${Object.keys(FIELD).map(f => `<label><input type="checkbox" data-mf="${f}"> ${fl(f)}</label>`).join("")}</div></div>
+        <div class="frow" style="margin-top:12px"><input type="text" data-r="reviewer" placeholder="Your name" value="${esc(localStorage.getItem("reviewer")||"")}" style="max-width:200px">
+          <input type="text" data-r="note" placeholder="Note (what you checked)">
+          <button class="btn primary" data-save="${id}">Save decision</button></div>
+        <div class="msg" data-msg></div></div>
+    </div></div>`;
+}
+document.addEventListener("change", e => {
+  const radio = e.target.closest('input[type=radio][name^="act-"]'); if (!radio) return;
+  const form = radio.closest(".form");
+  $$(".panel", form).forEach(p => p.classList.toggle("hidden", p.dataset.p !== radio.value));
+});
+document.addEventListener("click", async e => {
+  const u = e.target.closest("[data-undo]");
+  if (u) { await api("/api/unresolve", {email_id:u.dataset.undo}); await refresh(); return toast("Decision removed"); }
+  const b = e.target.closest("[data-save]"); if (!b) return;
+  const form = b.closest(".form"), id = b.dataset.save, msg = $("[data-msg]", form);
+  const act = $('input[type=radio]:checked', form).value, reviewer = $('[data-r=reviewer]', form).value.trim();
+  const body = {email_id:id, reviewer, note:$('[data-r=note]', form).value};
+  localStorage.setItem("reviewer", reviewer);
+  if (act === "CORRECT") {
+    body.corrections = {si:{}, bl:{}};
+    $$("input[data-side]", form).forEach(i => { if (i.value.trim()) body.corrections[i.dataset.side][i.dataset.f] = i.value.trim(); });
+  } else { body.decision = act; body.defect_fields = $$("input[data-mf]:checked", form).map(i => i.dataset.mf); }
+  b.disabled = true; msg.className = "msg"; msg.textContent = "Saving…";
+  try {
+    const {result} = await api("/api/resolve", body);
+    if (result.status === "NEEDS_REVIEW") { msg.className = "msg warn"; msg.textContent = "Saved, but it still needs attention: " + (result.review_detail || ""); b.disabled = false; await refreshQuiet(); }
+    else { toast(`${id}: ${result.status === "OK" ? "no mismatch detected" : "mismatch — " + result.defect_fields.map(fl).join(", ")}`); await refresh(); }
+  } catch (err) { msg.className = "msg err"; msg.textContent = err.message; b.disabled = false; }
+});
+async function refreshQuiet() { S.st = await api("/api/state"); }
+
+/* ---- mismatch report */
+function mismatchView() {
+  if (!S.mm) { api("/api/mismatches").then(x => { S.mm = x; render(); }); return `<p class="muted">Loading…</p>`; }
+  const rows = S.mm.rows;
+  const ids = [...new Set(rows.map(r => r.email_id))];
+  return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><h2>${ids.length} emails with a mismatch · ${rows.length} fields</h2>
+    <a class="btn sm" style="margin-left:auto;text-decoration:none" href="/api/export?name=mismatches.csv">Download CSV</a></div>
+  <div class="card tblwrap" style="max-height:calc(100vh - 260px)"><table><thead><tr><th>Email</th><th>Field</th><th>SI</th><th>BL</th></tr></thead><tbody>
+  ${rows.map(r => `<tr class="click" data-id="${r.email_id}"><td class="mono">${r.email_id}</td><td><b>${fl(r.field)}</b></td>
+    <td>${esc(r.si)}</td><td style="color:var(--bad);font-weight:600">${esc(r.bl)}</td></tr>`).join("")}</tbody></table></div>
+  <details style="margin-top:14px"><summary>${S.mm.ok.length} emails: No mismatch detected</summary>
+    <p class="mono small" style="line-height:1.9">${S.mm.ok.map(i => `<a href="#" onclick="openDrawer('${i}');return false">${i}</a>`).join(" · ")}</p></details>`;
+}
+document.addEventListener("click", e => { const tr = e.target.closest("#main tr.click[data-id]"); if (tr && S.tab === "mismatch") openDrawer(tr.dataset.id); });
+
+/* ---------------------------------------------------------------- wiring */
+function go(t) { S.tab = t; if (t === "mismatch") S.mm = null; refresh(); window.scrollTo(0,0); }
+$("#tabs").onclick = e => { const t = e.target.closest(".tab"); if (t) go(t.dataset.tab); };
+async function runPipeline() {
+  try { await api("/api/run", {ask_send_as: $("#asksend").value}); S.st.progress.running = true; updateProgress(); startPolling(); }
+  catch (err) { toast(err.message); }
+}
+$("#run").onclick = runPipeline;
+$("#submit").onclick = async () => {
+  try { const r = await api("/api/submit", {}); alert(JSON.stringify(r.scoreboard, null, 2)); } catch (err) { toast(err.message); }
+};
+refresh().then(() => { if (S.st.progress.running) startPolling(); }).catch(err => { $("#main").innerHTML = `<div class="callout">${esc(err.message)}</div>`; });
+</script>
+</body>
+</html>

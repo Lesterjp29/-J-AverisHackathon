@@ -45,30 +45,62 @@ def build_vocab(inbox) -> Vocab:
     return Vocab(names, places)
 
 
+def _prefill(docs) -> dict:
+    """Values read from whichever documents ARE a readable SI/BL, so a reviewer only types what is missing."""
+    out = {"si": {}, "bl": {}}
+    for d in docs:
+        if d.error or getattr(d, "kind", None) not in ("SI", "BL"):
+            continue
+        for fn, f in extract(d).items():
+            if f is None or f.blank:
+                continue
+            out["si" if d.kind == "SI" else "bl"][fn] = (party_lines(f)[0] or f.raw) if fn in (
+                "shipper", "consignee", "notify_party") else f.raw
+    return out
+
+
 def check_documents(email: dict, inbox, corrections: dict | None = None, vocab: Vocab | None = None) -> dict:
-    atts = email.get("attachments", [])
+    docs = [read_any(a, inbox.read_bytes(a)) for a in email.get("attachments", [])]
+    return check_docs(docs, corrections, vocab)
+
+
+def check_docs(docs: list[Doc], corrections: dict | None = None, vocab: Vocab | None = None,
+               roles: dict | None = None) -> dict:
+    """Compare an SI against a draft BL, given already-read documents (dataset files, uploads, photos, email
+    attachments). `roles` lets a person override the detected kind: {doc.path: "SI" | "BL"}."""
+    atts = [d.path for d in docs]
     res = {"status": None, "review_reason": None, "review_detail": None, "has_defect": False,
            "defect_fields": [], "fields": [], "documents": []}
 
-    docs = [read_any(a, inbox.read_bytes(a)) for a in atts]
     for d in docs:
-        d.kind = detect_kind(d) if not d.error else "UNREADABLE"
+        d.kind = (roles or {}).get(d.path) or (detect_kind(d) if not d.error else "UNREADABLE")
         res["documents"].append({"path": d.path, "format": d.fmt, "kind": d.kind, "ocr": d.ocr,
                                  "error": d.error})
 
+    if corrections and all(fn in (corrections.get("si") or {}) and fn in (corrections.get("bl") or {}) for fn in FIELDS):
+        from .review import apply_corrections            # reviewer transcribed every value from the source
+        si_f = {fn: None for fn in FIELDS}
+        bl_f = {fn: None for fn in FIELDS}
+        apply_corrections(si_f, bl_f, corrections)
+        results = compare_docs(si_f, bl_f)
+        res["fields"] = [r.as_dict() for r in results]
+        res["manual_entry"] = True
+        _summarize(res, results)
+        return res
+
     if len(docs) < 2:
         have = docs[0].kind if docs else "nothing"
-        return {**res, "status": "NEEDS_REVIEW", "review_reason": "missing_attachment",
+        return {**res, "prefill": _prefill(docs), "status": "NEEDS_REVIEW", "review_reason": "missing_attachment",
                 "review_detail": f"comparison needs an SI and a draft BL; only {len(docs)} attachment(s) found ({have})"}
 
     bad = [d for d in docs if d.error]
     if bad:
-        return {**res, "status": "NEEDS_REVIEW", "review_reason": "unreadable",
+        return {**res, "prefill": _prefill(docs), "status": "NEEDS_REVIEW", "review_reason": "unreadable",
                 "review_detail": "; ".join(f"{Path(d.path).name}: {d.error}" for d in bad)}
 
     kinds = sorted(d.kind for d in docs)
     if kinds != ["BL", "SI"]:
-        return {**res, "status": "NEEDS_REVIEW", "review_reason": "wrong_doc_type",
+        return {**res, "prefill": _prefill(docs), "status": "NEEDS_REVIEW", "review_reason": "wrong_doc_type",
                 "review_detail": "expected one SI and one draft BL, got " +
                                  ", ".join(f"{Path(d.path).name} = {d.kind}" for d in docs)}
 
@@ -81,13 +113,15 @@ def check_documents(email: dict, inbox, corrections: dict | None = None, vocab: 
     if corrections:                                   # human-corrected values re-enter here
         from .review import apply_corrections
         apply_corrections(si_f, bl_f, corrections)
-        si_p = bl_p = None
+        for ps, side in ((si_p, "si"), (bl_p, "bl")):        # corrected fields replace the reading in EVERY pass, so the
+            for one in ps or []:                             # untouched OCR fields still need both passes to agree
+                apply_corrections(one if side == "si" else {}, one if side == "bl" else {}, {side: corrections.get(side)})
 
     results = compare_docs(si_f, bl_f, si_passes=si_p, bl_passes=bl_p, si_ocr=si_doc.ocr, bl_ocr=bl_doc.ocr, vocab=vocab)
 
     # a document that contradicts itself is not trustworthy enough to call OK
     for d, f in ((si_doc, si_f), (bl_doc, bl_f)):
-        note = table_consistency(d.lines, f)
+        note = None if d.ocr else table_consistency(d.lines, f)         # OCR noise in container ids would false-alarm
         if note:
             for r in results:
                 if r.field == "container_count" and r.verdict == "match":
@@ -95,6 +129,12 @@ def check_documents(email: dict, inbox, corrections: dict | None = None, vocab: 
 
     res["fields"] = [r.as_dict() for r in results]
     res["swapped_attachment_order"] = swapped
+    _summarize(res, results, ocr=si_doc.ocr or bl_doc.ocr)
+    return res
+
+
+def _summarize(res: dict, results, ocr: bool = False) -> None:
+    """field verdicts -> overall status. mismatch > missing > uncertain > OK."""
     mism = [r for r in results if r.verdict == "mismatch"]
     miss = [r for r in results if r.verdict == "missing"]
     unc = [r for r in results if r.verdict == "uncertain"]
@@ -108,12 +148,10 @@ def check_documents(email: dict, inbox, corrections: dict | None = None, vocab: 
         res.update(status="NEEDS_REVIEW", review_reason="missing_value",
                    review_detail="; ".join(f"{r.field}: {r.reason}" for r in miss + unc))
     elif unc:
-        ocr = si_doc.ocr or bl_doc.ocr
         res.update(status="NEEDS_REVIEW", review_reason="unreadable" if ocr else "missing_value",
                    review_detail="; ".join(f"{r.field}: {r.reason}" for r in unc))
     else:
         res["status"] = "OK"
-    return res
 
 
 def process(email: dict, inbox, resolutions: dict, vocab: Vocab | None = None) -> dict:
@@ -188,6 +226,19 @@ def write_report_md(results: list[dict], path: Path):
     path.write_text("\n".join(L) + "\n", encoding="utf-8")
 
 
+def write_outputs(results: list[dict], out: Path) -> dict:
+    """report.json / report.md / review_queue.json / submission.json. Shared by the CLI and the UI."""
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "report.json").write_text(json.dumps(results, indent=1, ensure_ascii=False), encoding="utf-8")
+    write_report_md(results, out / "report.md")
+    (out / "review_queue.json").write_text(json.dumps(
+        [review_item(r) for r in results if r.get("status") == "NEEDS_REVIEW" and r["category"] == BL_COMPARISON],
+        indent=1, ensure_ascii=False), encoding="utf-8")
+    sub = {r["email_id"]: to_submission(r) for r in results}
+    (out / "submission.json").write_text(json.dumps(sub, indent=1), encoding="utf-8")
+    return sub
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("source", nargs="?", default=".", help="data folder or http://host:8080")
@@ -232,13 +283,7 @@ def main(argv=None):
     order = [e["email_id"] for e in inbox.emails()]
     results = [merged[i] for i in order]
 
-    (out / "report.json").write_text(json.dumps(results, indent=1, ensure_ascii=False), encoding="utf-8")
-    write_report_md(results, out / "report.md")
-    (out / "review_queue.json").write_text(json.dumps(
-        [review_item(r) for r in results if r.get("status") == "NEEDS_REVIEW" and r["category"] == BL_COMPARISON],
-        indent=1, ensure_ascii=False), encoding="utf-8")
-    sub = {r["email_id"]: to_submission(r) for r in results}
-    (out / "submission.json").write_text(json.dumps(sub, indent=1), encoding="utf-8")
+    sub = write_outputs(results, out)
 
     failed = [r["email_id"] for r in results if r.get("processing") == "FAILED"]
     print(f"{len(results)} emails -> {out}/  (failed: {failed or 'none'})")

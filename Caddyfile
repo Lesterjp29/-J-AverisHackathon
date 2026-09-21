@@ -1,0 +1,13 @@
+# Optional HTTPS for phone live-camera use (docker compose --profile https up). Self-signed: the phone will show a
+# certificate warning once - choose "Advanced -> continue". If this gives you trouble, ignore it: the normal
+# "Upload -> Take photo" route needs no HTTPS. (Alternative: run `ngrok http 8501` and open the https link it prints.)
+{
+	auto_https disable_redirects
+}
+
+:8443 {
+	tls internal {
+		on_demand
+	}
+	reverse_proxy app:8501
+}

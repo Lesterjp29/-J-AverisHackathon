@@ -1,0 +1,3 @@
+# optional: iPhone HEIC photos and Outlook .msg files. The app works without them.
+pillow-heif
+extract-msg

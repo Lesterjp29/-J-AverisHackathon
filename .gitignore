@@ -1,7 +1,29 @@
-﻿__pycache__/
+# hackathon dataset - not ours to publish
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+/out/
+/out_*/
+/stress_out/
+poppler_path.txt
+/inbox/
+/attachments/
+/sample_submission.json
+/data/*
+!/data/README.txt
+*.zip
+_new/
+bundle/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# ---- kept from the original repo (all but ".streamlit/", see note) ----
 *.py[cod]
 *$py.class
-.venv/
 env/
-venv/
-.streamlit/
+# keep Streamlit secrets out of git, but DO commit .streamlit/config.toml (the app and Docker image need it)
+.streamlit/secrets.toml

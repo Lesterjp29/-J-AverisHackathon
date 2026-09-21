@@ -1,0 +1,11 @@
+.venv
+__pycache__
+*.pyc
+.git
+*.zip
+docs
+out
+out_alt
+stress_out
+data
+poppler_path.txt

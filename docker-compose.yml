@@ -1,0 +1,27 @@
+# docker compose up --build          -> http://localhost:8501
+# docker compose --profile https up  -> also https://<this-computer>:8443  (optional: live in-browser camera on a phone)
+services:
+  app:
+    build: .
+    image: sdoc-checker:latest
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/data:ro      # optional: put the hackathon bundle's inbox/ and attachments/ folders in ./data
+      - ./out:/out           # results and your review decisions are saved here (survive restarts)
+    restart: unless-stopped
+
+  # OPTIONAL and untested by the author: HTTPS in front of the app so a phone's live camera works.
+  # Not needed for normal use - "Upload -> Take photo" works over plain http.
+  https:
+    image: caddy:2
+    profiles: ["https"]
+    depends_on: [app]
+    ports:
+      - "8443:8443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+
+volumes:
+  caddy_data:

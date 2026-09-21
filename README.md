@@ -1,46 +1,80 @@
-# Shipping document verification — solution notes
+# Shipping document checker
 
-    python -m pipeline.run <data-dir | http://localhost:8080> --out out [--submit]
-    python -m pipeline.run . --out out --resolutions resolutions.json     # apply human decisions
-    python -m pipeline.run . --out out --retry email_511                  # re-run one email
-    python -m pipeline.run . --out out_alt --ask-send-as BL_COMPARISON    # alternate labelling (see below)
+Checks a **Shipping Instruction (SI)** against a **draft Bill of Lading (BL)** on seven fields (shipper, consignee,
+notify party, port of loading, port of discharge, container count, gross weight) and tells you exactly what differs.
 
-Outputs: `report.md` (readable), `report.json` (evidence), `review_queue.json`, `submission.json` (scoreboard shape).
-Install: `pip install -r requirements.txt`, plus system `poppler` and `tesseract` (on Windows see below).
-Check tools any time with `python -m pipeline.env`. The pipeline refuses to run if poppler is missing, rather than
-silently sending every PDF to review.
+* **Quick check** - drop PDFs, Word, Excel, text files, photos, or a whole email (`.eml` / `.msg`). Instant result, the
+  values shown *on the page* where they were read, fix-a-value-and-recompare, and a ready-to-send **draft reply**.
+* **Scan with phone** - photograph the SI and the BL. Tilted, shadowed and sideways pages are straightened; a bad photo
+  (blurry, dark, glare, too far) is rejected with a plain reason instead of being misread.
+* **Inbox tabs** - the batch pipeline over the hackathon inbox: overview, emails, a human **review queue**, mismatch report.
 
-### Windows / VS Code
-1. Put `inbox/`, `attachments/`, `sample_submission.json` from the bundle into this folder (`loader.py` is already here).
-   Or leave them where they are and pass that folder: `python -m pipeline.run C:\path\to\bundle --out out`.
-2. Install Tesseract (UB-Mannheim build, tick "add to PATH") and poppler (oschwartz10612/poppler-windows, add `Library\bin` to PATH,
-   or set `POPPLER_PATH`). Restart VS Code. Verify: `python -m pipeline.env`.
-3. `python -m pipeline.run . --out out` then `python tests/test_pipeline.py`.
-Tests: `python tests/test_pipeline.py` — 13 tests (normaliser units + the 10 broken fixtures end to end).
+Nothing is ever guessed: when a value is blank, unreadable or the two OCR readings disagree, it goes to a person.
+Nothing is ever sent automatically. Uploaded files are processed in memory and are not saved.
 
-## Design: code decides, readers only read
-| Stage | How |
+![Quick check](docs/ui_quick_check.png)
+
+---
+## Run it (5 minutes, nothing to install except Docker)
+
+### Windows
+1. Install **Docker Desktop**: https://www.docker.com/products/docker-desktop/ (accept the defaults; restart if asked).
+2. Open Docker Desktop and wait until it says it is running.
+3. Unzip this project. **Double-click `start.bat`.**
+4. The first run builds the app (a few minutes). Your browser opens at **http://localhost:8501**.
+
+### Mac (Intel or Apple Silicon)
+1. Install **Docker Desktop**: https://www.docker.com/products/docker-desktop/ and open it until it says it is running.
+2. Unzip this project. **Double-click `start.command`.**
+   * First time macOS may block it: **right-click -> Open -> Open**.
+   * If it does not start, open Terminal in the folder and run `bash start.command`.
+3. Your browser opens at **http://localhost:8501**.
+
+**Stop:** double-click `stop.bat` / `stop.command`. **After you change any code:** run start again (it rebuilds).
+Your results and review decisions live in the `out/` folder and survive restarts.
+
+### Try it with the sample files (no data needed)
+Open **Quick check** and press *Mismatch*, *All match* or *An email* - or open **Scan with phone** and press
+*Photos with a mismatch*. The `samples/` folder has the same files, including bad photos that should be rejected.
+
+### Optional: the hackathon inbox (Inbox tabs)
+Copy the bundle's `inbox/` and `attachments/` folders into the `data/` folder here, refresh the page, and press
+**Run pipeline** (sidebar -> *Inbox dataset*).
+
+---
+## Using a phone
+1. Phone and computer on the **same Wi-Fi**. `start.bat` / `start.command` prints the address to type into the phone,
+   e.g. `http://192.168.1.23:8501`.
+2. Open **Scan with phone**, tap **Upload -> Take photo**. Your normal camera app opens (autofocus, flash) and this works
+   over plain http. Photograph each document flat on a plain, darker surface, whole page in frame, good light.
+3. Windows: if the phone cannot connect, allow Docker / port 8501 through the Windows firewall.
+
+The in-browser *live camera* needs **https**. It is optional: `docker compose --profile https up`, then
+`https://<computer-address>:8443` (accept the certificate warning once). This profile is **untested** - if it gives
+trouble use the Upload route above, or `ngrok http 8501` and open the https link it prints.
+
+![Scan](docs/ui_scan.png)
+
+---
+## Troubleshooting
+| Problem | Fix |
 |---|---|
-| Classify | Rules on **body + attachment content**. Subject is only a weak tiebreaker (subjects are reused across intents in the data). |
-| Read | txt / text-PDF (`pdftotext -layout`) / docx (paragraphs **and** table cells) / xlsx / scanned PDF (OCR at 300 & 400 dpi). SI vs BL identified by **document title**, never filename. |
-| Extract | Label regexes align "Load Port" / "POL" / "Port of Loading (POL)"; CJK glyph labels stripped; "Net Weight" never mistaken for gross. |
-| Normalise | Names: case/punctuation/suffix/spacing. Ports: drop `(CNNTG)` codes and `(WESTPORT)` terminals. Weight: units + `131,058` / `131058` / `128.544`. Containers: `6 x 40'HC` -> 6. |
-| Compare | Four outcomes: match / mismatch / missing / uncertain. Only *code* compares. |
-| OCR safety | Two OCR passes must agree; OCR'd names/ports are snapped to entities seen in born-digital docs, so noise ("ALGUAG") resolves but a genuinely different party does not. |
-| Human review | Missing/wrong/unreadable/blank/uncertain -> `review_queue.json` with reason, per-field SI/BL values and source lines. Reviewer supplies a decision or corrected values; the same compare code re-runs. |
-| Failures | Exceptions are recorded on the email (`processing: FAILED`), routed to review, and retryable with `--retry`. |
+| "Docker is not installed / not running" | Install Docker Desktop, open it, wait for "running", start again |
+| Windows: Docker asks about WSL 2 | Accept: Docker Desktop installs it for you, then restart |
+| Port 8501 already in use | Edit `docker-compose.yml`: change `"8501:8501"` to `"8502:8501"`, open http://localhost:8502 |
+| Phone cannot open the address | Same Wi-Fi? Firewall? A VPN on the computer can also block it |
+| Inbox tabs are empty | Put `inbox/` and `attachments/` in `data/` (optional; Quick check does not need them) |
+| Something else | `docker compose logs` and send it to the team |
 
-## Judgement calls (record of reasons)
-1. **"Please assist to send the draft BL for X for checking asap" (91 emails, no attachments)** -> `GENERAL` by default: nothing is being compared; it asks someone to *send* a document. This is the biggest ambiguity in the data. Score both ways (`--ask-send-as BL_COMPARISON` turns them into NEEDS_REVIEW/missing_attachment) and keep the better Stage-1 F1.
-2. Confirmed difference + a blank elsewhere -> `MISMATCH` (blank fields are listed as still needing a person). Blank only -> `NEEDS_REVIEW/missing_value`. A blank is never treated as a difference.
-3. Party comparison is on the **name** (first line). Addresses are ignored; the SI often omits them. `ON BEHALF OF` is compared only when both sides have it.
-4. Born-digital text is compared exactly after normalisation (no fuzzy band): every real difference found was a whole-entity swap or a +/-1 container / +/-500-1000 kg change, and no formatting-only difference survived normalisation. Fuzzy tolerance applies to OCR only.
-5. `unreadable` is also used for OCR-disagreement, since the allowed reason set has nothing closer.
+---
+## Without Docker (advanced)
+`pip install -r requirements-streamlit.txt -r requirements-extras.txt`, install **Tesseract** and **poppler**, then
+`streamlit run streamlit_app.py`. Windows needs poppler on PATH or set in the app's sidebar. Details, design decisions and
+the test notes are in `docs/TECHNICAL_NOTES.md`. Tests: `python tests/test_pipeline.py`.
 
-## Observed on the sample bundle (self-checked, not scored)
-520 emails: GENERAL 151, BL_COMPARISON 129, SI_REQUEST 125, INVOICE_QUERY 75, SPAM 40.
-Comparisons: OK 66, MISMATCH 46 (72 differing fields), NEEDS_REVIEW 17 (5 wrong doc, 5 missing attachment, 2 unreadable, 5 blank values) — exactly the designed edge cases 501-520 minus the three scans that read cleanly.
-Scanned pairs 512-514 were checked by eye against the page images: all three match.
-**False-negative audit.** Of the 66 OK verdicts, only 8 fields had SI text differing from BL text at all: 2 thousands-separator formats (`243588` vs `243,588`) and 6 OCR artefacts on the three scanned emails, all verified against the page images. No normalisation rule is masking a real difference in born-digital documents.
+## What is where
+`streamlit_app.py` the app - `pipeline/` the logic (`scan.py` photos, `intake.py` uploads and email, `evidence.py` page
+boxes, `reply.py` drafts, `compare.py` / `extract.py` / `normalize.py` the checking) - `samples/` demo files -
+`tools/make_samples.py` regenerates them - `tests/` - `Dockerfile`, `docker-compose.yml`, `start.*`, `stop.*`.
 
-`stress/` holds 10 deliberately broken emails (format-only differences, MT units, off-by-one container, deleted BL, swapped files, blank value, corrupt PDF, misleading subjects, one real defect among noise) — all classified as intended.
+![Evidence on a phone photo](docs/evidence_on_phone_photo.png)

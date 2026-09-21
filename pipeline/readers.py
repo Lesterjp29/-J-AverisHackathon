@@ -24,6 +24,7 @@ class Doc:
     passes: list[list[str]] = field(default_factory=list)  # extra OCR passes (scans only)
     error: str | None = None      # set when the file cannot be read at all
     ocr: bool = False
+    meta: dict = field(default_factory=dict)   # e.g. {"scans": [ScanResult]} for photographed pages
 
     @property
     def text(self) -> str:
@@ -149,9 +150,29 @@ def read_xlsx(path: str, data: bytes) -> Doc:
     return Doc(path, "xlsx", lines=lines)
 
 
+def read_image(path: str, data: bytes) -> Doc:
+    """A photo or image of a page. Quality is judged first: an unusable photo is 'unreadable' with a plain reason,
+    rather than being OCR'd into confident nonsense."""
+    from . import scan
+    try:
+        res = scan.process_photo(data)
+    except Exception as e:
+        return Doc(path, "photo", error=f"image could not be processed: {e}", ocr=True)
+    doc = scan.photos_to_doc(path, [res])
+    doc.meta["scans"] = [res]
+    if doc.error is None and not doc.lines and res.quality.retake:
+        doc.error = "photo quality too low: " + res.quality.issues[0][1]
+    elif doc.error and res.quality.retake:
+        doc.error = "photo quality too low: " + res.quality.issues[0][1]
+    return doc
+
+
 def read_any(path: str, data: bytes) -> Doc:
     ext = path.lower().rsplit(".", 1)[-1]
     try:
+        from .scan import IMAGE_EXTS
+        if ext in IMAGE_EXTS:
+            return read_image(path, data)
         if ext == "txt":
             return read_txt(path, data)
         if ext == "pdf":

@@ -93,11 +93,14 @@ def norm_value(fn: str, f: Field, snap: "Vocab | None" = None):
 
 def _consensus(fn: str, per_pass: list[Field | None], snap=None):
     """OCR: each pass must give the same normalised value, else the reading is untrustworthy."""
-    vals = [(norm_value(fn, f, snap) if f and not f.blank else None) for f in per_pass]
-    first = next((f for f in per_pass if f), None)
-    if len({repr(v) for v in vals}) == 1:
-        return first, True
-    return first, False
+    # A pass that did not find the label at all is a missed read, not a disagreement: judge the passes
+    # that DID read the field. (A pass that read it as blank/placeholder still counts, and will disagree.)
+    seen = [f for f in per_pass if f is not None]
+    if not seen:
+        return None, True
+    vals = [(norm_value(fn, f, snap) if not f.blank else None) for f in seen]
+    first = next((f for f in seen if not f.blank), seen[0])
+    return first, len({repr(v) for v in vals}) == 1
 
 
 def _show(fn: str, f: Field | None) -> str | None:

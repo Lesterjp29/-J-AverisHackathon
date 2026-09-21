@@ -1,0 +1,15 @@
+*.bat text eol=crlf
+*.command text eol=lf
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.yml text eol=lf
+Caddyfile text eol=lf
+*.py text eol=lf
+*.md text
+*.txt text
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.xlsx binary
+*.docx binary

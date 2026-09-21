@@ -47,7 +47,7 @@ def classify(email: dict, doc_kinds: list[str] | None = None) -> dict:
 
     # comparison request: SI/BL attachments, OR the body asks for a comparison (attachments may be missing)
     if any(k in ("SI", "BL") or k.startswith("OTHER") for k in doc_kinds) and n_att:
-        return out(BL_COMPARISON, 0.95, f"attachments are shipping documents: {doc_kinds}")
+        return out(BL_COMPARISON, 0.95, "attachments are shipping documents (" + ", ".join(k.replace("OTHER:", "").replace("_", " ") for k in doc_kinds) + ")")
     if COMPARE_RX.search(body) and not SI_BODY_RX.search(body):
         return out(BL_COMPARISON, 0.9 if n_att else 0.85,
                    "body asks to compare/check SI vs draft BL" + ("" if n_att else " (no attachments present)"))
