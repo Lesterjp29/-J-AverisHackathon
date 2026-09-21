@@ -93,9 +93,12 @@ def remember_review_draft(email_id):
 
 
 with st.sidebar:
-    st.markdown("**🚢 DocuVerify**")
-    st.caption("AI Shipping Document Automation")
-    st.write("")
+    st.markdown("""
+    <div class="sidebar-brand">
+        <div class="sidebar-brand-title">🚢 DocuVerify</div>
+        <div class="sidebar-brand-sub">AI Shipping Document Automation</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     nav_selection = st.radio(
         "Navigation",
@@ -105,17 +108,29 @@ with st.sidebar:
         on_change=remember_page,
         label_visibility="visible"
     )
-    st.write("---")
 
     # Engine status indicators
-    st.markdown("**System Health**")
-    st.caption("OCR Engine: **Available**" if shutil.which("tesseract") else "OCR Engine: **Not configured**")
-    if gemini_key_present:
-        st.caption("AI Model: **Active** 🤖")
-    else:
-        st.caption("AI Model: **Rule-Only** ⚡")
+    ocr_avail = bool(shutil.which("tesseract"))
+    ocr_pill = '<span class="health-pill health-pill-ok">Available</span>' if ocr_avail else '<span class="health-pill health-pill-warn">Not configured</span>'
+    ai_pill = '<span class="health-pill health-pill-ai">Active 🤖</span>' if gemini_key_present else '<span class="health-pill health-pill-warn">Rule-Only ⚡</span>'
 
-    st.caption(f"Batch Dataset: `{len(report_data)} emails indexed`")
+    st.markdown(f"""
+    <div class="sidebar-health-card">
+        <div class="sidebar-health-title">System Health</div>
+        <div class="sidebar-health-row">
+            <span class="sidebar-health-label">OCR Engine</span>
+            {ocr_pill}
+        </div>
+        <div class="sidebar-health-row">
+            <span class="sidebar-health-label">AI Model</span>
+            {ai_pill}
+        </div>
+        <div class="sidebar-health-row">
+            <span class="sidebar-health-label">Batch Dataset</span>
+            <span class="health-pill health-pill-neutral">{len(report_data)} indexed</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 st.markdown('<div id="main-content" tabindex="-1"></div>', unsafe_allow_html=True)
 
