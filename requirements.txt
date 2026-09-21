@@ -7,10 +7,3 @@ Pillow>=10.0
 
 #AI:
 google-generativeai
-
-The basic LLM reviews 3 types of cases:
-a) Classification cases with a confidence level lower than 0.75
-b) Field extraction where a field returned "None"
-c) Field comparison for fields marked "uncertain" 
-
-The LLM supplements the decision, but final confirmation of everything in the NEEDS_REVIEW queue still relies on humans.
