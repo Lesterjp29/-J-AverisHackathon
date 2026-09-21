@@ -1,5 +1,13 @@
 # Shipping document verification — solution notes
 
+## Document Dashboard
+
+Run `python -m streamlit run app.py` from this project directory. The dashboard includes document uploads, sample comparisons, a review queue, and searchable batch results.
+
+The layout adapts to the available content width. Wide comparison tables scroll inside a labeled, keyboard-focusable region; use the arrow keys when the table has focus. Review drafts survive page changes within the current session. Use **Confirm Resolution** to save them. Direct page links use `?page=overview`, `scanner`, `review`, `explorer`, or `distribution`.
+
+UI regression checks: `python -m unittest discover -s tests -p test_ui.py`.
+
     python -m pipeline.run <data-dir | http://localhost:8080> --out out [--submit]
     python -m pipeline.run . --out out --resolutions resolutions.json     # apply human decisions
     python -m pipeline.run . --out out --retry email_511                  # re-run one email

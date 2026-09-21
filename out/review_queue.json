@@ -351,16 +351,25 @@
   "email_id": "email_514",
   "subject": "RE_ Draft BL LE HAVRE V.QI540A NANTONG - amend BL 042",
   "reason": "unreadable",
-  "detail": "notify_party: OCR passes disagree on the BL value",
+  "detail": "notify_party: OCR passes disagree on the BL value; port_of_loading: OCR passes disagree on the BL value",
   "fields_needing_attention": [
    {
     "field": "notify_party",
     "verdict": "uncertain",
-    "si": "EAST BRIGHT F2Z-LLC",
-    "bl": "EAST BRIGHT FZ-LLO",
+    "si": "EAST BRIGHT F2-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
     "reason": "OCR passes disagree on the BL value",
-    "si_evidence": "Notify. EAST BRIGHT F2Z-LLC",
-    "bl_evidence": "Notify. EAST BRIGHT FZ-LLO"
+    "si_evidence": "Notify. EAST BRIGHT F2-LLC",
+    "bl_evidence": "Notify EAST BRIGHT FZ-LLC"
+   },
+   {
+    "field": "port_of_loading",
+    "verdict": "uncertain",
+    "si": "NANTONG, CHINA",
+    "bl": "NANTONG, CHIMA",
+    "reason": "OCR passes disagree on the BL value",
+    "si_evidence": "Portof Loading: NANTONG, CHINA",
+    "bl_evidence": "Portof Leading. NANTONG, CHIMA"
    }
   ],
   "all_fields": [
@@ -385,20 +394,20 @@
    {
     "field": "notify_party",
     "verdict": "uncertain",
-    "si": "EAST BRIGHT F2Z-LLC",
-    "bl": "EAST BRIGHT FZ-LLO",
+    "si": "EAST BRIGHT F2-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
     "reason": "OCR passes disagree on the BL value",
-    "si_evidence": "Notify. EAST BRIGHT F2Z-LLC",
-    "bl_evidence": "Notify. EAST BRIGHT FZ-LLO"
+    "si_evidence": "Notify. EAST BRIGHT F2-LLC",
+    "bl_evidence": "Notify EAST BRIGHT FZ-LLC"
    },
    {
     "field": "port_of_loading",
-    "verdict": "match",
+    "verdict": "uncertain",
     "si": "NANTONG, CHINA",
     "bl": "NANTONG, CHIMA",
-    "reason": "",
+    "reason": "OCR passes disagree on the BL value",
     "si_evidence": "Portof Loading: NANTONG, CHINA",
-    "bl_evidence": "Portof Loading. NANTONG, CHIMA"
+    "bl_evidence": "Portof Leading. NANTONG, CHIMA"
    },
    {
     "field": "port_of_discharge",

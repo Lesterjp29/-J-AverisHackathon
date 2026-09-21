@@ -59,8 +59,11 @@ def _fuzzy_label(line: str):
     """OCR turns 'Shipper:' into 'Shipper.', 'Port of Loading' into 'Portof Leading' or 'FPortof Loading'.
     Split at the first ':' or '.' near the start and fuzzy-match the label text."""
     from rapidfuzz import fuzz
-    m = re.match(r"^\W?([A-Za-z][A-Za-z ]{1,28}?)\s*[:.]\s*(.*)$", line)
+    # OCR renders the colon after a label as ':' '.' ',' ';' or '|' depending on engine version
+    m = re.match(r"^\W?([A-Za-z][A-Za-z ]{1,28}?)\s*[:.,;|]\s*(.*)$", line)
     if not m:
+        return None
+    if re.match(r"\s*container\s*(no|num|#)", m.group(1), re.I):      # table column header, not the 'Containers' field
         return None
     lab = re.sub(r"[^a-z]", "", m.group(1).lower())
     best = (0, None)
@@ -69,7 +72,7 @@ def _fuzzy_label(line: str):
             sc = fuzz.ratio(lab, re.sub(r"[^a-z]", "", a))
             if sc > best[0]:
                 best = (sc, name)
-    if best[0] >= 80:
+    if best[0] >= 85:
         return best[1], m.group(2).strip()
     return None
 

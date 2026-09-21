@@ -14399,10 +14399,10 @@
    {
     "field": "shipper",
     "verdict": "match",
-    "si": "APRIL FAR EAST (M) SDN BHD",
+    "si": "APRIL FAR EAST (M) SDN BHD:",
     "bl": "APRIL FAR EAST (M) SDN BHD",
     "reason": "",
-    "si_evidence": "Shipper. APRIL FAR EAST (M) SDN BHD",
+    "si_evidence": "Shipper. APRIL FAR EAST (M) SDN BHD:",
     "bl_evidence": "Shipper. APRIL FAR EAST (M) SDN BHD"
    },
    {
@@ -14421,7 +14421,7 @@
     "bl": "ALGUAG STATIONERY LLC",
     "reason": "",
     "si_evidence": "Notify. ALGURG STATIONERY LLC",
-    "bl_evidence": "Notify: ALGUAG STATIONERY LLC"
+    "bl_evidence": "Notify. ALGUAG STATIONERY LLC"
    },
    {
     "field": "port_of_loading",
@@ -14439,7 +14439,7 @@
     "bl": "TUTICORIN, INDIA",
     "reason": "",
     "si_evidence": "Port of Discharge: TUTICORIN, INDIA",
-    "bl_evidence": "Port of Discharge: TUTICORIN, INDIA"
+    "bl_evidence": "Portof Discharge: TUTICORIN, INDIA"
    },
    {
     "field": "container_count",
@@ -14505,10 +14505,10 @@
     "field": "consignee",
     "verdict": "match",
     "si": "KPP-ANTALIS (SINGAPORE) PTE. LTD.",
-    "bl": "KPP-ANTALIS (SINGAPORE) PTE LTD.",
+    "bl": "KPP-ANTALIS (SINGAPORE) PTE: LTD.",
     "reason": "",
     "si_evidence": "Consignee: KPP-ANTALIS (SINGAPORE) PTE. LTD.",
-    "bl_evidence": "Consignee: KPP-ANTALIS (SINGAPORE) PTE LTD."
+    "bl_evidence": "Consignee: KPP-ANTALIS (SINGAPORE) PTE: LTD."
    },
    {
     "field": "notify_party",
@@ -14584,7 +14584,7 @@
   "reason": "attachments are shipping documents: ['SI', 'BL']",
   "status": "NEEDS_REVIEW",
   "review_reason": "unreadable",
-  "review_detail": "notify_party: OCR passes disagree on the BL value",
+  "review_detail": "notify_party: OCR passes disagree on the BL value; port_of_loading: OCR passes disagree on the BL value",
   "has_defect": false,
   "defect_fields": [],
   "fields": [
@@ -14609,20 +14609,20 @@
    {
     "field": "notify_party",
     "verdict": "uncertain",
-    "si": "EAST BRIGHT F2Z-LLC",
-    "bl": "EAST BRIGHT FZ-LLO",
+    "si": "EAST BRIGHT F2-LLC",
+    "bl": "EAST BRIGHT FZ-LLC",
     "reason": "OCR passes disagree on the BL value",
-    "si_evidence": "Notify. EAST BRIGHT F2Z-LLC",
-    "bl_evidence": "Notify. EAST BRIGHT FZ-LLO"
+    "si_evidence": "Notify. EAST BRIGHT F2-LLC",
+    "bl_evidence": "Notify EAST BRIGHT FZ-LLC"
    },
    {
     "field": "port_of_loading",
-    "verdict": "match",
+    "verdict": "uncertain",
     "si": "NANTONG, CHINA",
     "bl": "NANTONG, CHIMA",
-    "reason": "",
+    "reason": "OCR passes disagree on the BL value",
     "si_evidence": "Portof Loading: NANTONG, CHINA",
-    "bl_evidence": "Portof Loading. NANTONG, CHIMA"
+    "bl_evidence": "Portof Leading. NANTONG, CHIMA"
    },
    {
     "field": "port_of_discharge",

@@ -128,7 +128,7 @@
 | email_511 | NEEDS REVIEW (unreadable) | email_511_BL.pdf: PDF could not be parsed (corrupt or truncated) |
 | email_512 | No mismatch detected | — |
 | email_513 | No mismatch detected | — |
-| email_514 | NEEDS REVIEW (unreadable) | notify_party: OCR passes disagree on the BL value |
+| email_514 | NEEDS REVIEW (unreadable) | notify_party: OCR passes disagree on the BL value; port_of_loading: OCR passes disagree on the BL value |
 | email_515 | NEEDS REVIEW (unreadable) | email_515_BL.pdf: PDF could not be parsed (corrupt or truncated) |
 | email_516 | NEEDS REVIEW (missing_value) | gross_weight_kg: SI value is blank/placeholder ('N/A') |
 | email_517 | NEEDS REVIEW (missing_value) | port_of_loading: SI value is blank/placeholder ('____MT'); port_of_discharge: SI value is blank/placeholder ('TBA') |

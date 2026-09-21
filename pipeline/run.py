@@ -19,7 +19,7 @@ from pathlib import Path
 
 from .classify import BL_COMPARISON, classify
 from .compare import Vocab, compare_docs, table_consistency
-from .extract import FIELDS, extract, party_lines
+from .extract import FIELDS, Field, extract, party_lines
 from .normalize import canon_name, canon_port
 from .readers import Doc, detect_kind, read_any
 from .llm import llm_classify_fallback, llm_extract_fallback, llm_resolve_uncertain
@@ -147,6 +147,112 @@ def check_documents(email: dict, inbox, corrections: dict | None = None, vocab: 
     return res
 
 
+# ---------------------------------------------------------------- generalized comparison (uploads / photos)
+def _prefill(docs: list[Doc]) -> dict | None:
+    """When one doc is readable but its partner is missing/broken, pre-fill the readable side so a reviewer
+    only has to type the other side."""
+    readable = [d for d in docs if not d.error and d.lines]
+    if not readable:
+        return None
+    out = {"si": {}, "bl": {}}
+    for d in readable:
+        side = "si" if d.kind == "SI" else "bl" if d.kind == "BL" else None
+        if side:
+            f = extract(d)
+            for fn in FIELDS:
+                if f[fn] and not f[fn].blank:
+                    out[side][fn] = f[fn].raw
+    return out if any(out["si"].values()) or any(out["bl"].values()) else None
+
+
+def _summarize(res: dict, results: list) -> None:
+    """Fill status / has_defect / defect_fields from FieldResult list."""
+    mism = [r for r in results if r.verdict == "mismatch"]
+    miss = [r for r in results if r.verdict == "missing"]
+    unc = [r for r in results if r.verdict == "uncertain"]
+    if mism:
+        res.update(status="MISMATCH", has_defect=True, defect_fields=[r.field for r in mism])
+        pending = miss + unc
+        if pending:
+            res["review_detail"] = "also needs a person: " + ", ".join(f"{r.field} ({r.reason})" for r in pending)
+    elif miss:
+        res.update(status="NEEDS_REVIEW", review_reason="missing_value",
+                   review_detail="; ".join(f"{r.field}: {r.reason}" for r in miss + unc))
+    elif unc:
+        ocr = any(d.ocr for d in [])
+        res.update(status="NEEDS_REVIEW", review_reason="missing_value",
+                   review_detail="; ".join(f"{r.field}: {r.reason}" for r in unc))
+    else:
+        res["status"] = "OK"
+
+
+def check_docs(docs: list[Doc], corrections: dict | None = None, vocab: Vocab | None = None,
+               roles: dict | None = None) -> dict:
+    """Compare an SI against a draft BL, given already-read documents (dataset files, uploads, photos, email
+    attachments). `roles` lets a person override the detected kind: {doc.path: "SI" | "BL"}."""
+    atts = [d.path for d in docs]
+    res = {"status": None, "review_reason": None, "review_detail": None, "has_defect": False,
+           "defect_fields": [], "fields": [], "documents": []}
+
+    for d in docs:
+        d.kind = (roles or {}).get(d.path) or (detect_kind(d) if not d.error else "UNREADABLE")
+        res["documents"].append({"path": d.path, "format": d.fmt, "kind": d.kind, "ocr": d.ocr,
+                                 "error": d.error})
+
+    if corrections and all(fn in (corrections.get("si") or {}) and fn in (corrections.get("bl") or {}) for fn in FIELDS):
+        from .review import apply_corrections
+        si_f = {fn: None for fn in FIELDS}
+        bl_f = {fn: None for fn in FIELDS}
+        apply_corrections(si_f, bl_f, corrections)
+        results = compare_docs(si_f, bl_f)
+        res["fields"] = [r.as_dict() for r in results]
+        res["manual_entry"] = True
+        _summarize(res, results)
+        return res
+
+    if len(docs) < 2:
+        have = docs[0].kind if docs else "nothing"
+        return {**res, "prefill": _prefill(docs), "status": "NEEDS_REVIEW", "review_reason": "missing_attachment",
+                "review_detail": f"comparison needs an SI and a draft BL; only {len(docs)} attachment(s) found ({have})"}
+
+    bad = [d for d in docs if d.error]
+    if bad:
+        return {**res, "prefill": _prefill(docs), "status": "NEEDS_REVIEW", "review_reason": "unreadable",
+                "review_detail": "; ".join(f"{Path(d.path).name}: {d.error}" for d in bad)}
+
+    kinds = sorted(d.kind for d in docs)
+    if kinds != ["BL", "SI"]:
+        return {**res, "prefill": _prefill(docs), "status": "NEEDS_REVIEW", "review_reason": "wrong_doc_type",
+                "review_detail": "expected one SI and one draft BL, got " +
+                                 ", ".join(f"{Path(d.path).name} = {d.kind}" for d in docs)}
+
+    si_doc, bl_doc = sorted(docs, key=lambda d: ROLE_ORDER[d.kind])
+    swapped = si_doc.path != atts[0]
+    si_f, bl_f = extract(si_doc), extract(bl_doc)
+    si_p = [extract(Doc(si_doc.path, "ocr", lines=p, ocr=True)) for p in si_doc.passes] if si_doc.ocr else None
+    bl_p = [extract(Doc(bl_doc.path, "ocr", lines=p, ocr=True)) for p in bl_doc.passes] if bl_doc.ocr else None
+
+    if corrections:
+        from .review import apply_corrections
+        apply_corrections(si_f, bl_f, corrections)
+        si_p = bl_p = None
+
+    results = compare_docs(si_f, bl_f, si_passes=si_p, bl_passes=bl_p,
+                           si_ocr=si_doc.ocr, bl_ocr=bl_doc.ocr, vocab=vocab)
+
+    for d, f in ((si_doc, si_f), (bl_doc, bl_f)):
+        note = table_consistency(d.lines, f)
+        if note:
+            for r in results:
+                if r.field == "container_count" and r.verdict == "match":
+                    r.verdict, r.reason = "uncertain", f"{d.kind}: {note}"
+
+    res["fields"] = [r.as_dict() for r in results]
+    res["swapped_attachment_order"] = swapped
+    _summarize(res, results)
+    return res
+
+
 def process(email: dict, inbox, resolutions: dict, vocab: Vocab | None = None) -> dict:
     eid = email["email_id"]
     base = {"email_id": eid,
@@ -157,6 +263,11 @@ def process(email: dict, inbox, resolutions: dict, vocab: Vocab | None = None) -
             d = read_any(a, inbox.read_bytes(a))
             kinds.append("UNREADABLE" if d.error else detect_kind(d))
         c = classify(email, kinds)
+        # LLM fallback for low-confidence classifications
+        print(f"[{eid}] rule confidence={c['confidence']}")
+        llm_c = llm_classify_fallback(email, c)
+        if llm_c:
+            c = llm_c
         base.update(c)
         if c["category"] != BL_COMPARISON:
             return base
@@ -180,15 +291,6 @@ def process(email: dict, inbox, resolutions: dict, vocab: Vocab | None = None) -
                     has_defect=False, defect_fields=[], fields=[])
         if "category" not in base:
             base["category"] = "GENERAL"
-
-        c = classify(email, kinds)
-    # temporarily, right after classify(email, kinds) in run.py
-    print(f"[{eid}] rule confidence={c['confidence']}")
-    # only fires if c["confidence"] < 0.75
-    llm_c = llm_classify_fallback(email, c)
-    if llm_c:
-        c = llm_c
-    base.update(c)
 
     return base
 
@@ -287,15 +389,7 @@ def main(argv=None):
     order = [e["email_id"] for e in inbox.emails()]
     results = [merged[i] for i in order]
 
-    (out / "report.json").write_text(json.dumps(results,
-                                                indent=1, ensure_ascii=False), encoding="utf-8")
-    write_report_md(results, out / "report.md")
-    (out / "review_queue.json").write_text(json.dumps(
-        [review_item(r) for r in results if r.get("status") ==
-         "NEEDS_REVIEW" and r["category"] == BL_COMPARISON],
-        indent=1, ensure_ascii=False), encoding="utf-8")
-    sub = {r["email_id"]: to_submission(r) for r in results}
-    (out / "submission.json").write_text(json.dumps(sub, indent=1), encoding="utf-8")
+    sub = write_outputs(results, out)
 
     failed = [r["email_id"]
               for r in results if r.get("processing") == "FAILED"]
@@ -303,6 +397,19 @@ def main(argv=None):
     if a.submit:
         print(json.dumps(inbox.submit(sub), indent=1))
     return results
+
+
+def write_outputs(results: list[dict], out: Path) -> dict:
+    """report.json / report.md / review_queue.json / submission.json. Shared by the CLI and the UI."""
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "report.json").write_text(json.dumps(results, indent=1, ensure_ascii=False), encoding="utf-8")
+    write_report_md(results, out / "report.md")
+    (out / "review_queue.json").write_text(json.dumps(
+        [review_item(r) for r in results if r.get("status") == "NEEDS_REVIEW" and r["category"] == BL_COMPARISON],
+        indent=1, ensure_ascii=False), encoding="utf-8")
+    sub = {r["email_id"]: to_submission(r) for r in results}
+    (out / "submission.json").write_text(json.dumps(sub, indent=1), encoding="utf-8")
+    return sub
 
 
 if __name__ == "__main__":
