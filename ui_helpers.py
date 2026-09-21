@@ -51,31 +51,26 @@ def comparison_table(fields: list[dict]) -> str:
         fname = html.escape(field_labels.get(raw_fn, raw_fn.replace("_", " ").title()))
         verdict = f.get("verdict", "")
         badge = verdict_badges.get(verdict, html.escape(str(verdict)))
+
+        # Check for AI advisory verdict or LLM fallback
+        ai_sugg = f.get("llm_suggested_verdict")
+        ai_reason = f.get("llm_reasoning")
+        if ai_sugg:
+            badge += f'<div style="margin-top:4px;"><span class="badge badge-neutral" title="{html.escape(str(ai_reason or ""))}"><small>🤖 AI: {html.escape(str(ai_sugg))}</small></span></div>'
+
         si_val = text(f.get("si"))
         bl_val = text(f.get("bl"))
         reason = html.escape(str(f.get("reason", "")))
         reason_cell = f'<span style="color:#64748B;font-size:12px">{reason}</span>' if reason else ""
 
-        rows.append(f"""
-        <tr>
-            <td>{fname}</td>
-            <td>{si_val}</td>
-            <td>{bl_val}</td>
-            <td>{badge}</td>
-            <td>{reason_cell}</td>
-        </tr>""")
+        rows.append(f"<tr><td>{fname}</td><td>{si_val}</td><td>{bl_val}</td><td>{badge}</td><td>{reason_cell}</td></tr>")
 
-    return f"""
-    <table class="field-table">
-        <tr>
-            <th>Field Name</th>
-            <th>Shipping Instruction (SI)</th>
-            <th>Draft Bill of Lading (BL)</th>
-            <th>Status</th>
-            <th>Evidence / Note</th>
-        </tr>
-        {''.join(rows)}
-    </table>"""
+    return (
+        '<table class="field-table">\n'
+        '<thead><tr><th>Field Name</th><th>Shipping Instruction (SI)</th><th>Draft Bill of Lading (BL)</th><th>Status</th><th>Evidence / Note</th></tr></thead>\n'
+        f"<tbody>\n{''.join(rows)}\n</tbody>\n"
+        '</table>'
+    )
 
 
 def summary_table(items) -> str:
@@ -93,9 +88,11 @@ def summary_table(items) -> str:
         else:
             continue
         rows.append(f"<tr><td><strong>{html.escape(str(cat))}</strong></td><td>{count}</td><td>{pct:.1f}%</td></tr>")
-    return f"""
-    <table class="field-table">
-        <tr><th>Category</th><th>Count</th><th>Share</th></tr>
-        {''.join(rows)}
-    </table>"""
+    return (
+        '<table class="field-table">\n'
+        '<thead><tr><th>Category</th><th>Count</th><th>Share</th></tr></thead>\n'
+        f"<tbody>\n{''.join(rows)}\n</tbody>\n"
+        '</table>'
+    )
+
 

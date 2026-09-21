@@ -1,4 +1,4 @@
-﻿__pycache__/
+__pycache__/
 *.py[cod]
 *$py.class
 .venv/
@@ -6,3 +6,5 @@ env/
 venv/
 .streamlit/*
 !.streamlit/config.toml
+.env
+.env.*

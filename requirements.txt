@@ -8,5 +8,6 @@ opencv-python-headless
 streamlit>=1.40
 # system packages: poppler-utils (pdftotext, pdftoppm), tesseract-ocr
 
-#AI:
+# AI:
+google-genai>=2.0
 google-generativeai

@@ -20,11 +20,37 @@ import json
 import os
 import re
 
+_env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
 _API_KEY = os.environ.get("GEMINI_API_KEY")
-_MODEL_NAME = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
-_ENABLED = bool(_API_KEY)
+if not _API_KEY and os.path.exists(_env_path):
+    try:
+        with open(_env_path, "r", encoding="utf-8") as _f:
+            for _line in _f:
+                _line = _line.strip()
+                if _line.startswith("GEMINI_API_KEY="):
+                    _API_KEY = _line.split("=", 1)[1].strip().strip('"').strip("'")
+                    os.environ["GEMINI_API_KEY"] = _API_KEY
+                    break
+    except Exception:
+        pass
 
+_model_env = os.environ.get("GEMINI_MODEL")
+if not _model_env and os.path.exists(_env_path):
+    try:
+        with open(_env_path, "r", encoding="utf-8") as _f:
+            for _line in _f:
+                _line = _line.strip()
+                if _line.startswith("GEMINI_MODEL="):
+                    _model_env = _line.split("=", 1)[1].strip().strip('"').strip("'")
+                    os.environ["GEMINI_MODEL"] = _model_env
+                    break
+    except Exception:
+        pass
+
+_MODEL_NAME = _model_env or "gemini-3.1-flash-lite"
+_ENABLED = bool(_API_KEY)
 _client = None
+
 if _ENABLED:
     try:
         from google import genai
@@ -34,27 +60,78 @@ if _ENABLED:
         _ENABLED = False
 
 
+def is_enabled() -> bool:
+    """Check if Gemini LLM is configured, dynamically initializing if key becomes available."""
+    global _API_KEY, _ENABLED, _client, _MODEL_NAME
+    if _ENABLED and _client is not None:
+        return True
+    _key = os.environ.get("GEMINI_API_KEY")
+    if not _key and os.path.exists(_env_path):
+        try:
+            with open(_env_path, "r", encoding="utf-8") as _f:
+                for _line in _f:
+                    _line = _line.strip()
+                    if _line.startswith("GEMINI_API_KEY="):
+                        _key = _line.split("=", 1)[1].strip().strip('"').strip("'")
+                        os.environ["GEMINI_API_KEY"] = _key
+                    elif _line.startswith("GEMINI_MODEL="):
+                        _m = _line.split("=", 1)[1].strip().strip('"').strip("'")
+                        os.environ["GEMINI_MODEL"] = _m
+                        _MODEL_NAME = _m
+        except Exception:
+            pass
+    if _key:
+        _API_KEY = _key
+        try:
+            from google import genai
+            _client = genai.Client(api_key=_API_KEY)
+            _ENABLED = True
+            return True
+        except Exception:
+            _client = None
+            _ENABLED = False
+            return False
+    return False
+
+
 def _ask(prompt: str) -> str | None:
     """Low-level call. Returns raw text, or None on any failure - never raises."""
-    if not _ENABLED or _client is None:
+    if not is_enabled() or _client is None:
         return None
-    try:
-        resp = _client.models.generate_content(
-            model=_MODEL_NAME, contents=prompt)
-        return (resp.text or "").strip()
-    except Exception:
-        return None
+    models_to_try = [_MODEL_NAME]
+    for fb in ("gemini-3.1-flash-lite", "gemini-3.5-flash-lite"):
+        if fb not in models_to_try:
+            models_to_try.append(fb)
+
+    for m in models_to_try:
+        try:
+            resp = _client.models.generate_content(
+                model=m, contents=prompt)
+            if resp and resp.text:
+                return resp.text.strip()
+        except Exception:
+            continue
+    return None
 
 
 def _parse_json(text: str | None) -> dict | None:
     if not text:
         return None
+    # 1. Try finding JSON block between { and }
+    match = re.search(r"(\{.*\})", text, re.DOTALL)
+    if match:
+        try:
+            return json.loads(match.group(1))
+        except Exception:
+            pass
+    # 2. Fallback to code block cleanup
     cleaned = re.sub(r"^```(?:json)?|```$", "",
                      text.strip(), flags=re.M).strip()
     try:
         return json.loads(cleaned)
     except (json.JSONDecodeError, TypeError):
         return None
+
 
 
 # ---------------------------------------------------------------- (1) classification fallback
@@ -192,3 +269,65 @@ def llm_resolve_uncertain(field_result, si_evidence: str, bl_evidence: str) -> d
     return {"llm_suggested_verdict": parsed["verdict"],
             "llm_reasoning": parsed.get("reasoning", ""),
             "llm_note": "advisory only - a person still confirms this field"}
+
+
+# ---------------------------------------------------------------- (4) discrepancy advisor
+def llm_explain_discrepancies(fields: list[dict], status: str) -> dict | None:
+    """Analyze discrepancies between SI and BL and generate business impact + recommendation."""
+    mismatches = [f for f in fields if f.get("verdict") in ("mismatch", "uncertain", "missing")]
+    if not mismatches:
+        return None
+    summary_lines = []
+    for f in mismatches:
+        summary_lines.append(
+            f"- Field: {f.get('field')} | SI: '{f.get('si')}' | BL: '{f.get('bl')}' | Verdict: {f.get('verdict')} | Reason: {f.get('reason')}"
+        )
+    prompt = f"""You are a senior maritime shipping and documentation operations specialist.
+A comparison between a Shipping Instruction (SI) and draft Bill of Lading (BL) detected the following discrepancies:
+
+{chr(10).join(summary_lines)}
+
+Analyze these discrepancies and provide an operational assessment.
+Return ONLY valid JSON matching this schema:
+{{
+  "summary": "1-2 concise sentences summarizing the primary discrepancy and operational risk",
+  "root_cause": "Likely cause (e.g., trade name difference, port terminal code variance, clerical error)",
+  "recommended_action": "Specific action the logistics coordinator should take (e.g., amend draft BL, verify with shipper)",
+  "severity": "HIGH"
+}}
+"""
+    parsed = _parse_json(_ask(prompt))
+    return parsed
+
+
+# ---------------------------------------------------------------- (5) document intake advisor
+def llm_explain_document_issue(documents: list[dict], review_reason: str, review_detail: str) -> dict | None:
+    """Analyze why documents were flagged (e.g., wrong_doc_type, missing_attachment, unreadable)
+    and provide business impact, root cause, and recommendations."""
+    doc_summaries = []
+    for d in documents:
+        doc_summaries.append(
+            f"- File: {d.get('path')} | Detected Kind: {d.get('kind')} | Format: {d.get('format')} | Error: {d.get('error') or 'None'}"
+        )
+    prompt = f"""You are a senior maritime shipping and documentation operations specialist.
+A user uploaded files for Shipping Instruction (SI) vs Bill of Lading (BL) verification, but the intake pipeline flagged an operational issue before field comparison could occur:
+
+Issue Flag: {review_reason}
+Details: {review_detail}
+
+Uploaded Documents Detected:
+{chr(10).join(doc_summaries)}
+
+Analyze this issue and provide an operational assessment. If a document appears to be an invoice, packing list, or other non-BL document, explain the risk and clearly recommend whether the user should upload the actual draft BL or override the role if they believe the file contains draft BL instructions.
+
+Return ONLY valid JSON matching this exact schema:
+{{
+  "summary": "1-2 concise sentences summarizing the document intake problem and operational risk",
+  "root_cause": "Likely cause (e.g., Commercial Invoice uploaded instead of draft Bill of Lading, missing BL attachment, or unreadable scan)",
+  "recommended_action": "Specific recommendation (e.g., upload the draft Bill of Lading from the carrier, or use Role Override to force compare if appropriate)",
+  "severity": "HIGH"
+}}
+"""
+    parsed = _parse_json(_ask(prompt))
+    return parsed
+

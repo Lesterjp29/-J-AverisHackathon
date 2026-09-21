@@ -229,6 +229,20 @@ def check_docs(docs: list[Doc], corrections: dict | None = None, vocab: Vocab | 
     si_doc, bl_doc = sorted(docs, key=lambda d: ROLE_ORDER[d.kind])
     swapped = si_doc.path != atts[0]
     si_f, bl_f = extract(si_doc), extract(bl_doc)
+
+    # *AI – When the regex/fuzzy label matcher finds nothing
+    for fn in FIELDS:
+        if si_f[fn] is None:
+            sugg = llm_extract_fallback(fn, si_doc.lines)
+            if sugg:
+                si_f[fn] = Field(raw=sugg["value"], block=[sugg["value"]], blank=False,
+                                 evidence=f"LLM extraction fallback (confidence {sugg['confidence']:.2f})")
+        if bl_f[fn] is None:
+            sugg = llm_extract_fallback(fn, bl_doc.lines)
+            if sugg:
+                bl_f[fn] = Field(raw=sugg["value"], block=[sugg["value"]], blank=False,
+                                 evidence=f"LLM extraction fallback (confidence {sugg['confidence']:.2f})")
+
     si_p = [extract(Doc(si_doc.path, "ocr", lines=p, ocr=True)) for p in si_doc.passes] if si_doc.ocr else None
     bl_p = [extract(Doc(bl_doc.path, "ocr", lines=p, ocr=True)) for p in bl_doc.passes] if bl_doc.ocr else None
 
@@ -239,6 +253,14 @@ def check_docs(docs: list[Doc], corrections: dict | None = None, vocab: Vocab | 
 
     results = compare_docs(si_f, bl_f, si_passes=si_p, bl_passes=bl_p,
                            si_ocr=si_doc.ocr, bl_ocr=bl_doc.ocr, vocab=vocab)
+
+    # *AI – Uses LLM for fields flagged as "uncertain"
+    for r in results:
+        if r.verdict == "uncertain":
+            sugg = llm_resolve_uncertain(r, r.si_evidence, r.bl_evidence)
+            if sugg:
+                for k, v in sugg.items():
+                    setattr(r, k, v)
 
     for d, f in ((si_doc, si_f), (bl_doc, bl_f)):
         note = table_consistency(d.lines, f)

@@ -1,9 +1,28 @@
 import os
 import json
 import shutil
+import importlib
 from pathlib import Path
+
+# Auto-load .env if present so API keys persist across all sessions
+_env_file = Path(__file__).with_name(".env")
+if _env_file.exists():
+    for _line in _env_file.read_text(encoding="utf-8").splitlines():
+        _line = _line.strip()
+        if _line and not _line.startswith("#") and "=" in _line:
+            _k, _v = _line.split("=", 1)
+            os.environ[_k.strip()] = _v.strip().strip('"').strip("'")
+
 import streamlit as st
+import ui_helpers
+importlib.reload(ui_helpers)
 from ui_helpers import comparison_table, summary_table, report_status, text as html_text
+
+try:
+    import pipeline.llm
+    importlib.reload(pipeline.llm)
+except Exception:
+    pass
 
 # Ensure environment setup is run so poppler and tesseract are discovered on Windows
 try:
@@ -68,7 +87,11 @@ for item in report_data:
         outcomes[status] += 1
 
 # Check AI status
-gemini_key_present = bool(os.environ.get("GEMINI_API_KEY"))
+try:
+    from pipeline.llm import is_enabled
+    gemini_key_present = is_enabled()
+except Exception:
+    gemini_key_present = bool(os.environ.get("GEMINI_API_KEY"))
 
 # --- Sidebar Navigation ---
 pages = {
@@ -375,18 +398,85 @@ elif nav_selection == "📸 Document Scanner":
                 </div>
                 """, unsafe_allow_html=True)
 
+            documents = comparison.get("documents", [])
+            docs_objects = scan_result.get("docs", [])
+
+            # 1.5 Gemini AI Copilot Advisor (Discrepancies or Document Intake/Classification)
+            if gemini_key_present and status != "OK":
+                if fields:
+                    ai_cache_key = f"ai_advisor_{scan_result.get('category')}_{status}_{len(defect_fields)}"
+                    advisor_data = st.session_state.get(ai_cache_key)
+
+                    if not advisor_data:
+                        btn_c1, btn_c2 = st.columns([0.45, 0.55])
+                        with btn_c1:
+                            if st.button("✨ Run Gemini AI Discrepancy Analysis", key="btn_run_ai", type="secondary", use_container_width=True):
+                                with st.spinner("Gemini is analyzing discrepancy risks, probable root cause, and action recommendations…"):
+                                    from pipeline.llm import llm_explain_discrepancies
+                                    advisor_data = llm_explain_discrepancies(fields, status)
+                                    if advisor_data:
+                                        st.session_state[ai_cache_key] = advisor_data
+                                        st.rerun()
+                else:
+                    ai_cache_key = f"ai_doc_advisor_{scan_result.get('category')}_{review_reason}_{len(documents)}"
+                    advisor_data = st.session_state.get(ai_cache_key)
+
+                    if not advisor_data:
+                        btn_c1, btn_c2 = st.columns([0.45, 0.55])
+                        with btn_c1:
+                            if st.button("✨ Run Gemini AI Document Advisor", key="btn_run_doc_ai", type="secondary", use_container_width=True):
+                                with st.spinner("Gemini is evaluating document classification, file format, and intake requirements…"):
+                                    from pipeline.llm import llm_explain_document_issue
+                                    advisor_data = llm_explain_document_issue(documents, review_reason, review_detail)
+                                    if advisor_data:
+                                        st.session_state[ai_cache_key] = advisor_data
+                                        st.rerun()
+
+                if advisor_data:
+                    severity = str(advisor_data.get("severity", "MEDIUM")).upper()
+                    sev_color = "#BE123C" if severity == "HIGH" else ("#B45309" if severity == "MEDIUM" else "#15803D")
+                    sev_bg = "#FFE4E6" if severity == "HIGH" else ("#FEF3C7" if severity == "MEDIUM" else "#DCFCE7")
+                    sev_border = "#FECDD3" if severity == "HIGH" else ("#FDE68A" if severity == "MEDIUM" else "#BBF7D0")
+
+                    card_title = "Gemini Copilot Risk & Discrepancy Assessment" if fields else "Gemini Copilot Document Intake & Risk Assessment"
+                    st.markdown(f"""
+<div style="background:#FBFBFE;border:1px solid #E4E4E7;border-left:4px solid #7C3AED;border-radius:14px;padding:18px 22px;margin:16px 0 24px 0;box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-weight:800;font-size:15px;color:#18181B;display:flex;align-items:center;gap:8px;">
+            <span style="font-size:18px;">🤖</span> {card_title}
+        </div>
+        <span style="background:{sev_bg};color:{sev_color};border:1px solid {sev_border};font-weight:700;font-size:11px;padding:3px 10px;border-radius:999px;">
+            {severity} RISK
+        </span>
+    </div>
+    <div style="font-size:14px;color:#334155;margin-bottom:14px;line-height:1.55;">
+        <strong>Operational Summary:</strong> {html_text(advisor_data.get('summary', ''))}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:13px;">
+        <div style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:10px;padding:12px 16px;">
+            <div style="font-size:11px;font-weight:800;color:#7C3AED;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Probable Root Cause</div>
+            <div style="color:#475569;line-height:1.45;">{html_text(advisor_data.get('root_cause', ''))}</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:10px;padding:12px 16px;">
+            <div style="font-size:11px;font-weight:800;color:#7C3AED;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Recommended Action</div>
+            <div style="color:#475569;line-height:1.45;">{html_text(advisor_data.get('recommended_action', ''))}</div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
             # 2. Side-by-side Field Comparison Table
             if fields:
                 st.markdown("## 📊 Field-by-Field Verification")
                 st.markdown(comparison_table(fields), unsafe_allow_html=True)
 
             # 3. Document identification cards
-            documents = comparison.get("documents", [])
             if documents:
                 st.markdown("## 📁 Document Role Identification")
                 d_cols = st.columns(min(len(documents), 3))
                 for idx, doc in enumerate(documents):
-                    doc_path = Path(doc.get("path", "unknown")).name
+                    doc_path = doc.get("path", "unknown")
+                    display_name = Path(doc_path).name
                     doc_fmt = doc.get("format", "unknown")
                     doc_kind = doc.get("kind", "unknown")
                     doc_ocr = doc.get("ocr", False)
@@ -395,11 +485,12 @@ elif nav_selection == "📸 Document Scanner":
                     kind_badge = "badge-ok" if doc_kind == "SI" else ("badge-neutral" if doc_kind == "BL" else "badge-review")
                     with d_cols[idx % len(d_cols)]:
                         with st.container(border=True):
-                            st.markdown(f"**{doc_path}**")
+                            st.markdown(f"**{display_name}**")
                             st.caption(f"Format: `{doc_fmt}` | OCR: `{'Yes' if doc_ocr else 'No'}`")
-                            st.markdown(f'<span class="badge {kind_badge}">{html_text(doc_kind)}</span>', unsafe_allow_html=True)
+                            st.markdown(f'<span class="badge {kind_badge}">Detected: {html_text(doc_kind)}</span>', unsafe_allow_html=True)
                             if doc_error:
                                 st.caption(f":red[{doc_error}]")
+
 
         # 4. Photo Quality Inspector (if images were provided)
         docs_info = scan_result.get("docs", [])
