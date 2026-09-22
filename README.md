@@ -56,156 +56,54 @@ Scanned pairs 512-514 were checked by eye against the page images: all three mat
 
 ## Technical Architecture
 
+### 1. System Topology & Infrastructure
+```mermaid
+graph LR
+    subgraph Clients["Clients & Ingestion"]
+        A1["Email (IMAP)"]
+        A2["Web Uploads"]
+        A3["Mobile Photos"]
+        UI["Streamlit Portal<br/>(app.py)"]
+    end
+
+    subgraph Cloud["Cloud Infrastructure (Docker)"]
+        GCS[("Object Storage<br/>S3 / GCS")]
+        DOCKER["Docker Microservice<br/>(Cloud Run / ECS)<br/><i>Tesseract & Poppler</i>"]
+        SECRETS["Secret Manager"]
+    end
+
+    subgraph Outputs["Persistence (/out)"]
+        O1[("submission.json")]
+        O2[("report.json / .md")]
+        O3[("review_queue.json")]
+    end
+
+    A1 --> GCS
+    A2 & A3 --> UI --> DOCKER
+    GCS <--> DOCKER
+    SECRETS -.-> DOCKER
+    DOCKER --> O1 & O2 & O3
+    O2 & O3 -.-> UI
+```
+
+### 2. Document Processing & Audit Pipeline
 ```mermaid
 flowchart TD
-    %% -------------------------------------------------------------
-    %% 1. INGESTION SOURCES & CLIENTS
-    %% -------------------------------------------------------------
-    subgraph SOURCES["1. Ingestion Sources & Clients"]
-        S_EMAIL["Corporate Email Gateway<br/>(IMAP / MIME .eml Payloads)"]
-        S_MANUAL["Manual Uploads<br/>(PDF, DOCX, XLSX, TXT)"]
-        S_PHOTO["Mobile Camera Scans<br/>(Skewed JPG / PNG Photos)"]
-    end
-
-    %% -------------------------------------------------------------
-    %% 2. PRESENTATION LAYER (FRONTEND)
-    %% -------------------------------------------------------------
-    subgraph FRONTEND["2. Presentation Layer (Streamlit Framework)"]
-        UI_MAIN["Streamlit Web App<br/>(app.py)"]
-        UI_UPLOAD["File & Camera Upload Portal"]
-        UI_DIFF["Interactive Side-by-Side Diff Viewer"]
-        UI_QUEUE["Borderline Match Review Panel"]
-        UI_CONFIG["App Configuration<br/>(.streamlit/config.toml)"]
-
-        UI_CONFIG -.-> UI_MAIN
-        UI_UPLOAD --> UI_MAIN
-        UI_MAIN --> UI_DIFF
-        UI_MAIN --> UI_QUEUE
-    end
-
-    %% -------------------------------------------------------------
-    %% 3. CLOUD & DOCKER INFRASTRUCTURE LAYER
-    %% -------------------------------------------------------------
-    subgraph CLOUD["3. Cloud & Container Infrastructure (Docker Environment)"]
-        CDN["Cloud CDN / Load Balancer<br/>(SSL/TLS Termination)"]
-        BLOB_STORE["Cloud Object Storage (S3 / GCS)<br/>(/attachments, /inbox, /out)"]
-        SECRETS["Cloud Secret Manager<br/>(API Keys, Service Accounts)"]
-
-        subgraph DOCKER_CONTAINER["Docker Runtime Container (Dockerfile)"]
-            OS_DEPS["OS Libraries (packages.txt)<br/>- tesseract-ocr<br/>- poppler-utils"]
-            PY_ENV["Python Runtime & Requirements<br/>(requirements.txt)"]
-            CONTAINER_APP["Container Orchestration<br/>(Google Cloud Run / AWS ECS / Local Daemon)"]
-
-            OS_DEPS --> CONTAINER_APP
-            PY_ENV --> CONTAINER_APP
-        end
-
-        CDN --> CONTAINER_APP
-        BLOB_STORE <--> CONTAINER_APP
-        SECRETS -.->|Runtime Injection via pipeline/env.py| CONTAINER_APP
-    end
-
-    %% -------------------------------------------------------------
-    %% 4. BACKEND PROCESSING PIPELINE (CONTAINERIZED RUNTIME)
-    %% -------------------------------------------------------------
-    subgraph BACKEND["4. Backend Pipeline Core (Running inside Docker Container)"]
-        direction TB
-
-        %% Submodule A: Ingestion & Extraction
-        subgraph MOD_INTAKE["Module A: Ingestion & Preprocessing (pipeline/intake.py, scan.py, readers.py)"]
-            INTAKE["Intake Normalizer & Unpacker<br/>(pipeline/intake.py)"]
-            ROUTER{"File Type Router"}
-            D1["PDF & Scans:<br/>pdf2image & Tesseract OCR"]
-            D2["Office Docs:<br/>python-docx & openpyxl"]
-            D3["Camera Images:<br/>OpenCV Deskew & OCR"]
-            D4["Plain Text:<br/>Direct UTF-8 Parser"]
-
-            INTAKE --> ROUTER
-            ROUTER -->|"PDF / Scanned"| D1
-            ROUTER -->|"DOCX / XLSX"| D2
-            ROUTER -->|"JPG / PNG"| D3
-            ROUTER -->|"TXT"| D4
-        end
-
-        %% Submodule B: Role Classification
-        subgraph MOD_CLASSIFY["Module B: Role Classification (pipeline/classify.py)"]
-            CLF_SCORE["Keyword Heuristics & Signature Scoring"]
-            CLF_CHECK{"Confidence >= Threshold?"}
-            CLF_LABEL["Label Role:<br/>BL vs. SI"]
-            CLF_LLM["LLM Document Role Fallback<br/>(pipeline/llm.py)"]
-
-            D1 & D2 & D3 & D4 --> CLF_SCORE
-            CLF_SCORE --> CLF_CHECK
-            CLF_CHECK -->|"Yes"| CLF_LABEL
-            CLF_CHECK -->|"Ambiguous"| CLF_LLM
-            CLF_LLM --> CLF_LABEL
-        end
-
-        %% Submodule C: Entity Extraction
-        subgraph MOD_EXTRACT["Module C: Structured Entity Extraction (pipeline/extract.py & llm.py)"]
-            EXTRACT_TGT["Target Entity Extractor<br/>(Regex Boundaries & Schema Validator)"]
-            LLM_SCHEMA["JSON Schema Constraint Enforcement<br/>(pipeline/llm.py)"]
-            PAYLOAD["Structured Entity Payload<br/>(Parties, Routes, Containers, Weights)"]
-
-            CLF_LABEL --> EXTRACT_TGT
-            EXTRACT_TGT <--> LLM_SCHEMA
-            LLM_SCHEMA --> PAYLOAD
-        end
-
-        %% Submodule D: Reconciliation & Matching
-        subgraph MOD_RECON["Module D: Comparison & Verification (pipeline/compare.py & normalize.py)"]
-            NORM["Unit & Text Normalization<br/>(LBS to KG, ISO Dates, Trailing Trim)"]
-            COMPARE["Fuzzy Match & Levenshtein Matrix<br/>(Numeric Tolerance Checks)"]
-            DIFF_CHECK{"Field Mismatch Detected?"}
-
-            PAYLOAD --> NORM
-            NORM --> COMPARE
-            COMPARE --> DIFF_CHECK
-        end
-
-        %% Submodule E: Audit, Human-in-the-Loop & Communication
-        subgraph MOD_AUDIT["Module E: Audit & Communication (pipeline/evidence.py, review.py, reply.py)"]
-            EVIDENCE["Audit Evidence Collector<br/>(pipeline/evidence.py)"]
-            REVIEW["Human Review Gating<br/>(pipeline/review.py: Score < Tau)"]
-            REPLY["Discrepancy Email Generator<br/>(pipeline/reply.py)"]
-
-            DIFF_CHECK -->|"Score >= Tau"| EVIDENCE
-            DIFF_CHECK -->|"Score < Tau"| REVIEW
-            DIFF_CHECK -->|"Mismatch Found"| REPLY
-        end
-    end
-
-    %% -------------------------------------------------------------
-    %% 5. PERSISTENCE & OUTPUT ARTIFACTS
-    %% -------------------------------------------------------------
-    subgraph PERSISTENCE["5. Persistence & Output Artifacts (out/)"]
-        OUT_SUBMISSION["out/submission.json<br/>(Canonical Reconciliation Output)"]
-        OUT_REPORT_JSON["out/report.json<br/>(Machine-Readable Audit Trace)"]
-        OUT_REPORT_MD["out/report.md<br/>(Consolidated Markdown Diff Summary)"]
-        OUT_REVIEW["out/review_queue.json<br/>(Low-Confidence Review Queue)"]
-    end
-
-    %% Source Routing
-    S_EMAIL --> BLOB_STORE
-    S_MANUAL --> UI_UPLOAD
-    S_PHOTO --> UI_UPLOAD
-    UI_MAIN --> CDN
-    CONTAINER_APP --> INTAKE
-
-    %% Backend to Persistence Wiring
-    EVIDENCE --> OUT_SUBMISSION
-    EVIDENCE --> OUT_REPORT_JSON
-    EVIDENCE --> OUT_REPORT_MD
-    REVIEW --> OUT_REVIEW
-    OUT_SUBMISSION --> BLOB_STORE
-    OUT_REPORT_JSON --> BLOB_STORE
-    OUT_REPORT_MD --> BLOB_STORE
-    OUT_REVIEW --> BLOB_STORE
-
-    %% Artifacts to Frontend Wiring
-    OUT_REPORT_MD -.-> UI_DIFF
-    OUT_REPORT_JSON -.-> UI_DIFF
-    OUT_REVIEW -.-> UI_QUEUE
-    REPLY -.->|Draft Approval| UI_MAIN
+    IN["Document Input (pipeline/intake.py)"] --> ROUTE{"File Type?"}
+    
+    ROUTE -->|"PDF / Scans"| R1["pdf2image & Tesseract OCR"]
+    ROUTE -->|"Office Docs"| R2["python-docx & openpyxl"]
+    ROUTE -->|"JPG / PNG"| R3["OpenCV Deskew & OCR"]
+    ROUTE -->|"Plain Text"| R4["Direct UTF-8 Reader"]
+    
+    R1 & R2 & R3 & R4 --> CLF["Classifier (pipeline/classify.py)<br/>BL vs. SI"]
+    CLF --> EXT["Entity Extraction (pipeline/extract.py)<br/>LLM + JSON Schema Enforcement"]
+    EXT --> NORM["Normalization & Diff (pipeline/compare.py)<br/>LBS to KG, ISO Dates, Levenshtein"]
+    
+    NORM --> CHECK{"Confidence Score?"}
+    CHECK -->|">= 0.82"| OK["Audit Trail (out/report.json & submission.json)"]
+    CHECK -->|"< 0.82"| REVIEW["Human Queue (out/review_queue.json)"]
+    CHECK -->|"Mismatch"| REPLY["Client Reply Generator (pipeline/reply.py)"]
+```
 
 
