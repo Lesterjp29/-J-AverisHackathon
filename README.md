@@ -318,6 +318,32 @@ The current app is a local/file-backed prototype. Planned improvements are to:
 
 These are proposed next steps, not shipped capabilities.
 
+---
+
+## Challenges Faced & Engineering Solutions
+
+| Challenge | Impact | Resolution |
+| :--- | :--- | :--- |
+| **Decoupled Feature Merging** | Parallel feature branches between the core backend and the standalone OCR pipeline led to integration friction and merge conflicts. | Standardized a shared data contract (`DocumentPayload` interface) and decoupled the pipeline via asynchronous event-driven worker tasks. |
+| **GCP IAM & Artifact Registry Configuration** | Strict permission boundaries and service account roles on a fresh GCP project led to deployment halts during image pushes and container builds. | Established a dedicated CI/CD Service Account with tightly scoped roles (`roles/artifactregistry.writer`, `roles/run.admin`, and `roles/iam.serviceAccountUser`). |
+| **Asynchronous GCS Output Retrieval** | Processed artifacts required staging in Google Cloud Storage (GCS) before the client could fetch results, creating state management friction. | Implemented short-lived **GCS Signed URLs** alongside Cloud Pub/Sub webhooks to notify clients the exact moment artifacts become downloadable. |
+
+---
+
+## Future Roadmap & Scalability
+
+- [ ] **Evaluation on Realistic Unseen Datasets**
+  - Benchmark extraction precision and recall against diverse, real-world shipping documents (varying DPI, crumpled scans, handwriting, multi-lingual stamps).
+  - Implement continuous automated evaluation pipelines using synthetic and anonymized production samples.
+
+- [ ] **Enterprise Access Control & Authentication**
+  - Integrate **OAuth2 / OIDC** via Google Workspace / Microsoft Entra ID for organization-wide single sign-on (SSO).
+  - Introduce **Role-Based Access Control (RBAC)** to restrict sensitive cargo/financial data visibility by operational desk.
+
+- [ ] **Cloud Run Cost Optimization & Autoscaling**
+  - Configure **min-instances to 0** for idle cost prevention alongside warm-up requests to mitigate cold starts during peak logistics windows.
+  - Implement request concurrency tuning and memory-efficient document streaming to downscale allocated container resources.
+
 ## Contributing
 
 Open an issue describing the problem, or submit a focused pull request with reproduction steps and relevant test results. Keep UI work in `ui/` and `app.py`, processing logic in `pipeline/`, and reusable fixtures in `data/`. Do not commit credentials, real customer documents, or local reviewer decisions.
