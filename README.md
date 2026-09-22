@@ -52,3 +52,50 @@ Scanned pairs 512-514 were checked by eye against the page images: all three mat
 **False-negative audit.** Of the 66 OK verdicts, only 8 fields had SI text differing from BL text at all: 2 thousands-separator formats (`243588` vs `243,588`) and 6 OCR artefacts on the three scanned emails, all verified against the page images. No normalisation rule is masking a real difference in born-digital documents.
 
 `stress/` holds 10 deliberately broken emails (format-only differences, MT units, off-by-one container, deleted BL, swapped files, blank value, corrupt PDF, misleading subjects, one real defect among noise) — all classified as intended.
+
+
+## Technical Architecture
+
+```mermaid
+flowchart TD
+    subgraph INTAKE["1. Ingestion Layer (pipeline/intake.py)"]
+        A1["Email Inbox (.eml / MIME)"] --> B["Intake Normalizer"]
+        A2["Manual Uploads (PDF / DOCX / XLSX)"] --> B
+        A3["Mobile Camera Scans (JPG / PNG)"] --> B
+    end
+
+    subgraph SCAN["2. Preprocessing & Extraction (pipeline/scan.py & readers.py)"]
+        B --> C{"File Type Router"}
+        C -->|"PDF / Scanned"| D1["pdf2image & Tesseract OCR"]
+        C -->|"Office Docs"| D2["python-docx & openpyxl"]
+        C -->|"Images"| D3["OpenCV Deskew & OCR"]
+        C -->|"Plain Text"| D4["Direct UTF-8 Parser"]
+    end
+
+    subgraph CLASSIFY["3. Role Classification (pipeline/classify.py)"]
+        D1 & D2 & D3 & D4 --> E["Keyword Heuristics & Signature Scoring"]
+        E --> F{"Confidence >= Threshold?"}
+        F -->|"Yes"| G["Label Document: BL vs. SI"]
+        F -->|"Ambiguous"| H["LLM Classification Fallback"]
+        H --> G
+    end
+
+    subgraph EXTRACT["4. Entity Extraction (pipeline/extract.py & llm.py)"]
+        G --> I["Target Entity Extractor"]
+        I --> J["JSON Schema Constraint Enforcement"]
+        J --> K["Structured Entity Payload (Shipper, Consignee, Container, Weights)"]
+    end
+
+    subgraph RECONCILE["5. Comparison & Verification (pipeline/compare.py & normalize.py)"]
+        K --> L["Unit Normalization (e.g., LBS to KGS, Dates, Decimals)"]
+        L --> M["Fuzzy Match & Levenshtein Distance Matrix"]
+        M --> N{"Field Mismatch Detected?"}
+    end
+
+    subgraph AUDIT["6. Review & Output (pipeline/evidence.py, review.py & reply.py)"]
+        N -->|"Score < Tau"| O1["Human Review Queue (out/review_queue.json)"]
+        N -->|"Score >= Tau"| O2["Audit Evidence Collector (out/report.json)"]
+        N -->|"Discrepancy"| O3["Automated Client Reply (pipeline/reply.py)"]
+        O1 & O2 --> P["Consolidated Report (out/report.md & submission.json)"]
+        P --> Q["Interactive Dashboard (Streamlit app.py)"]
+    end
