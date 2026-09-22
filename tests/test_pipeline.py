@@ -5,6 +5,7 @@ Two layers:
   2. end-to-end assertions on the deliberately broken emails in stress/
 """
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -12,9 +13,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+# Regression checks must be reproducible and must not call a configured cloud model.
+os.environ["DOCUVERIFY_DISABLE_AI"] = "1"
+
 from pipeline.normalize import canon_name, canon_port, parse_container_count, parse_weight_kg
 from pipeline.readers import Doc, detect_kind
 from pipeline.extract import extract
+from pipeline.paths import SAMPLE_DATA, STRESS_DATA, DEMO_DATA, SAMPLE_REPORTS
 
 
 # ------------------------------------------------- normalisers: must NOT flag
@@ -140,10 +145,12 @@ EXPECTED = {
 
 
 def test_stress_fixtures():
-    out = ROOT / "stress_out"
-    subprocess.run([sys.executable, "-m", "pipeline.run", "stress", "--out", str(out)],
-                   cwd=ROOT, check=True, capture_output=True)
-    got = {r["email_id"]: r for r in json.loads((out / "report.json").read_text(encoding="utf-8"))}
+    import tempfile
+    with tempfile.TemporaryDirectory(prefix="docuverify-test-") as workdir:
+        out = Path(workdir)
+        subprocess.run([sys.executable, "-m", "pipeline.run", str(STRESS_DATA), "--out", str(out)],
+                       cwd=ROOT, check=True, capture_output=True)
+        got = {r["email_id"]: r for r in json.loads((out / "report.json").read_text(encoding="utf-8"))}
     for eid, (cat, status, reason, defects) in EXPECTED.items():
         r = got[eid]
         assert r["category"] == cat, f"{eid}: category {r['category']}"
@@ -162,7 +169,7 @@ def test_ui_backend_review_flow(tmp_path=None):
         raise unittest.SkipTest("Legacy HTTP App not present (Streamlit app is active)")
     import tempfile
     out = tempfile.mkdtemp()
-    a = ui.App(str(ROOT / "stress"), out, "GENERAL")
+    a = ui.App(str(STRESS_DATA), out, "GENERAL")
     a._run_all()
     assert a.results["email_t06_blank_value"]["status"] == "NEEDS_REVIEW"
     assert any(x["email_id"] == "email_t06_blank_value" for x in a.review()["queue"])
@@ -244,7 +251,7 @@ def test_photo_intake_matches_and_mismatches():
     import os
     os.environ.setdefault("OMP_THREAD_LIMIT", "1")
     from pipeline.intake import analyse
-    P = ROOT / "samples" / "4_phone_photos"
+    P = DEMO_DATA / "4_phone_photos"
     ok = analyse([_rd(P / "match_SI_photo.jpg"), _rd(P / "match_BL_photo.jpg")])["result"]
     assert ok["status"] == "OK", (ok["status"], ok.get("review_detail"))
     bad = analyse([_rd(P / "mismatch_SI_photo.jpg"), _rd(P / "mismatch_BL_photo_sideways.jpg")])["result"]
@@ -254,8 +261,8 @@ def test_photo_intake_matches_and_mismatches():
 def test_bad_photos_are_rejected_with_a_plain_reason():
     _skip_without("cv2")
     from pipeline.intake import analyse
-    B = ROOT / "samples" / "5_bad_photos_should_be_rejected"
-    bl = _rd(ROOT / "samples" / "2_upload_ok" / "BL.pdf")
+    B = DEMO_DATA / "5_bad_photos_should_be_rejected"
+    bl = _rd(DEMO_DATA / "2_upload_ok" / "BL.pdf")
     for name, word in (("blurry", "blurry"), ("glare", "Glare"), ("too_dark", "dark"), ("too_far_away", "closer")):
         r = analyse([_rd(B / f"{name}.jpg"), bl])["result"]
         assert r["status"] == "NEEDS_REVIEW" and r["review_reason"] == "unreadable", (name, r["status"])
@@ -264,7 +271,7 @@ def test_bad_photos_are_rejected_with_a_plain_reason():
 
 def test_upload_and_email_intake():
     from pipeline.intake import analyse
-    S = ROOT / "samples"
+    S = DEMO_DATA
     r = analyse([_rd(S / "1_upload_mismatch" / "SI.txt"), _rd(S / "1_upload_mismatch" / "BL.txt")])["result"]
     assert r["status"] == "MISMATCH" and sorted(r["defect_fields"]) == ["consignee", "notify_party"]
     r = analyse([_rd(S / "2_upload_ok" / "BL.pdf"), _rd(S / "2_upload_ok" / "SI.pdf")])["result"]   # order must not matter
@@ -279,7 +286,7 @@ def test_upload_and_email_intake():
 def test_evidence_boxes_locate_every_field():
     from pipeline import evidence as ev
     from pipeline.intake import analyse
-    S = ROOT / "samples" / "2_upload_ok"
+    S = DEMO_DATA / "2_upload_ok"
     r = analyse([_rd(S / "SI.pdf"), _rd(S / "BL.pdf")])
     pages = ev.render_pages("SI.pdf", (S / "SI.pdf").read_bytes())
     items = ev.items_from_fields(r["result"]["fields"], "si")
@@ -292,7 +299,7 @@ def test_evidence_boxes_locate_every_field():
     assert d["consignee"][0][1] != d["notify_party"][0][1]
     html = ev.text_evidence_html(r["docs"][0].lines, items)
     assert "<b>[" not in html or True                                     # pdf docs use boxes; html is for txt/docx/xlsx
-    t = analyse([_rd(ROOT / "samples" / "1_upload_mismatch" / "SI.txt"), _rd(ROOT / "samples" / "1_upload_mismatch" / "BL.txt")])
+    t = analyse([_rd(DEMO_DATA / "1_upload_mismatch" / "SI.txt"), _rd(DEMO_DATA / "1_upload_mismatch" / "BL.txt")])
     html = ev.text_evidence_html(t["docs"][0].lines, ev.items_from_fields(t["result"]["fields"], "si"))
     assert html.count("<b>[") == 7
 
@@ -300,7 +307,7 @@ def test_evidence_boxes_locate_every_field():
 def test_reply_drafts_are_specific_and_human():
     from pipeline.intake import analyse
     from pipeline.reply import draft_reply, mailto
-    S = ROOT / "samples"
+    S = DEMO_DATA
     e = analyse([_rd(S / "3_email" / "customer_email_with_mismatch.eml")])
     d = draft_reply(e["email"], e["result"])
     assert d["kind"] == "mismatch" and d["to"] == "docs@vitalsolutions.sg" and d["subject"].startswith("RE: ")
@@ -323,10 +330,10 @@ def test_reply_drafts_are_specific_and_human():
 
 def test_submission_shape_matches_sample():
     import unittest
-    if not ((ROOT / "out" / "submission.json").exists() and (ROOT / "sample_submission.json").exists()):
+    if not ((SAMPLE_REPORTS / "submission.json").exists() and (SAMPLE_DATA / "sample_submission.json").exists()):
         raise unittest.SkipTest("needs the hackathon bundle's sample_submission.json and a pipeline run (out/)")
-    sub = json.loads((ROOT / "out" / "submission.json").read_text(encoding="utf-8"))
-    sample = json.loads((ROOT / "sample_submission.json").read_text(encoding="utf-8"))
+    sub = json.loads((SAMPLE_REPORTS / "submission.json").read_text(encoding="utf-8"))
+    sample = json.loads((SAMPLE_DATA / "sample_submission.json").read_text(encoding="utf-8"))
     assert set(sub) == set(sample)
     keys = set(next(iter(sample.values())))
     assert all(set(v) == keys for v in sub.values())

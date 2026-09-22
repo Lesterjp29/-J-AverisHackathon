@@ -14,9 +14,10 @@ if _env_file.exists():
             os.environ[_k.strip()] = _v.strip().strip('"').strip("'")
 
 import streamlit as st
-import ui_helpers
+from ui import helpers as ui_helpers
 importlib.reload(ui_helpers)
-from ui_helpers import comparison_table, summary_table, report_status, format_review_issue, text as html_text
+from ui.helpers import comparison_table, summary_table, report_status, format_review_issue, text as html_text
+from pipeline.paths import ROOT, SAMPLE_DATA, DEFAULT_OUTPUT, SAMPLE_REPORTS, RESOLUTIONS_FILE
 
 try:
     import pipeline.llm
@@ -40,11 +41,10 @@ st.set_page_config(
 )
 
 # Match custom surfaces to the native Streamlit theme in .streamlit/config.toml.
-st.markdown(f"<style>{Path(__file__).with_name('ui.css').read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
+st.markdown(f"<style>{(ROOT / 'ui' / 'styles.css').read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
 
 
-OUT_DIR = Path("out")
-RESOLUTIONS_FILE = Path("resolutions.json")
+OUT_DIR = DEFAULT_OUTPUT
 
 
 def load_resolutions() -> dict:
@@ -57,10 +57,10 @@ def load_resolutions() -> dict:
 
 
 @st.cache_data
-def load_data():
-    report_path = OUT_DIR / "report.json"
-    review_path = OUT_DIR / "review_queue.json"
-    sub_path = OUT_DIR / "submission.json"
+def load_data(report_dir):
+    report_path = report_dir / "report.json"
+    review_path = report_dir / "review_queue.json"
+    sub_path = report_dir / "submission.json"
 
     raw_report = json.loads(report_path.read_text(
         encoding="utf-8")) if report_path.exists() else {}
@@ -81,7 +81,8 @@ def load_data():
     return report_list, reviews, subs
 
 
-report_data, review_queue, submissions = load_data()
+report_dir = OUT_DIR if (OUT_DIR / "report.json").exists() else SAMPLE_REPORTS
+report_data, review_queue, submissions = load_data(report_dir)
 
 # Calculate stats
 intents = {}
@@ -334,8 +335,8 @@ elif nav_selection == "📸 Document Scanner":
     # Handle sample load buttons
     if load_sample_ok or load_sample_mismatch:
         sample_id = "001" if load_sample_ok else "004"
-        p1 = Path(f"attachments/email_{sample_id}_SI.txt")
-        p2 = Path(f"attachments/email_{sample_id}_BL.txt")
+        p1 = SAMPLE_DATA / "attachments" / f"email_{sample_id}_SI.txt"
+        p2 = SAMPLE_DATA / "attachments" / f"email_{sample_id}_BL.txt"
         st.session_state["scanner_result"] = None
         try:
             with st.spinner("Processing sample documents…"):
@@ -677,6 +678,7 @@ elif nav_selection == "⚠️ Review Queue":
                             dec_val = "OK" if decision.startswith("OK") else "MISMATCH"
                             save_map = load_resolutions()
                             save_map[eid] = {"decision": dec_val, "reviewer": "human_reviewer", "note": notes}
+                            RESOLUTIONS_FILE.parent.mkdir(parents=True, exist_ok=True)
                             RESOLUTIONS_FILE.write_text(json.dumps(save_map, indent=2), encoding="utf-8")
                             st.session_state.setdefault("review_drafts", {})[eid] = {"decision": decision, "note": notes}
                             st.session_state[f"collapsed_{eid}"] = True

@@ -5,8 +5,8 @@ loader.py — one-import access to the SDOC hackathon inbox (participants).
 Works two ways with the same API:
 
   # A) local files (static bundle):
-  from loader import Inbox
-  inbox = Inbox("data")                 # folder with inbox/ + attachments/
+  from pipeline.loader import Inbox
+  inbox = Inbox("data/sample")          # folder with inbox/ + attachments/
   for email in inbox:
       print(email["email_id"], email["subject"])
       for path in email["attachments"]:
@@ -91,7 +91,8 @@ class Inbox:
 if __name__ == "__main__":
     # tiny smoke test / demo against a local bundle
     import sys
-    src = sys.argv[1] if len(sys.argv) > 1 else "data"
+    from .paths import SAMPLE_DATA
+    src = sys.argv[1] if len(sys.argv) > 1 else str(SAMPLE_DATA)
     inbox = Inbox(src)
     ems = inbox.emails()
     print(f"{len(ems)} emails from {src}")

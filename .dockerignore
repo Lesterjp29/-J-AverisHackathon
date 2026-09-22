@@ -1,0 +1,14 @@
+.git
+.venv
+venv
+env
+__pycache__
+**/__pycache__
+*.pyc
+.env
+.env.*
+.streamlit/secrets.toml
+.vscode
+.impeccable
+outputs
+.pytest_cache

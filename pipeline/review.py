@@ -7,7 +7,7 @@ resolutions.json (keyed by email_id) accepts two shapes:
   {"email_516": {"corrections": {"si": {"gross_weight_kg": "235,550 KG"}}, "note": "confirmed with customer"}}
 
 Corrections are re-compared by the same code path, so the report updates itself.
-    python -m pipeline.run . --out out --resolutions resolutions.json
+    python -m pipeline.run data/sample --out outputs/sample --resolutions outputs/resolutions.json
 """
 from __future__ import annotations
 

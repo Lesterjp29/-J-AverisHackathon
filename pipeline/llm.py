@@ -48,7 +48,7 @@ if not _model_env and os.path.exists(_env_path):
         pass
 
 _MODEL_NAME = _model_env or "gemini-3.1-flash-lite"
-_ENABLED = bool(_API_KEY)
+_ENABLED = bool(_API_KEY) and os.environ.get("DOCUVERIFY_DISABLE_AI") != "1"
 _client = None
 
 if _ENABLED:
@@ -63,6 +63,8 @@ if _ENABLED:
 def is_enabled() -> bool:
     """Check if Gemini LLM is configured, dynamically initializing if key becomes available."""
     global _API_KEY, _ENABLED, _client, _MODEL_NAME
+    if os.environ.get("DOCUVERIFY_DISABLE_AI") == "1":
+        return False
     if _ENABLED and _client is not None:
         return True
     _key = os.environ.get("GEMINI_API_KEY")

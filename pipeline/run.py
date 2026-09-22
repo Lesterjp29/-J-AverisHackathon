@@ -23,6 +23,8 @@ from .extract import FIELDS, Field, extract, party_lines
 from .normalize import canon_name, canon_port
 from .readers import Doc, detect_kind, read_any
 from .llm import llm_classify_fallback, llm_extract_fallback, llm_resolve_uncertain
+from .loader import Inbox
+from .paths import SAMPLE_DATA, DEFAULT_OUTPUT
 
 ROLE_ORDER = {"SI": 0, "BL": 1}
 
@@ -361,9 +363,9 @@ def write_report_md(results: list[dict], path: Path):
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("source", nargs="?", default=".",
+    ap.add_argument("source", nargs="?", default=str(SAMPLE_DATA),
                     help="data folder or http://host:8080")
-    ap.add_argument("--out", default="out")
+    ap.add_argument("--out", default=str(DEFAULT_OUTPUT))
     ap.add_argument(
         "--resolutions", help="JSON of human decisions/corrections keyed by email_id")
     ap.add_argument("--retry", nargs="*",
@@ -378,15 +380,6 @@ def main(argv=None):
 
     from .env import preflight
     preflight(a.allow_missing_tools)
-    # loader.py may sit next to pipeline/ (project root) or inside the data folder
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-    if not a.source.startswith("http"):
-        sys.path.insert(1, str(Path(a.source).resolve()))
-    try:
-        from loader import Inbox
-    except ModuleNotFoundError:
-        raise SystemExit("Cannot find loader.py. Put the bundle's loader.py next to the pipeline/ folder "
-                         "(or inside the data folder you pass as the first argument).")
     if a.ask_send_as:
         from . import classify as _c
         _c.ASK_SEND_DRAFT_LABEL = a.ask_send_as

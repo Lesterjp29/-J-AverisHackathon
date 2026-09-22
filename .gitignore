@@ -8,3 +8,10 @@ venv/
 !.streamlit/config.toml
 .env
 .env.*
+!.env.example
+.pytest_cache/
+.impeccable/
+.vscode/
+outputs/*
+!outputs/README.md
+poppler_path.txt
