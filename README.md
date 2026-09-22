@@ -191,7 +191,57 @@ Reference snapshots live in [`examples/reports/`](examples/reports/). New report
 ├── requirements-api.txt        # Optional API and cloud dependencies
 └── requirements-dev.txt        # Test dependencies
 ```
+## Technical Architecture
 
+### 1. System Topology & Infrastructure
+```mermaid
+graph LR
+    subgraph Clients["Clients & Ingestion"]
+        A1["Email (IMAP)"]
+        A2["Web Uploads"]
+        A3["Mobile Photos"]
+        UI["Streamlit Portal<br/>(app.py)"]
+    end
+
+    subgraph Cloud["Cloud Infrastructure (Docker)"]
+        GCS[("Object Storage<br/>S3 / GCS")]
+        DOCKER["Docker Microservice<br/>(Cloud Run / ECS)<br/><i>Tesseract & Poppler</i>"]
+        SECRETS["Secret Manager"]
+    end
+
+    subgraph Outputs["Persistence (/out)"]
+        O1[("submission.json")]
+        O2[("report.json / .md")]
+        O3[("review_queue.json")]
+    end
+
+    A1 --> GCS
+    A2 & A3 --> UI --> DOCKER
+    GCS <--> DOCKER
+    SECRETS -.-> DOCKER
+    DOCKER --> O1 & O2 & O3
+    O2 & O3 -.-> UI
+```
+
+### 2. Document Processing & Audit Pipeline
+```mermaid
+flowchart TD
+    IN["Document Input (pipeline/intake.py)"] --> ROUTE{"File Type?"}
+    
+    ROUTE -->|"PDF / Scans"| R1["pdf2image & Tesseract OCR"]
+    ROUTE -->|"Office Docs"| R2["python-docx & openpyxl"]
+    ROUTE -->|"JPG / PNG"| R3["OpenCV Deskew & OCR"]
+    ROUTE -->|"Plain Text"| R4["Direct UTF-8 Reader"]
+    
+    R1 & R2 & R3 & R4 --> CLF["Classifier (pipeline/classify.py)<br/>BL vs. SI"]
+    CLF --> EXT["Entity Extraction (pipeline/extract.py)<br/>LLM + JSON Schema Enforcement"]
+    EXT --> NORM["Normalization & Diff (pipeline/compare.py)<br/>LBS to KG, ISO Dates, Levenshtein"]
+    
+    NORM --> CHECK{"Confidence Score?"}
+    CHECK -->|">= 0.82"| OK["Audit Trail (out/report.json & submission.json)"]
+    CHECK -->|"< 0.82"| REVIEW["Human Queue (out/review_queue.json)"]
+    CHECK -->|"Mismatch"| REPLY["Client Reply Generator (pipeline/reply.py)"]
+```
 ## Testing
 
 ```bash
