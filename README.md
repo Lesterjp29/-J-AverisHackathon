@@ -84,23 +84,31 @@ flowchart TD
     end
 
     %% -------------------------------------------------------------
-    %% 3. CLOUD INFRASTRUCTURE & SECURITY PERIMETER
+    %% 3. CLOUD & DOCKER INFRASTRUCTURE LAYER
     %% -------------------------------------------------------------
-    subgraph CLOUD["3. Cloud Infrastructure & Security Perimeter"]
+    subgraph CLOUD["3. Cloud & Container Infrastructure (Docker Environment)"]
         CDN["Cloud CDN / Load Balancer<br/>(SSL/TLS Termination)"]
         BLOB_STORE["Cloud Object Storage (S3 / GCS)<br/>(/attachments, /inbox, /out)"]
-        CONTAINER_SRV["Container Orchestration<br/>(Google Cloud Run / AWS ECS)"]
         SECRETS["Cloud Secret Manager<br/>(API Keys, Service Accounts)"]
 
-        CDN --> CONTAINER_SRV
-        BLOB_STORE <--> CONTAINER_SRV
-        SECRETS -.->|Runtime Injection via pipeline/env.py| CONTAINER_SRV
+        subgraph DOCKER_CONTAINER["Docker Runtime Container (Dockerfile)"]
+            OS_DEPS["OS Libraries (packages.txt)<br/>- tesseract-ocr<br/>- poppler-utils"]
+            PY_ENV["Python Runtime & Requirements<br/>(requirements.txt)"]
+            CONTAINER_APP["Container Orchestration<br/>(Google Cloud Run / AWS ECS / Local Daemon)"]
+
+            OS_DEPS --> CONTAINER_APP
+            PY_ENV --> CONTAINER_APP
+        end
+
+        CDN --> CONTAINER_APP
+        BLOB_STORE <--> CONTAINER_APP
+        SECRETS -.->|Runtime Injection via pipeline/env.py| CONTAINER_APP
     end
 
     %% -------------------------------------------------------------
     %% 4. BACKEND PROCESSING PIPELINE (CONTAINERIZED RUNTIME)
     %% -------------------------------------------------------------
-    subgraph BACKEND["4. Backend Pipeline Core (Containerised via Dockerfile)"]
+    subgraph BACKEND["4. Backend Pipeline Core (Running inside Docker Container)"]
         direction TB
 
         %% Submodule A: Ingestion & Extraction
@@ -182,7 +190,7 @@ flowchart TD
     S_MANUAL --> UI_UPLOAD
     S_PHOTO --> UI_UPLOAD
     UI_MAIN --> CDN
-    CONTAINER_SRV --> INTAKE
+    CONTAINER_APP --> INTAKE
 
     %% Backend to Persistence Wiring
     EVIDENCE --> OUT_SUBMISSION
