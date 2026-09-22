@@ -16,7 +16,7 @@ DocuVerify classifies shipping correspondence, compares Shipping Instructions (S
 - [Technical Architecture](#technical-architecture)
 - [Testing](#testing)
 - [Written Responses](#written-responses)
-- [Challenges Faced & Engineering Solutions](#challenges-faced--engineering-solution)
+- [Challenges Faced & Engineering Solutions](#challenges-faced--engineering-solutions)
 - [Future Roadmap & Scalability](#future-roadmap--scalability)
 - [Contributing](#contributing)
 - [License](#license)
