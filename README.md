@@ -48,7 +48,7 @@ flowchart LR
 
 Document roles are identified from content rather than filenames. Normalization accounts for company suffixes, punctuation, port codes, weight units, and container notation. Blank or unreadable values are escalated instead of silently accepted.
 
-See [architecture and development notes](docs/architecture.md) for the rules and known ambiguities.
+See [architecture and development notes](docs/architecture.md) for the rules and known ambiguities. The separately contributed [cloud architecture diagrams](docs/cloud-architecture-proposal.md) are preserved as a proposal, with implementation gaps identified.
 
 ## Quick Start
 
