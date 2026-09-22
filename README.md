@@ -13,6 +13,7 @@ DocuVerify classifies shipping correspondence, compares Shipping Instructions (S
 - [Quick Start](#quick-start)
 - [Usage](#usage)
 - [Repository Structure](#repository-structure)
+- [Technical Architecture](#technical-architecture)
 - [Testing](#testing)
 - [Written Responses](#written-responses)
 - [Contributing](#contributing)
